@@ -142,6 +142,7 @@ svg{display:block}
 .bgrid input,.bgrid select,.bgrid textarea{font:inherit;font-size:16px;border:1.5px solid var(--field);border-radius:10px;padding:8px 10px;background:var(--surface-2);color:var(--ink);width:100%}
 .bgrid textarea{min-height:56px;resize:vertical}
 .bgrid input:focus,.bgrid select:focus,.bgrid textarea:focus{outline:none;border-color:var(--orange)}
+.bgrid .req{color:var(--orange)}.bgrid .opt{font-weight:600;opacity:.75}
 .berr{color:#D13A3A;font-size:13px;font-weight:600;margin-top:8px}
 .ok{display:flex;gap:10px;align-items:flex-start}
 .ok .tick{width:30px;height:30px;border-radius:50%;background:#22C55E;color:#fff;display:grid;place-items:center;flex:none;font-weight:800}
@@ -374,7 +375,7 @@ const STR = {
     bookThis: 'Book this', bookMsg: "I'd like to book this.",
     booking: 'Booking request', name: 'Name', phone: 'Phone', email: 'Email', address: 'Service address', date: 'Preferred date',
     window: 'Time window', morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', services: 'Services',
-    confirm: 'Confirm & send', sending: 'Sending…', missing: 'Please fill in name, phone, a valid email, address and date.',
+    confirm: 'Confirm & send', sending: 'Sending…', missing: 'Please enter a phone number so our team can reach you.', badEmail: 'That email doesn’t look right — fix it or leave it blank.', badDate: 'Please pick a date from today onward.', optional: '(optional)',
     sent: 'Request sent!', sentText: 'Reference {r}. Our team will reach out to confirm your date and final price.',
     sendFail: "Couldn't send just now. Please try again, or email illinisolutions@gmail.com.",
     aiFail: "Sorry, I couldn't reach the assistant just now.", retry: 'Try again', tooMany: 'Too many messages — please wait a minute.',
@@ -395,7 +396,7 @@ const STR = {
     bookThis: '预约这个', bookMsg: '我想预约这个。',
     booking: '预约申请', name: '姓名', phone: '电话', email: '邮箱', address: '服务地址', date: '期望日期',
     window: '时间段', morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', services: '服务',
-    confirm: '确认并提交', sending: '提交中…', missing: '请填写姓名、电话、有效邮箱、地址和日期。',
+    confirm: '确认并提交', sending: '提交中…', missing: '请留一个手机号，方便我们联系你。', badEmail: '邮箱格式不对，请修改或留空。', badDate: '请选择今天或之后的日期。', optional: '（选填）',
     sent: '已提交！', sentText: '预约编号 {r}。我们的团队会联系你确认日期和最终价格。',
     sendFail: '暂时提交失败，请重试，或发邮件到 illinisolutions@gmail.com。',
     aiFail: '抱歉，暂时连接不上 AI 助手。', retry: '重试', tooMany: '消息太频繁了，请稍等一分钟。',
@@ -508,11 +509,11 @@ function bookingCard(json, idx) {
   const date = /^\d{4}-\d{2}-\d{2}$/.test(v.date || '') ? v.date : '';
   return `<form class="card bk" data-idx="${idx}" novalidate><h4>${tr('booking')}</h4>
     <div class="bgrid">
-      <label>${tr('name')}<input name="name" required value="${esc(v.name || '')}" autocomplete="name"></label>
-      <label>${tr('phone')}<input name="phone" type="tel" required value="${esc(v.phone || '')}" autocomplete="tel"></label>
-      <label class="full">${tr('email')}<input name="email" type="email" required value="${esc(v.email || '')}" autocomplete="email"></label>
-      <label class="full">${tr('address')}<input name="address" required value="${esc(v.address || '')}" autocomplete="street-address"></label>
-      <label>${tr('date')}<input name="date" type="date" required min="${today}" value="${esc(date)}"></label>
+      <label><span>${tr('phone')} <span class="req">*</span></span><input name="phone" type="tel" required value="${esc(v.phone || '')}" autocomplete="tel" inputmode="tel"></label>
+      <label><span>${tr('name')} <span class="opt">${tr('optional')}</span></span><input name="name" value="${esc(v.name || '')}" autocomplete="name"></label>
+      <label class="full"><span>${tr('email')} <span class="opt">${tr('optional')}</span></span><input name="email" type="email" value="${esc(v.email || '')}" autocomplete="email"></label>
+      <label class="full"><span>${tr('address')} <span class="opt">${tr('optional')}</span></span><input name="address" value="${esc(v.address || '')}" autocomplete="street-address"></label>
+      <label>${tr('date')}<input name="date" type="date" min="${today}" value="${esc(date)}"></label>
       <label>${tr('window')}<select name="window">${opt('Morning')}${opt('Afternoon')}${opt('Evening')}</select></label>
       <label class="full">${tr('notes')}<textarea name="notes">${esc(v.notes || '')}</textarea></label>
     </div>
@@ -591,8 +592,10 @@ async function ask(text) {
 async function submitBooking(form) {
   const err = form.querySelector('.berr'), btn = form.querySelector('[type=submit]');
   const fd = Object.fromEntries(new FormData(form));
-  const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email || '');
-  if (!fd.name?.trim() || !fd.phone?.trim() || !okEmail || !fd.address?.trim() || !fd.date) { err.textContent = tr('missing'); err.hidden = false; return; }
+  const digits = (fd.phone || '').replace(/\D/g, '');
+  if (digits.length < 7) { err.textContent = tr('missing'); err.hidden = false; form.querySelector('[name=phone]').focus(); return; }
+  if (fd.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email)) { err.textContent = tr('badEmail'); err.hidden = false; return; }
+  if (fd.date && fd.date < today) { err.textContent = tr('badDate'); err.hidden = false; return; }
   let items = {}; try { items = JSON.parse(fd.items || '{}'); } catch (e) {}
   const list = parseItems(items);
   let once = 0, mo = 0;
@@ -605,10 +608,11 @@ async function submitBooking(form) {
     const res = await fetch(BOOKING_ENDPOINT, {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
-        _subject: `New booking ${ref} — ${fd.name} — ${fmt(once)}${mo ? ` + ${fmt(mo)}/mo` : ''}`, _template: 'box', _replyto: fd.email, _captcha: 'false',
+        _subject: `New booking ${ref} — ${fd.name || fd.phone} — ${fmt(once)}${mo ? ` + ${fmt(mo)}/mo` : ''}`, _template: 'box', _captcha: 'false',
+        ...(fd.email ? { _replyto: fd.email } : {}),
         'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
-        'Name': fd.name, 'Phone': fd.phone, 'Email': fd.email, 'Service address': fd.address,
-        'Preferred date': fd.date, 'Time window': fd.window, 'Order': order, 'Notes': fd.notes || '—', 'Chat transcript': transcript,
+        'Phone': fd.phone, 'Name': fd.name || '—', 'Email': fd.email || '—', 'Service address': fd.address || '— (ask customer)',
+        'Preferred date': fd.date || '— (ask customer)', 'Time window': fd.window, 'Order': order, 'Notes': fd.notes || '—', 'Chat transcript': transcript,
       }),
     });
     const j = await res.json().catch(() => ({}));
