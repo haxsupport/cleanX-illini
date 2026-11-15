@@ -195,8 +195,8 @@ svg{display:block}
 @media (max-width:959px){
   .main{grid-template-columns:minmax(0,1fr)}
   .pbtn{display:inline-flex}
-  .prices{position:fixed;z-index:40;left:0;right:0;bottom:0;height:min(88%,calc(var(--app-h,100dvh) - 40px));border:2px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);visibility:hidden}
-  .prices.open{transform:none;visibility:visible}
+  .prices{position:fixed;z-index:40;left:0;right:0;bottom:0;height:min(88%,calc(var(--app-h,100dvh) - 40px));border:2px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s linear .32s;visibility:hidden}
+  .prices.open{transform:none;visibility:visible;transition-delay:0s}
   .prices-head{padding-top:18px}
   .prices-head::before{content:"";position:absolute;top:7px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:4px;background:var(--dash)}
   .prices-x{display:grid}
@@ -347,7 +347,13 @@ const PHOTOS = { standard: 'bedroom', deep: 'kitchen', moving: 'movers', storage
 /* iOS Safari keeps 100dvh when the keyboard opens — size the shell to the visual viewport instead */
 if (window.visualViewport) {
   const vv = window.visualViewport;
-  const fit = () => { root.style.setProperty('--app-h', vv.height + 'px'); if (window.scrollY) window.scrollTo(0, 0); };
+  let lastH = 0;
+  const fit = () => {
+    if (vv.scale > 1.01) return;                       // ignore pinch-zoom
+    const h = Math.round(vv.height);
+    if (h !== lastH) { lastH = h; root.style.setProperty('--app-h', h + 'px'); }
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  };
   vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); fit();
 }
 
@@ -435,12 +441,12 @@ $('#pgrid').addEventListener('toggle', e => {
 const prices = $('#prices'), scrim = $('#scrim'), pricesBtn = $('#pricesBtn');
 const narrow = matchMedia('(max-width:959px)');
 function openSheet() { prices.classList.add('open'); scrim.classList.add('on'); pricesBtn.setAttribute('aria-expanded', 'true'); setTimeout(() => $('#pricesX').focus({ preventScroll: true }), 50); }
-function closeSheet() { prices.classList.remove('open'); scrim.classList.remove('on'); pricesBtn.setAttribute('aria-expanded', 'false'); }
+function closeSheet(refocus) { const was = prices.classList.contains('open'); prices.classList.remove('open'); scrim.classList.remove('on'); pricesBtn.setAttribute('aria-expanded', 'false'); if (was && refocus) pricesBtn.focus({ preventScroll: true }); }
 pricesBtn.addEventListener('click', openSheet);
-$('#pricesX').addEventListener('click', closeSheet);
-scrim.addEventListener('click', closeSheet);
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && prices.classList.contains('open')) closeSheet(); });
-narrow.addEventListener('change', closeSheet);
+$('#pricesX').addEventListener('click', () => closeSheet(true));
+scrim.addEventListener('click', () => closeSheet(true));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && prices.classList.contains('open')) closeSheet(true); });
+narrow.addEventListener('change', () => closeSheet());
 
 /* ================= Chat ================= */
 const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787/chat' : 'https://illini-chat.iceocean712.workers.dev/chat';
@@ -627,36 +633,46 @@ input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey &&
 $('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, drafts: {} }; persist(); renderChat(); input.focus(); });
 $('#pgrid').addEventListener('click', e => {
   const b = e.target.closest('[data-ask-item]'); if (!b) return;
-  if (narrow.matches) closeSheet();
+  if (narrow.matches) { closeSheet(); document.activeElement?.blur(); }
   ask(tr('askAbout', { x: L(ITEMS[b.dataset.askItem]) }));
 });
 
 /* ================= Theme & language ================= */
+// Run a DOM update inside a View Transition, but never depend on it: if the
+// transition is skipped/aborted (tab hidden, etc.) the update still runs.
+function withTransition(update) {
+  if (!document.startViewTransition || reduce || document.hidden) { update(); return null; }
+  let ran = false; const run = () => { if (!ran) { ran = true; update(); } };
+  let vt; try { vt = document.startViewTransition(run); } catch (e) { run(); return null; }
+  vt.ready.catch(() => {}); vt.finished.catch(() => {}); vt.updateCallbackDone.catch(run);
+  setTimeout(run, 600);
+  return vt;
+}
 function setMeta() { document.querySelector('meta[name=theme-color]').content = root.dataset.theme === 'dark' ? '#0B1424' : '#FFF7EE'; }
 $('#themeBtn').addEventListener('click', e => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   const apply = () => { root.dataset.theme = next; setMeta(); try { localStorage.setItem('imc-theme', next); } catch (er) {} };
-  if (reduce || document.hidden) return apply();
-  if (!document.startViewTransition) { root.classList.add('theme-fade'); apply(); setTimeout(() => root.classList.remove('theme-fade'), 400); return; }
+  if (!document.startViewTransition || reduce || document.hidden) { if (!reduce) { root.classList.add('theme-fade'); setTimeout(() => root.classList.remove('theme-fade'), 400); } apply(); return; }
   const r = e.currentTarget.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
   const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
   root.classList.add('vt-theme');
-  const vt = document.startViewTransition(apply); vt.updateCallbackDone.catch(() => {});
+  const vt = withTransition(apply);
+  if (!vt) { root.classList.remove('vt-theme'); return; }
   vt.ready.then(() => root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
     { duration: 550, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
   vt.finished.catch(() => {}).finally(() => root.classList.remove('vt-theme'));
 });
 function setLang(next) {
-  const keepScroll = threadWrap.scrollTop, keepPrices = $('#pricesBody').scrollTop;
+  const atEnd = isNearEnd(), keepScroll = threadWrap.scrollTop, keepPrices = $('#pricesBody').scrollTop;
   lang = next; root.dataset.lang = next; root.lang = next === 'zh' ? 'zh-CN' : 'en';
   try { localStorage.setItem('imc-lang', next); } catch (e) {}
   applyStatic(); renderPricing(); renderChat();
-  threadWrap.scrollTop = keepScroll; $('#pricesBody').scrollTop = keepPrices;
+  if (atEnd) toEnd(); else threadWrap.scrollTop = keepScroll; $('#pricesBody').scrollTop = keepPrices;
   document.title = next === 'zh' ? 'Illini Move & Clean — AI 报价与预约：搬家、清洁、仓储' : 'Illini Move & Clean — AI quotes & booking for moving, cleaning, storage';
 }
 $('#langBtn').addEventListener('click', () => {
   const next = lang === 'zh' ? 'en' : 'zh';
-  if (document.startViewTransition && !reduce && !document.hidden) { const vt = document.startViewTransition(() => setLang(next)); [vt.ready, vt.finished, vt.updateCallbackDone].forEach(pr => pr.catch(() => {})); } else setLang(next);
+  withTransition(() => setLang(next));
 });
 
 /* ================= Init ================= */
