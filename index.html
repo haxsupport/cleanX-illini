@@ -389,6 +389,75 @@ footer a:hover{color:var(--orange-2)}
 .lb-side .checklist{margin-top:4px}
 .lb-side .btn{margin-top:auto}
 
+/* ---------- AI chat ---------- */
+.ai-fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:105;display:flex;align-items:center;gap:10px;border:2px solid var(--navy);background:var(--orange);color:#fff;border-radius:999px;padding:8px 18px 8px 8px;font-weight:800;font-size:15px;box-shadow:4px 4px 0 var(--navy);transition:transform .35s var(--ease-spring), box-shadow .2s, bottom .45s var(--ease-spring), opacity .25s}
+.ai-fab:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
+.ai-fab .av{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;position:relative}
+.ai-fab .av svg{width:24px;height:24px}
+.ai-fab .av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:#22C55E;border:2px solid #fff}
+.ai-fab.hide{opacity:0;pointer-events:none;transform:scale(.8)}
+.ai-nudge{position:fixed;right:20px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:105;max-width:250px;background:#fff;border:2px solid var(--navy);border-radius:18px 18px 4px 18px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--navy);box-shadow:4px 4px 0 var(--navy);transform:translateY(10px) scale(.95);opacity:0;pointer-events:none;transition:all .4s var(--ease-spring)}
+.ai-nudge.show{opacity:1;transform:none;pointer-events:auto;cursor:pointer}
+.ai-nudge button{position:absolute;top:-10px;left:-10px;width:24px;height:24px;border-radius:50%;border:2px solid var(--navy);background:#fff;display:grid;place-items:center;padding:0}
+.ai-nudge button .i{width:12px;height:12px;stroke-width:3}
+.ai{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:130;width:400px;height:min(640px,calc(100dvh - 120px));display:flex;flex-direction:column;background:var(--cream);border:2px solid var(--navy);border-radius:28px;box-shadow:8px 8px 0 var(--orange);overflow:hidden;transform-origin:bottom right;transform:scale(.6) translateY(40px);opacity:0;pointer-events:none;transition:transform .45s var(--ease-spring), opacity .25s}
+.ai.open{transform:none;opacity:1;pointer-events:auto}
+.ai-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;background:var(--navy);color:#fff}
+.ai-head .av{width:42px;height:42px;border-radius:14px;background:var(--orange);display:grid;place-items:center;flex:none}
+.ai-head .av svg{width:26px;height:26px}
+.ai-head b{display:block;font-family:"Bricolage Grotesque";font-size:18px;line-height:1.1}
+.ai-head small{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:12.5px;font-weight:600}
+.ai-head small::before{content:"";width:8px;height:8px;border-radius:50%;background:#22C55E}
+.ai-head .sp{flex:1}
+.ai-head button{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;display:grid;place-items:center;transition:background .2s}
+.ai-head button:hover{background:rgba(255,255,255,.12)}
+.ai-head button .i{width:17px;height:17px}
+.ai-body{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;overscroll-behavior:contain}
+.msg{max-width:88%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;word-wrap:break-word;animation:msgIn .35s var(--ease-spring)}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.97)}}
+.msg.bot{align-self:flex-start;background:#fff;border:2px solid var(--navy);border-bottom-left-radius:6px;color:var(--ink)}
+.msg.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:6px}
+.msg.err{background:#FDECEC;border-color:#E9A0A0;color:#A12222}
+.msg b,.msg strong{color:var(--navy);font-weight:800}
+.msg.me b{color:#fff}
+.msg ul{margin:6px 0;padding-left:18px}
+.msg li{margin:2px 0}
+.msg p{margin:0 0 6px}.msg p:last-child{margin:0}
+.msg .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.act{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--navy);background:var(--peach);color:var(--navy);border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;transition:transform .15s, background .2s}
+.act:hover{background:var(--orange);color:#fff;transform:translateY(-1px)}
+.act .i{width:14px;height:14px;stroke-width:2.6}
+.act.done{background:var(--navy);color:#fff;pointer-events:none}
+.act.primary{background:var(--orange);color:#fff}
+.dots{display:inline-flex;gap:4px;padding:4px 2px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--navy);opacity:.35;animation:dot 1.2s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{30%{opacity:1;transform:translateY(-3px)}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0 4px}
+.chip-q{border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:14px;padding:8px 12px;font-size:13.5px;font-weight:600;text-align:left;transition:background .2s, transform .15s}
+.chip-q:hover{background:var(--peach);transform:translateY(-1px)}
+.ai-foot{padding:10px 12px 12px;border-top:2px solid var(--navy);background:#fff}
+.ai-form{display:flex;align-items:flex-end;gap:8px;background:var(--cream);border:2px solid var(--navy);border-radius:20px;padding:6px 6px 6px 14px;transition:box-shadow .2s}
+.ai-form:focus-within{box-shadow:0 0 0 4px rgba(255,95,5,.25)}
+.ai-form textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:16px;line-height:1.4;max-height:120px;padding:7px 0;outline:none;color:var(--ink)}
+.ai-form button{width:40px;height:40px;flex:none;border-radius:14px;border:0;background:var(--orange);color:#fff;display:grid;place-items:center;transition:transform .15s, opacity .2s}
+.ai-form button:disabled{opacity:.4}
+.ai-form button:not(:disabled):hover{transform:scale(1.06)}
+.ai-form button .i{width:18px;height:18px;stroke-width:2.6}
+.ai-note{margin:8px 4px 0;font-size:11.5px;color:var(--muted);text-align:center}
+@media (max-width:1023px){
+  body.bar-on .ai-fab{bottom:calc(96px + env(safe-area-inset-bottom))}
+  body.bar-on .ai-nudge{bottom:calc(160px + env(safe-area-inset-bottom))}
+}
+@media (max-width:640px){
+  .ai{right:0;bottom:0;width:100%;height:100dvh;border-radius:0;border:0;box-shadow:none;transform-origin:bottom center}
+  .ai-head{padding-top:calc(14px + env(safe-area-inset-top))}
+  .ai-foot{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .ai-fab{padding:6px;right:14px}
+  .ai-fab .lbl{display:none}
+  .ai-nudge{right:14px}
+}
+
 /* Reveal */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s var(--ease-spring);transition-delay:var(--rd,0s)}
 .reveal.in{opacity:1;transform:none}
@@ -858,6 +927,27 @@ fieldset.field{border:0;padding:0;margin:0}
   </div>
 </dialog>
 
+<!-- AI assistant -->
+<button class="ai-fab" id="aiFab" aria-label="Chat with Illini Assistant" aria-controls="ai" aria-expanded="false"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FF5F05"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/><circle cx="5.5" cy="4.5" r="1.5" fill="#13294B"/></svg></span><span class="lbl">Ask Illini AI</span></button>
+<div class="ai-nudge" id="aiNudge" role="button" tabindex="0"><button id="aiNudgeX" aria-label="Dismiss"><span data-icon="x"></span></button>Hi! 👋 Need a quick estimate? I can build your quote in seconds.</div>
+<section class="ai" id="ai" role="dialog" aria-label="Illini Assistant chat" aria-modal="false">
+  <header class="ai-head">
+    <span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FFFFFF"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/><circle cx="5.5" cy="4.5" r="1.5" fill="#13294B"/></svg></span>
+    <div><b>Illini Assistant</b><small>AI · replies instantly</small></div>
+    <span class="sp"></span>
+    <button id="aiReset" aria-label="Start a new chat" title="New chat"><span data-icon="refresh"></span></button>
+    <button id="aiClose" aria-label="Close chat"><span data-icon="x"></span></button>
+  </header>
+  <div class="ai-body" id="aiBody" aria-live="polite"></div>
+  <div class="ai-foot">
+    <form class="ai-form" id="aiForm">
+      <textarea id="aiInput" rows="1" maxlength="1000" placeholder="Ask about prices, moving, storage…" aria-label="Message"></textarea>
+      <button type="submit" id="aiSend" aria-label="Send" disabled><span data-icon="send"></span></button>
+    </form>
+    <p class="ai-note">AI can make mistakes. Final prices are confirmed when you book.</p>
+  </div>
+</section>
+
 <div class="toast" id="toast" role="status" aria-live="polite"><span class="ico" data-icon="check"></span><span id="toastMsg"></span></div>
 <canvas id="confetti"></canvas>
 
@@ -906,6 +996,8 @@ const ICONS = {
   info: '<circle cx="12" cy="12" r="10"/>'+P('M12 16v-4')+P('M12 8h.01'),
   home: P('M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8')+P('M3 10a2 2 0 0 1 .71-1.53l7-6a2 2 0 0 1 2.58 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'),
   cap: P('M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z')+P('M22 10v6')+P('M6 12.5V16a6 3 0 0 0 12 0v-3.5'),
+  refresh: P('M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8')+P('M21 3v5h-5')+P('M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16')+P('M8 16H3v5'),
+  send: P('M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.03.94l7.93 3.18a2 2 0 0 1 1.11 1.11z')+P('m21.85 2.15-10.94 10.93'),
   sun: '<circle cx="12" cy="12" r="4"/>'+P('M12 2v2')+P('M12 20v2')+P('m4.93 4.93 1.41 1.41')+P('m17.66 17.66 1.41 1.41')+P('M2 12h2')+P('M20 12h2')+P('m6.34 17.66-1.41 1.41')+P('m19.07 4.93-1.41 1.41'),
 };
 const icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
@@ -1124,7 +1216,9 @@ function renderCart() {
   const badge = $('#badge'); badge.textContent = t.count; badge.classList.toggle('show', t.count > 0);
   $('#cbCount').textContent = `${t.count} item${t.count === 1 ? '' : 's'} in quote`;
   $('#cbTotal').textContent = fmt(t.once) + (t.mo ? ` + ${fmt(t.mo)}/mo` : '');
-  $('#cartbar').classList.toggle('show', t.lines > 0 && !$('#cart').classList.contains('open') && builderNear);
+  const barOn = t.lines > 0 && !$('#cart').classList.contains('open') && builderNear;
+  $('#cartbar').classList.toggle('show', barOn);
+  document.body.classList.toggle('bar-on', barOn);
   document.body.classList.toggle('has-bar', t.lines > 0);
 }
 
@@ -1386,6 +1480,140 @@ form.addEventListener('submit', async e => {
     sending = false; btn.disabled = false; btn.innerHTML = label;
   }
 });
+
+/* ---------- AI assistant ---------- */
+// Cloudflare Worker that proxies DeepSeek (the API key lives only in the Worker).
+const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname)
+  ? 'http://localhost:8787/chat'
+  : 'https://illini-chat.iceocean712.workers.dev/chat';
+const ai = $('#ai'), aiBody = $('#aiBody'), aiInput = $('#aiInput'), aiSend = $('#aiSend'), aiFab = $('#aiFab');
+const CHAT_KEY = 'imc-chat-v1';
+let chat = [];
+try { chat = JSON.parse(sessionStorage.getItem(CHAT_KEY)) || []; } catch (e) { chat = []; }
+const saveChat = () => { try { sessionStorage.setItem(CHAT_KEY, JSON.stringify(chat.slice(-30))); } catch (e) {} };
+let aiBusy = false;
+const SUGGEST = ['How much for a 2-bed move-out clean?', "What's in the Kitchen Deep Clean?", 'Store 6 boxes + a bike for summer?', 'Movers for a studio — what do I need?', '可以用中文吗？'];
+const WELCOME = "Hey! 👋 I'm the **Illini Assistant**. Ask me anything about cleaning, moving or storage — I can price it out and add it straight to your quote.";
+const ACT_RE = /\[\[(?:add:([A-Za-z0-9]+):(\d{1,2})|book)\]\]/g;
+const esc = t => t.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function md(text) {
+  const lines = esc(text.trim()).split('\n'); let html = '', inList = false;
+  const inline = l => l.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[^*])\*(?!\s)([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+  for (const l of lines) {
+    const m = l.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
+    if (m) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${inline(m[1])}</li>`; continue; }
+    if (inList) { html += '</ul>'; inList = false; }
+    if (l.trim()) html += `<p>${inline(l)}</p>`;
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+const visible = t => t.replace(ACT_RE, '').replace(/\[\[[^\]]*\]?$/, '').replace(/\n{3,}/g, '\n\n');
+function actionsHTML(text) {
+  const out = []; const seen = new Set(); let m; ACT_RE.lastIndex = 0;
+  while ((m = ACT_RE.exec(text)) && out.length < 5) {
+    if (!m[1]) { if (!seen.has('book')) { seen.add('book'); out.push(`<button class="act primary" data-ai="book">${icon('calendar')} Open booking form</button>`); } continue; }
+    const it = ITEMS[m[1]]; if (!it || !it.price || seen.has(m[1])) continue; seen.add(m[1]);
+    let q = Math.max(1, Math.min(99, +m[2])); if (it.type === 'hourly') q = Math.max(q, it.min); if (it.type === 'flat') q = 1;
+    const lbl = it.type === 'hourly' ? `${q} hrs` : it.type === 'flat' ? '' : q > 1 ? `×${q}` : '';
+    const done = (cart[m[1]] || 0) >= q;
+    out.push(`<button class="act${done ? ' done' : ''}" data-ai="add" data-id="${m[1]}" data-q="${q}">${icon(done ? 'check' : 'plus')} ${it.name}${lbl ? ' ' + lbl : ''} · ${fmt(it.price * q)}${it.cat.billing === 'monthly' ? '/mo' : ''}</button>`);
+  }
+  return out.length ? `<div class="acts">${out.join('')}</div>` : '';
+}
+function bubble(role, text, cls = '') {
+  const el = document.createElement('div');
+  el.className = `msg ${role === 'user' ? 'me' : 'bot'} ${cls}`;
+  el.innerHTML = role === 'user' ? md(text) : md(visible(text)) + actionsHTML(text);
+  aiBody.appendChild(el); return el;
+}
+function renderChat() {
+  aiBody.innerHTML = '';
+  bubble('assistant', WELCOME);
+  chat.forEach(m => bubble(m.role, m.content));
+  if (!chat.length) {
+    const c = document.createElement('div'); c.className = 'chips'; c.id = 'aiChips';
+    c.innerHTML = SUGGEST.map(q => `<button class="chip-q" data-ask="${esc(q)}">${esc(q)}</button>`).join('');
+    aiBody.appendChild(c);
+  }
+  aiBody.scrollTop = aiBody.scrollHeight;
+}
+function openAI() {
+  ai.classList.add('open'); aiFab.classList.add('hide'); aiFab.setAttribute('aria-expanded', true);
+  $('#aiNudge').classList.remove('show'); nudgeDone();
+  if (!aiBody.childElementCount) renderChat();
+  setTimeout(() => aiInput.focus({ preventScroll: true }), 250);
+  closeSheet();
+  if (matchMedia('(max-width:640px)').matches) document.body.style.overflow = 'hidden';
+}
+function closeAI() { ai.classList.remove('open'); aiFab.classList.remove('hide'); aiFab.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }
+aiFab.addEventListener('click', openAI);
+$('#aiClose').addEventListener('click', closeAI);
+$('#aiReset').addEventListener('click', () => { if (aiBusy) return; chat = []; saveChat(); renderChat(); aiInput.focus(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && ai.classList.contains('open') && !document.querySelector('dialog[open]')) closeAI(); });
+aiInput.addEventListener('input', () => { aiInput.style.height = 'auto'; aiInput.style.height = Math.min(120, aiInput.scrollHeight) + 'px'; aiSend.disabled = !aiInput.value.trim() || aiBusy; });
+aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#aiForm').requestSubmit(); } });
+$('#aiForm').addEventListener('submit', e => { e.preventDefault(); askAI(aiInput.value); });
+aiBody.addEventListener('click', e => {
+  const q = e.target.closest('[data-ask]'); if (q) { askAI(q.dataset.ask); return; }
+  const a = e.target.closest('[data-ai]'); if (!a) return;
+  if (a.dataset.ai === 'book') { closeAI(); openBooking(); return; }
+  const id = a.dataset.id, want = +a.dataset.q;
+  setQty(id, Math.max(cart[id] || 0, want));
+  a.classList.add('done'); a.innerHTML = icon('check') + ' Added to quote';
+  toast(`${ITEMS[id].name} added to your quote`);
+});
+async function askAI(text) {
+  text = (text || '').trim(); if (!text || aiBusy) return;
+  aiBusy = true; aiSend.disabled = true;
+  $('#aiChips')?.remove();
+  aiInput.value = ''; aiInput.style.height = 'auto';
+  chat.push({ role: 'user', content: text.slice(0, 1000) }); saveChat();
+  bubble('user', text);
+  const el = bubble('assistant', ''); el.innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
+  aiBody.scrollTop = aiBody.scrollHeight;
+  let reply = '';
+  try {
+    const ctrl = new AbortController(); let timer = setTimeout(() => ctrl.abort(), 30000);
+    const res = await fetch(CHAT_ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chat.slice(-16), cart }), signal: ctrl.signal,
+    });
+    if (!res.ok || !res.body) {
+      const j = await res.json().catch(() => ({}));
+      throw new Error(j.error || `HTTP ${res.status}`);
+    }
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    let raf = 0;
+    const paint = () => { raf = 0; el.innerHTML = md(visible(reply)) || '<span class="dots"><i></i><i></i><i></i></span>'; aiBody.scrollTop = aiBody.scrollHeight; };
+    while (true) {
+      const { value, done } = await reader.read(); if (done) break;
+      clearTimeout(timer); timer = setTimeout(() => ctrl.abort(), 30000);
+      reply += dec.decode(value, { stream: true });
+      if (!raf) raf = requestAnimationFrame(paint);
+    }
+    clearTimeout(timer);
+    if (!reply.trim()) throw new Error('Empty reply');
+    cancelAnimationFrame(raf);
+    el.innerHTML = md(visible(reply)) + actionsHTML(reply);
+    chat.push({ role: 'assistant', content: reply }); saveChat();
+  } catch (err) {
+    console.warn('[ai]', err);
+    chat.pop(); saveChat();
+    el.classList.add('err');
+    el.innerHTML = `<p>${esc(/Too many/.test(err.message) ? err.message : "Sorry, I couldn't reach the assistant just now.")}</p><div class="acts"><button class="act" data-ask="${esc(text)}">${icon('refresh')} Try again</button></div>`;
+    el.previousElementSibling?.remove();
+  } finally {
+    aiBusy = false; aiSend.disabled = !aiInput.value.trim();
+    aiBody.scrollTop = aiBody.scrollHeight;
+  }
+}
+// Gentle nudge once per visitor, after they've browsed a bit
+function nudgeDone() { try { localStorage.setItem('imc-nudged', '1'); } catch (e) {} }
+let nudged = false; try { nudged = !!localStorage.getItem('imc-nudged'); } catch (e) {}
+if (!nudged) setTimeout(() => { if (!ai.classList.contains('open')) $('#aiNudge').classList.add('show'); }, 9000);
+$('#aiNudge').addEventListener('click', e => { if (e.target.closest('#aiNudgeX')) { e.stopPropagation(); $('#aiNudge').classList.remove('show'); nudgeDone(); return; } openAI(); });
+$('#aiNudge').addEventListener('keydown', e => { if (e.key === 'Enter') openAI(); });
 
 /* ---------- Toast ---------- */
 let toastT;

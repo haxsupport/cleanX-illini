@@ -1,0 +1,19 @@
+name = "illini-chat"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://howyoungx.github.io,http://localhost:5173"
+DEEPSEEK_MODEL = "deepseek-flash"
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+# DEEPSEEK_API_KEY is a secret — set it with:  npx wrangler secret put DEEPSEEK_API_KEY
+
+# 20 messages per minute per visitor IP
+[[ratelimits]]
+name = "RL"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60
