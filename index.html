@@ -434,7 +434,7 @@ const agent = $('#chat'), thread = $('#thread'), composer = $('#composer'), inpu
 const KEY = 'imc-chat-v3';
 let state = { msgs: [], sent: {}, drafts: {} };
 try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {}, drafts: s.drafts || {} }; } catch (e) {}
-const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify({ msgs: state.msgs.slice(-40), sent: state.sent, drafts: state.drafts })); } catch (e) {} };
+const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify({ msgs: state.msgs, sent: state.sent, drafts: state.drafts })); } catch (e) {} };
 let busy = false;
 
 const QUOTE_RE = /\[\[quote:([^\]]+)\]\]/g;
@@ -619,7 +619,7 @@ input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey &&
 $('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, drafts: {} }; persist(); renderChat(); window.scrollTo({ top: 0 }); input.focus(); });
 
 function goChat(text) {
-  if (text) { ask(text); return; }
+  if (text) { if (!agent.classList.contains('empty')) composer.scrollIntoView({ block: 'end', behavior: 'instant' }); ask(text); return; }
   if (agent.classList.contains('empty')) window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   else composer.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
   setTimeout(() => input.focus({ preventScroll: true }), 400);
@@ -634,12 +634,12 @@ function setMeta() { document.querySelector('meta[name=theme-color]').content = 
 $('#themeBtn').addEventListener('click', e => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   const apply = () => { root.dataset.theme = next; setMeta(); try { localStorage.setItem('imc-theme', next); } catch (er) {} };
-  if (reduce) return apply();
+  if (reduce || document.hidden) return apply();
   if (!document.startViewTransition) { root.classList.add('theme-fade'); apply(); setTimeout(() => root.classList.remove('theme-fade'), 400); return; }
   const r = e.currentTarget.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
   const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
   root.classList.add('vt-theme');
-  const vt = document.startViewTransition(apply);
+  const vt = document.startViewTransition(apply); vt.updateCallbackDone.catch(() => {});
   vt.ready.then(() => root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
     { duration: 550, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
   vt.finished.catch(() => {}).finally(() => root.classList.remove('vt-theme'));
@@ -652,7 +652,7 @@ function setLang(next) {
 }
 $('#langBtn').addEventListener('click', () => {
   const next = lang === 'zh' ? 'en' : 'zh';
-  if (document.startViewTransition && !reduce && !document.hidden) document.startViewTransition(() => setLang(next)).ready.catch(() => {}); else setLang(next);
+  if (document.startViewTransition && !reduce && !document.hidden) { const vt = document.startViewTransition(() => setLang(next)); [vt.ready, vt.finished, vt.updateCallbackDone].forEach(pr => pr.catch(() => {})); } else setLang(next);
 });
 
 /* ================= Init ================= */
