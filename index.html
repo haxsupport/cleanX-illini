@@ -27,7 +27,6 @@
   --line:#13294B; --sh:#13294B; --soft:#E9EDF3; --peach:#FFE6D6; --field:#D5DBE5; --me:#13294B; --dash:rgba(19,41,75,.14);
   --font:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
   --display:"Bricolage Grotesque",var(--font);
-  --hdr:60px;
   color-scheme:light;
 }
 :root[data-theme=dark]{
@@ -36,7 +35,9 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-padding-top:var(--hdr)}
+/* App shell: the page itself never scrolls — only the thread and the price panel do */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:var(--font);font-size:16px;line-height:1.5;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:var(--display);color:var(--heading);margin:0;line-height:1.05;letter-spacing:-.02em}
 :root[data-lang=zh] h1,:root[data-lang=zh] h2,:root[data-lang=zh] h3{letter-spacing:0;line-height:1.2}
@@ -46,19 +47,19 @@ svg{display:block}
 .i{width:1em;height:1em;flex:none}
 [hidden]{display:none!important}
 :focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:8px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+.app{height:var(--app-h,100dvh);display:grid;grid-template-rows:auto minmax(0,1fr)}
 
 /* ---------- Header ---------- */
-.hdr{position:sticky;top:0;z-index:20;height:var(--hdr);background:var(--bg);border-bottom:2px solid var(--line)}
-.hdr .wrap{display:flex;align-items:center;gap:8px;height:100%}
+.hdr{height:60px;display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--bg);border-bottom:2px solid var(--line);min-width:0}
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto;min-width:0}
 .logo svg{width:36px;height:36px;flex:none}
 .lm-bg{fill:var(--navy)}.lm-i{fill:var(--orange)}
 :root[data-theme=dark] .lm-bg{fill:var(--orange)}:root[data-theme=dark] .lm-i{fill:var(--navy)}
 .logo b{font-family:var(--display);font-weight:800;font-size:18px;line-height:.9;color:var(--heading)}
 .logo b small{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--orange);margin-top:3px}
-.hlink{font-weight:700;font-size:14.5px;text-decoration:none;padding:8px 10px;border-radius:999px;color:var(--heading);white-space:nowrap}
-.hlink:hover{background:var(--soft)}
+.pbtn{display:none;align-items:center;gap:6px;height:40px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--heading);font-weight:800;font-size:14px;padding:0 14px 0 12px;flex:none}
+.pbtn .i{width:16px;height:16px;color:var(--orange)}
 .hbtn{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--heading);padding:0;flex:none}
 .lang{position:relative;display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:800;font-size:13px;flex:none}
 .lang span{position:relative;z-index:1;width:32px;text-align:center;line-height:30px;transition:color .3s}
@@ -74,26 +75,19 @@ svg{display:block}
 :root[data-theme=dark] .theme-btn .mm{transform:translate(-10px,6px)}
 :root[data-theme=dark] .theme-btn .rays{transform:scale(.4) rotate(45deg);opacity:0}
 
-/* Theme / language transitions */
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
 :root.vt-theme::view-transition-old(root),:root.vt-theme::view-transition-new(root){animation:none;mix-blend-mode:normal}
 :root.vt-theme::view-transition-old(root){z-index:1}:root.vt-theme::view-transition-new(root){z-index:2}
 :root.theme-fade,:root.theme-fade *{transition:background-color .35s,color .35s,border-color .35s!important}
 
-/* ---------- Agent (page-flow chat, no inner scroll) ---------- */
-.agent{min-height:calc(100dvh - var(--hdr));display:flex}
-.agent-in{flex:1;display:flex;flex-direction:column;max-width:780px;width:100%;margin:0 auto;padding:0 16px}
-.intro{text-align:center}
-.intro .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:14px}
-.intro .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:#22C55E}
-.intro h1{font-size:clamp(34px,6.4vw,60px);font-weight:800}
-.intro h1 em{font-style:normal;color:var(--orange)}
-.intro p{margin:12px auto 0;color:var(--muted);max-width:540px;font-size:clamp(15.5px,1.9vw,18px)}
-.thread{flex:1;display:flex;flex-direction:column;gap:12px;padding:20px 0 14px}
-.composer{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0 calc(10px + env(safe-area-inset-bottom))}
-.composer::before{content:"";position:absolute;left:0;right:0;top:-20px;height:20px;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+/* ---------- Main: chat | prices ---------- */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 400px;min-height:0}
+.agent{display:flex;flex-direction:column;min-height:0;min-width:0}
+.thread{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.thread-in{max-width:760px;margin:0 auto;padding:20px 16px 12px;display:flex;flex-direction:column;gap:12px;min-height:100%}
+.composer{flex:none;width:100%;max-width:792px;margin:0 auto;padding:8px 16px calc(10px + env(safe-area-inset-bottom))}
 .cbar{display:flex;justify-content:flex-end;margin-bottom:6px}
-.newchat{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--muted);font-weight:700;font-size:13px;padding:4px 2px}
+.newchat{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--muted);font-weight:700;font-size:13px;padding:2px}
 .newchat:hover{color:var(--heading)}
 .newchat .i{width:14px;height:14px}
 .form{display:flex;align-items:flex-end;gap:8px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:6px 6px 6px 16px;box-shadow:4px 4px 0 var(--orange)}
@@ -103,22 +97,24 @@ svg{display:block}
 .send:disabled{opacity:.4;cursor:default}
 .send .i{width:18px;height:18px}
 .note{margin:7px 2px 0;font-size:11.5px;color:var(--muted);text-align:center}
-.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:18px}
+
+/* empty state: landing centered inside the chat pane */
+.intro{display:none;margin:auto 0;text-align:center;padding:10px 0}
+.intro .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px}
+.intro .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:#22C55E}
+.intro h1{font-size:clamp(32px,5.4vw,56px);font-weight:800}
+.intro h1 em{font-style:normal;color:var(--orange)}
+.intro p{margin:12px auto 0;color:var(--muted);max-width:520px;font-size:clamp(15px,1.8vw,17.5px)}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
 .chip{border:1.5px solid var(--line);background:var(--surface);color:var(--heading);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600}
 .chip:hover{background:var(--peach)}
-/* empty state = centered landing */
-.agent.empty .agent-in{justify-content:center;padding-bottom:6vh}
-.agent.empty .thread,.agent.empty .cbar{display:none}
-.agent.empty .composer{position:static;padding-top:26px}
-.agent.empty .composer::before{display:none}
-.agent.empty .form{padding:8px 8px 8px 18px;border-radius:22px}
-.agent.empty .form textarea{min-height:52px;font-size:17px}
-.agent:not(.empty) .intro,.agent:not(.empty) .chips{display:none}
+.agent.empty .intro{display:block}
+.agent.empty .cbar{visibility:hidden}
 
 .msg{max-width:88%;font-size:15.5px;line-height:1.55;overflow-wrap:anywhere}
 .msg.bot{align-self:flex-start;color:var(--ink);display:grid;grid-template-columns:28px 1fr;gap:10px}
 .msg.bot::before{content:"";width:28px;height:28px;border-radius:9px;background:var(--orange) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3l1.9 5.9L20 11l-6.1 2.1L12 19l-1.9-5.9L4 11l6.1-2.1z' fill='%23fff'/%3E%3C/svg%3E") center/18px no-repeat}
-.msg.bot > .tx{padding-top:3px}
+.msg.bot > .tx{padding-top:3px;min-width:0}
 .msg.me{align-self:flex-end;background:var(--me);color:#fff;padding:10px 14px;border-radius:18px 18px 5px 18px}
 .msg.err .tx{color:#D13A3A}
 .msg b{color:var(--heading)}.msg.me b{color:#fff}
@@ -129,7 +125,6 @@ svg{display:block}
 .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
 @keyframes dot{40%{opacity:1}}
 
-/* Cards in thread */
 .card{margin-left:38px;max-width:520px;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14.5px}
 .card h4{margin:0 0 8px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange)}
 .qrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--dash)}
@@ -154,132 +149,136 @@ svg{display:block}
 .spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ---------- Pricing reference ---------- */
-.pricing{padding:40px 0 48px;border-top:2px solid var(--line)}
-.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 16px;flex-wrap:wrap;margin-bottom:18px}
-.ph h2{font-size:clamp(26px,4vw,38px);font-weight:800}
-.ph p{margin:0;color:var(--muted);max-width:460px;font-size:15px}
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
-.pcat{background:var(--surface);border:2px solid var(--line);border-radius:20px;overflow:hidden}
-.pcat > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px}
+/* ---------- Price panel ---------- */
+.prices{border-left:2px solid var(--line);background:var(--surface-2);display:flex;flex-direction:column;min-height:0}
+.prices-head{flex:none;display:flex;align-items:center;gap:10px;padding:14px 16px 10px}
+.prices-head h2{font-size:21px;font-weight:800;margin-right:auto}
+.prices-x{display:none}
+.prices-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 16px 16px}
+.psub{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+.pcat{background:var(--surface);border:2px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.pcat > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px}
 .pcat > summary::-webkit-details-marker{display:none}
-.pcat > summary h3{font-size:20px;font-weight:800;margin-right:auto}
-.pcat > summary .from{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
-.chev{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .25s}
-.chev .i{width:14px;height:14px}
+.pcat > summary h3{font-size:17px;font-weight:800;margin-right:auto}
+.pcat > summary .from{font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.chev{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .25s}
+.chev .i{width:13px;height:13px}
 .pcat[open] .chev{transform:rotate(180deg)}
-.pimg{position:relative;margin:0 16px 4px;border-radius:12px;overflow:hidden;aspect-ratio:16/7;background:var(--soft)}
+.pimg{position:relative;margin:0 14px 2px;border-radius:10px;overflow:hidden;aspect-ratio:16/6;background:var(--soft)}
 .pimg img{width:100%;height:100%;object-fit:cover;display:block}
-.pimg figcaption{position:absolute;right:8px;bottom:6px;font-size:10.5px;font-weight:700;color:#fff;background:rgba(11,26,51,.55);padding:2px 7px;border-radius:999px}
-.badge{display:inline-block;margin:6px 16px 0;font-size:11.5px;font-weight:800;letter-spacing:.04em;background:var(--peach);color:var(--orange);padding:4px 9px;border-radius:999px}
-.rows{padding:2px 16px 10px}
-.grp{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:12px 0 0}
-.row{display:grid;grid-template-columns:1fr auto 32px;align-items:start;gap:2px 10px;padding:10px 0;border-bottom:1px dashed var(--dash)}
+.pimg figcaption{position:absolute;right:6px;bottom:5px;font-size:10px;font-weight:700;color:#fff;background:rgba(11,26,51,.55);padding:1px 6px;border-radius:999px}
+.badge{display:inline-block;margin:6px 14px 0;font-size:11px;font-weight:800;letter-spacing:.04em;background:var(--peach);color:var(--orange);padding:3px 8px;border-radius:999px}
+.rows{padding:0 14px 8px}
+.grp{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 0}
+.row{display:grid;grid-template-columns:1fr auto 30px;align-items:start;gap:1px 8px;padding:8px 0;border-bottom:1px dashed var(--dash);font-size:14.5px}
 .row:last-child{border-bottom:0}
 .row .n{font-weight:700;color:var(--heading)}
 .row .n sup{color:var(--orange);font-size:.8em}
 .row .p{font-weight:800;color:var(--heading);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.row .p small{font-weight:600;color:var(--muted);font-size:12.5px}
-.row .d{grid-column:1/3;font-size:13.5px;color:var(--muted)}
-.row details{grid-column:1/3;font-size:13.5px;color:var(--muted)}
-.row details summary{cursor:pointer;font-weight:700;color:var(--heading);font-size:13px;list-style:none;display:inline-flex;gap:4px}
+.row .p small{font-weight:600;color:var(--muted);font-size:12px}
+.row .d{grid-column:1/3;font-size:12.5px;color:var(--muted)}
+.row details{grid-column:1/3;font-size:12.5px;color:var(--muted)}
+.row details summary{cursor:pointer;font-weight:700;color:var(--heading);font-size:12.5px;list-style:none;display:inline-flex;gap:4px}
 .row details summary::-webkit-details-marker{display:none}
 .row details summary::after{content:"+";font-weight:800;color:var(--orange)}
 .row details[open] summary::after{content:"–"}
-.row details ul{margin:6px 0 2px;padding-left:18px}
-.ask{grid-column:3;grid-row:1/span 2;width:32px;height:32px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface-2);color:var(--orange);display:grid;place-items:center;padding:0}
+.row details ul{margin:5px 0 2px;padding-left:16px}
+.ask{grid-column:3;grid-row:1/span 2;width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface-2);color:var(--orange);display:grid;place-items:center;padding:0}
 .ask:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
-.ask .i{width:16px;height:16px}
-.fine{margin-top:16px;display:grid;gap:6px;font-size:13.5px;color:var(--muted)}
+.ask .i{width:15px;height:15px}
+.fine{margin-top:6px;display:grid;gap:6px;font-size:12.5px;color:var(--muted)}
 .fine b{color:var(--heading)}
+.fine a{color:var(--heading);font-weight:700}
+.scrim{display:none}
 
-footer{border-top:2px solid var(--line);padding:22px 0 calc(24px + env(safe-area-inset-bottom));font-size:13.5px;color:var(--muted)}
-footer .wrap{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
-footer a{color:var(--heading);font-weight:700}
-
-.to-chat{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:15;display:flex;align-items:center;gap:8px;border:2px solid var(--line);background:var(--orange);color:#fff;border-radius:999px;padding:6px 16px 6px 6px;font-weight:800;font-size:14.5px;box-shadow:3px 3px 0 var(--sh);transform:translateY(160%);transition:transform .3s ease}
-.to-chat.show{transform:none}
-.to-chat .av{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center}
-.to-chat .av svg{width:18px;height:18px}
-
-@media (max-width:760px){
-  .pgrid{grid-template-columns:1fr}
-  .logo b{font-size:16px}
-  .logo b small{letter-spacing:.08em}
-  .agent.empty .agent-in{padding-bottom:4vh}
-  .intro .eyebrow{margin-bottom:10px}
+/* ---------- Narrow: prices become a sheet ---------- */
+@media (max-width:959px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  .pbtn{display:inline-flex}
+  .prices{position:fixed;z-index:40;left:0;right:0;bottom:0;height:min(88%,calc(var(--app-h,100dvh) - 40px));border:2px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+  .prices.open{transform:none;visibility:visible}
+  .prices-head{padding-top:18px}
+  .prices-head::before{content:"";position:absolute;top:7px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:4px;background:var(--dash)}
+  .prices-x{display:grid}
+  .prices-body{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .scrim{display:block;position:fixed;inset:0;z-index:35;background:rgba(11,20,36,.5);opacity:0;pointer-events:none;transition:opacity .25s}
+  .scrim.on{opacity:1;pointer-events:auto}
+}
+@media (max-width:560px){
+  .hdr{padding:0 12px;gap:6px}
+  .logo b{font-size:15.5px}
+  .logo b small{letter-spacing:.06em}
+  .pbtn{padding:0 12px 0 10px}
+  .pbtn span{display:none}
   .msg{max-width:96%}
   .card{margin-left:0}
   .bgrid{grid-template-columns:1fr}
+  .chips{margin-top:16px}
 }
-@media (max-width:360px){ .logo b{display:none} }
+@media (max-width:370px){ .logo b{display:none} }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<div class="app">
 
 <header class="hdr">
-  <div class="wrap">
-    <a class="logo" href="#chat" aria-label="Illini Move & Clean">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
-      <b>ILLINI<small>MOVE &amp; CLEAN</small></b>
-    </a>
-    <a class="hlink" href="#pricing" data-i18n="navPricing">Pricing</a>
-    <button class="lang" id="langBtn" aria-label="Switch language / 切换语言"><span class="l-en">EN</span><span class="l-zh">中</span></button>
-    <button class="hbtn theme-btn" id="themeBtn" aria-label="Toggle dark mode">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <mask id="mmask"><rect width="24" height="24" fill="#fff"/><circle class="mm" cx="26" cy="2" r="6.5" fill="#000"/></mask>
-        <circle class="core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#mmask)"/>
-        <g class="rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v2M12 20.5v2M4.6 4.6 6 6M18 18l1.4 1.4M1.5 12h2M20.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></g>
-      </svg>
-    </button>
-  </div>
+  <a class="logo" href="./" aria-label="Illini Move & Clean">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
+    <b>ILLINI<small>MOVE &amp; CLEAN</small></b>
+  </a>
+  <button class="pbtn" id="pricesBtn" aria-controls="prices" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor"/></svg><span data-i18n="navPricing">Pricing</span></button>
+  <button class="lang" id="langBtn" aria-label="Switch language / 切换语言"><span class="l-en">EN</span><span class="l-zh">中</span></button>
+  <button class="hbtn theme-btn" id="themeBtn" aria-label="Toggle dark mode">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <mask id="mmask"><rect width="24" height="24" fill="#fff"/><circle class="mm" cx="26" cy="2" r="6.5" fill="#000"/></mask>
+      <circle class="core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#mmask)"/>
+      <g class="rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v2M12 20.5v2M4.6 4.6 6 6M18 18l1.4 1.4M1.5 12h2M20.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></g>
+    </svg>
+  </button>
 </header>
 
-<main>
+<main class="main">
   <section class="agent empty" id="chat" aria-label="Illini Assistant">
-    <div class="agent-in">
-      <div class="intro">
-        <div class="eyebrow" data-i18n="eyebrow">Illini Assistant · online</div>
-        <h1 data-i18n="h1">Move out. Clean up. <em>Chill out.</em></h1>
-        <p data-i18n="sub">Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.</p>
+    <div class="thread" id="threadWrap" aria-live="polite">
+      <div class="thread-in" id="thread">
+        <div class="intro" id="intro">
+          <div class="eyebrow" data-i18n="eyebrow">Illini Assistant · online</div>
+          <h1 data-i18n="h1">Move out. Clean up. <em>Chill out.</em></h1>
+          <p data-i18n="sub">Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.</p>
+          <div class="chips" id="chips"></div>
+        </div>
       </div>
-      <div class="thread" id="thread" aria-live="polite"></div>
-      <div class="composer" id="composer">
-        <div class="cbar"><button class="newchat" id="reset"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span data-i18n="newChat">New chat</span></button></div>
-        <form class="form" id="form">
-          <textarea id="input" rows="1" maxlength="1000" placeholder="Ask for a price or a booking…" data-i18n-ph="ph" aria-label="Message"></textarea>
-          <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
-        </form>
-        <p class="note" data-i18n="aiNote">AI can make mistakes. Final prices are confirmed by our team before any work.</p>
-      </div>
-      <div class="chips" id="chips"></div>
+    </div>
+    <div class="composer" id="composer">
+      <div class="cbar"><button class="newchat" id="reset"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span data-i18n="newChat">New chat</span></button></div>
+      <form class="form" id="form">
+        <textarea id="input" rows="1" maxlength="1000" placeholder="Ask for a price or a booking…" data-i18n-ph="ph" aria-label="Message"></textarea>
+        <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      </form>
+      <p class="note" data-i18n="aiNote">AI can make mistakes. Final prices are confirmed by our team before any work.</p>
     </div>
   </section>
 
-  <section class="pricing" id="pricing">
-    <div class="wrap">
-      <div class="ph">
-        <h2 data-i18n="pTitle">Real prices, at a glance</h2>
-        <p data-i18n="pSub">The same rates our AI uses. Tap the chat icon on any item to ask about it or book it.</p>
-      </div>
-      <div class="pgrid" id="pgrid"></div>
+  <aside class="prices" id="prices" aria-label="Prices">
+    <div class="prices-head">
+      <h2 data-i18n="pTitle">Real prices</h2>
+      <button class="hbtn prices-x" id="pricesX" aria-label="Close"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>
+    <div class="prices-body" id="pricesBody">
+      <p class="psub" data-i18n="pSub">The same rates our AI uses. Tap the chat icon on any item to ask about it or book it.</p>
+      <div id="pgrid"></div>
       <div class="fine">
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
+        <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
+        <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
     </div>
-  </section>
+  </aside>
 </main>
-
-<footer>
-  <div class="wrap">
-    <span>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></span>
-    <span data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</span>
-  </div>
-</footer>
-
-<button class="to-chat" id="toChat"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FF5F05"/></svg></span><span data-i18n="askAi">Ask AI</span></button>
+</div>
+<div class="scrim" id="scrim"></div>
 
 <script>
 (() => {
@@ -345,16 +344,23 @@ const fmt = n => '$' + n.toLocaleString('en-US');
 
 const PHOTOS = { standard: 'bedroom', deep: 'kitchen', moving: 'movers', storage: 'storage' };
 
+/* iOS Safari keeps 100dvh when the keyboard opens — size the shell to the visual viewport instead */
+if (window.visualViewport) {
+  const vv = window.visualViewport;
+  const fit = () => { root.style.setProperty('--app-h', vv.height + 'px'); if (window.scrollY) window.scrollTo(0, 0); };
+  vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); fit();
+}
+
 /* ================= UI strings ================= */
 const STR = {
   en: {
     navPricing: 'Pricing', eyebrow: 'Illini Assistant · online', h1: 'Move out. Clean up. <em>Chill out.</em>',
     sub: 'Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.',
     newChat: 'New chat', ph: 'Ask for a price or a booking…', aiNote: 'AI can make mistakes. Final prices are confirmed by our team before any work.',
-    pTitle: 'Real prices, at a glance', pSub: 'The same rates our AI uses. Tap the chat icon on any item to ask about it or book it.',
+    pTitle: 'Real prices', pSub: 'The same rates our AI uses. Tap the chat icon on any item to ask about it or book it.',
     fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
     fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
-    notAff: 'Independent business — not affiliated with the University of Illinois.', askAi: 'Ask AI',
+    notAff: 'Independent business — not affiliated with the University of Illinois.',
     chips: ['2-bed move-out clean — how much?', 'Move my studio + store 6 boxes', "What's in the Kitchen Deep Clean?", 'Book a cleaning for next Saturday', 'Two movers this weekend'],
     included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
     askAbout: 'Tell me about {x} — price and what’s included.',
@@ -372,10 +378,10 @@ const STR = {
     navPricing: '价格', eyebrow: 'Illini 助手 · 在线', h1: '搬家。打扫。<em>轻松搞定。</em>',
     sub: '问价格、做方案、直接预约 — AI 按我们的真实价格回答。中文或 English 都可以。',
     newChat: '新对话', ph: '问价格，或直接预约…', aiNote: 'AI 可能出错。最终价格会在开工前由我们的团队确认。',
-    pTitle: '真实价格一览', pSub: '和 AI 用的是同一份价目表。点任意项目右侧的对话图标即可咨询或预约。',
+    pTitle: '真实价格', pSub: '和 AI 用的是同一份价目表。点任意项目右侧的对话图标即可咨询或预约。',
     fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
     fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
-    notAff: '独立经营，与伊利诺伊大学无隶属关系。', askAi: '问 AI',
+    notAff: '独立经营，与伊利诺伊大学无隶属关系。',
     chips: ['两室退房清洁多少钱？', '单间搬家 + 存 6 个箱子', '厨房深度清洁包含什么？', '帮我约下周六的清洁', '这周末要两名搬运工'],
     included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
     askAbout: '介绍一下「{x}」— 价格和包含的内容。',
@@ -400,16 +406,15 @@ const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 const ICON_CHAT = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>';
 const ICON_CHEV = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
 
-/* ================= Pricing reference ================= */
-const openCats = new Set();
+/* ================= Price panel ================= */
+let openCats = null;   // null = default (first category open)
 function renderPricing() {
-  const wide = innerWidth > 760;
   $('#pgrid').innerHTML = CATS.map((c, ci) => {
     const min = Math.min(...c.items.filter(i => i.price).map(i => i.price));
-    const isOpen = openCats.size ? openCats.has(c.key) : (wide || ci === 0);
+    const isOpen = openCats ? openCats.has(c.key) : ci === 0;
     return `<details class="pcat" data-cat="${c.key}"${isOpen ? ' open' : ''}>
       <summary><h3>${L(c)}</h3><span class="from">${tr('from', { p: fmt(min) })}</span><span class="chev">${ICON_CHEV}</span></summary>
-      <figure class="pimg" style="margin:0 16px 4px"><img src="assets/web/${PHOTOS[c.key]}.jpg" alt="${esc(L(c))}" width="760" height="507" loading="lazy" decoding="async"><figcaption>${tr('photo')}</figcaption></figure>
+      <figure class="pimg"><img src="assets/web/${PHOTOS[c.key]}.jpg" alt="${esc(L(c))}" width="760" height="507" loading="lazy" decoding="async"><figcaption>${tr('photo')}</figcaption></figure>
       <span class="badge">${L(c.badge)}</span>
       <div class="rows">${c.items.map(it => it.group ? `<div class="grp">${P(it.group)}</div>` : `<div class="row">
         <span class="n">${esc(L(it))}${it.star ? '<sup>*</sup>' : ''}</span>
@@ -422,15 +427,25 @@ function renderPricing() {
   }).join('');
 }
 $('#pgrid').addEventListener('toggle', e => {
-  const d = e.target.closest('.pcat'); if (!d || e.target !== d) return;
-  if (!openCats.size) document.querySelectorAll('.pcat[open]').forEach(x => openCats.add(x.dataset.cat));
-  d.open ? openCats.add(d.dataset.cat) : openCats.delete(d.dataset.cat);
+  const d = e.target; if (!d.classList || !d.classList.contains('pcat')) return;
+  openCats = new Set([...document.querySelectorAll('.pcat[open]')].map(x => x.dataset.cat));
 }, true);
+
+/* Mobile sheet */
+const prices = $('#prices'), scrim = $('#scrim'), pricesBtn = $('#pricesBtn');
+const narrow = matchMedia('(max-width:959px)');
+function openSheet() { prices.classList.add('open'); scrim.classList.add('on'); pricesBtn.setAttribute('aria-expanded', 'true'); setTimeout(() => $('#pricesX').focus({ preventScroll: true }), 50); }
+function closeSheet() { prices.classList.remove('open'); scrim.classList.remove('on'); pricesBtn.setAttribute('aria-expanded', 'false'); }
+pricesBtn.addEventListener('click', openSheet);
+$('#pricesX').addEventListener('click', closeSheet);
+scrim.addEventListener('click', closeSheet);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && prices.classList.contains('open')) closeSheet(); });
+narrow.addEventListener('change', closeSheet);
 
 /* ================= Chat ================= */
 const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787/chat' : 'https://illini-chat.iceocean712.workers.dev/chat';
 const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/8028b4c927389f74bb8dc76d5cee771a';
-const agent = $('#chat'), thread = $('#thread'), composer = $('#composer'), input = $('#input'), send = $('#send');
+const agent = $('#chat'), threadWrap = $('#threadWrap'), thread = $('#thread'), intro = $('#intro'), input = $('#input'), send = $('#send');
 const KEY = 'imc-chat-v3';
 let state = { msgs: [], sent: {}, drafts: {} };
 try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {}, drafts: s.drafts || {} }; } catch (e) {}
@@ -511,32 +526,27 @@ function addBot(text, idx) {
 }
 function addMe(text) { const el = document.createElement('div'); el.className = 'msg me'; el.innerHTML = md(text); thread.appendChild(el); }
 function renderChat() {
-  thread.textContent = '';
+  [...thread.children].forEach(n => { if (n !== intro) n.remove(); });
   state.msgs.forEach((m, i) => { if (m.hidden) return; m.role === 'user' ? addMe(m.content) : addBot(m.content, i); });
   agent.classList.toggle('empty', !state.msgs.length);
   $('#chips').innerHTML = tr('chips').map(c => `<button class="chip" data-say="${esc(c)}">${esc(c)}</button>`).join('');
+  toEnd();
 }
 
-/* Page-level auto-scroll: only follow the stream if the reader is already near the end */
-const lastBottom = () => { const l = thread.lastElementChild; return l ? l.getBoundingClientRect().bottom : 0; };
-const isNearEnd = () => lastBottom() <= composer.getBoundingClientRect().top + 120;
-function revealEnd(force) {
-  const gap = lastBottom() - (composer.getBoundingClientRect().top - 16);
-  if (gap > 0 && (force || true)) window.scrollBy({ top: gap, behavior: 'instant' });
-}
+/* Thread-level auto-scroll: follow the stream only if the reader is already near the end */
+const isNearEnd = () => threadWrap.scrollHeight - threadWrap.scrollTop - threadWrap.clientHeight < 80;
+const toEnd = () => { threadWrap.scrollTop = threadWrap.scrollHeight; };
 
 async function ask(text) {
   text = (text || '').trim(); if (!text || busy) return;
   busy = true; send.disabled = true;
   input.value = ''; input.style.height = '';
-  const wasEmpty = agent.classList.contains('empty');
   state.msgs.push({ role: 'user', content: text.slice(0, 1000) }); persist();
   agent.classList.remove('empty');
   addMe(text);
   const el = botEl('<span class="dots"><i></i><i></i><i></i></span>');
   thread.appendChild(el);
-  if (wasEmpty) window.scrollTo({ top: 0, behavior: 'instant' });
-  revealEnd(true);
+  toEnd();
   let reply = '';
   try {
     const ctrl = new AbortController(); let timer = setTimeout(() => ctrl.abort(), 30000);
@@ -549,7 +559,7 @@ async function ask(text) {
     const paint = () => {
       raf = 0; const follow = isNearEnd();
       const v = visible(reply); el.firstChild.innerHTML = v ? md(v) : '<span class="dots"><i></i><i></i><i></i></span>';
-      if (follow) revealEnd();
+      if (follow) toEnd();
     };
     for (;;) {
       const { value, done } = await reader.read(); if (done) break;
@@ -562,13 +572,13 @@ async function ask(text) {
     const follow = isNearEnd();
     state.msgs.push({ role: 'assistant', content: reply }); persist();
     el.remove(); addBot(reply, state.msgs.length - 1);
-    if (follow) revealEnd();
+    if (follow) toEnd();
   } catch (err) {
     state.msgs.pop(); persist();
     el.classList.add('err');
     el.firstChild.innerHTML = `<p>${esc(err.message === 'rate' ? tr('tooMany') : tr('aiFail'))}</p><div class="cbtns"><button class="btn" data-say="${esc(text)}">${tr('retry')}</button></div>`;
     el.previousElementSibling?.remove();
-    if (!state.msgs.length) agent.classList.add('empty');
+    toEnd();
   } finally { busy = false; send.disabled = !input.value.trim(); }
 }
 
@@ -605,9 +615,7 @@ async function submitBooking(form) {
     err.textContent = tr('sendFail'); err.hidden = false; btn.disabled = false; btn.textContent = tr('confirm');
   }
 }
-
 thread.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) ask(b.dataset.say); });
-$('#chips').addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) ask(b.dataset.say); });
 thread.addEventListener('submit', e => { const f = e.target.closest('form.bk'); if (f) { e.preventDefault(); submitBooking(f); } });
 thread.addEventListener('input', e => {
   const f = e.target.closest('form.bk'); if (!f || !e.target.name) return;
@@ -616,18 +624,12 @@ thread.addEventListener('input', e => {
 $('#form').addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
 input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(140, input.scrollHeight) + 'px'; send.disabled = !input.value.trim() || busy; });
 input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#form').requestSubmit(); } });
-$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, drafts: {} }; persist(); renderChat(); window.scrollTo({ top: 0 }); input.focus(); });
-
-function goChat(text) {
-  if (text) { if (!agent.classList.contains('empty')) composer.scrollIntoView({ block: 'end', behavior: 'instant' }); ask(text); return; }
-  if (agent.classList.contains('empty')) window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-  else composer.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
-  setTimeout(() => input.focus({ preventScroll: true }), 400);
-}
-$('#pgrid').addEventListener('click', e => { const b = e.target.closest('[data-ask-item]'); if (b) goChat(tr('askAbout', { x: L(ITEMS[b.dataset.askItem]) })); });
-const toChat = $('#toChat');
-toChat.addEventListener('click', () => goChat());
-new IntersectionObserver(([en]) => toChat.classList.toggle('show', !en.isIntersecting), { threshold: 0, rootMargin: '-64px 0px 0px 0px' }).observe(agent);
+$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, drafts: {} }; persist(); renderChat(); input.focus(); });
+$('#pgrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-ask-item]'); if (!b) return;
+  if (narrow.matches) closeSheet();
+  ask(tr('askAbout', { x: L(ITEMS[b.dataset.askItem]) }));
+});
 
 /* ================= Theme & language ================= */
 function setMeta() { document.querySelector('meta[name=theme-color]').content = root.dataset.theme === 'dark' ? '#0B1424' : '#FFF7EE'; }
@@ -645,9 +647,11 @@ $('#themeBtn').addEventListener('click', e => {
   vt.finished.catch(() => {}).finally(() => root.classList.remove('vt-theme'));
 });
 function setLang(next) {
+  const keepScroll = threadWrap.scrollTop, keepPrices = $('#pricesBody').scrollTop;
   lang = next; root.dataset.lang = next; root.lang = next === 'zh' ? 'zh-CN' : 'en';
   try { localStorage.setItem('imc-lang', next); } catch (e) {}
   applyStatic(); renderPricing(); renderChat();
+  threadWrap.scrollTop = keepScroll; $('#pricesBody').scrollTop = keepPrices;
   document.title = next === 'zh' ? 'Illini Move & Clean — AI 报价与预约：搬家、清洁、仓储' : 'Illini Move & Clean — AI quotes & booking for moving, cleaning, storage';
 }
 $('#langBtn').addEventListener('click', () => {
@@ -657,7 +661,7 @@ $('#langBtn').addEventListener('click', () => {
 
 /* ================= Init ================= */
 $('#yr').textContent = new Date().getFullYear();
-setMeta(); setLang(lang);
+setMeta(); setLang(lang); toEnd();
 })();
 </script>
 </body>
