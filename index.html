@@ -2,823 +2,261 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Illini Move & Clean — Moving, Cleaning & Storage in Champaign-Urbana</title>
-<meta name="description" content="Move out. Clean up. Chill out. Upfront pricing for room cleaning, deep cleaning, moving and storage in Champaign-Urbana. Build your quote in seconds.">
-<meta name="theme-color" content="#13294B">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Illini Move & Clean — AI quotes & booking for moving, cleaning, storage</title>
+<meta name="description" content="Ask our AI for an instant quote or to book moving, cleaning and storage in Champaign–Urbana. Real prices, in English or 中文.">
+<meta name="theme-color" content="#FFF7EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2313294B'/%3E%3Cpath d='M20 16h24v8h-7v16h7v8H20v-8h7V24h-7z' fill='%23FF5F05'/%3E%3C/svg%3E">
+<script>
+// Set theme + language before first paint (no flash)
+(function () {
+  var d = document.documentElement, t, l;
+  try { t = localStorage.getItem('imc-theme'); l = localStorage.getItem('imc-lang'); } catch (e) {}
+  if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  if (l !== 'zh' && l !== 'en') l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+  d.dataset.theme = t; d.dataset.lang = l; d.lang = l === 'zh' ? 'zh-CN' : 'en';
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2313294B'/%3E%3Cpath d='M20 16h24v8h-7v16h7v8H20v-8h7V24h-7z' fill='%23FF5F05'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://illini-chat.iceocean712.workers.dev" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#13294B; --navy-2:#1C3A68; --navy-3:#0B1A33;
-  --orange:#FF5F05; --orange-2:#FF7E36; --peach:#FFE6D6;
-  --cream:#FFF7EE; --paper:#FFFFFF; --ink:#0B1A33; --muted:#53627C; --soft:#E7EBF2;
-  --r:22px; --shadow:5px 5px 0 var(--navy);
-  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --orange:#FF5F05; --orange-2:#FF7E36; --navy:#13294B;
+  --bg:#FFF7EE; --surface:#FFFFFF; --surface-2:#FFF1E4; --ink:#0B1A33; --heading:#13294B; --muted:#56657E;
+  --line:#13294B; --sh:#13294B; --soft:#E9EDF3; --peach:#FFE6D6; --field:#D5DBE5; --me:#13294B; --dash:rgba(19,41,75,.14);
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --display:"Bricolage Grotesque",var(--font);
+  color-scheme:light;
+}
+:root[data-theme=dark]{
+  --bg:#0B1424; --surface:#132039; --surface-2:#0F1B31; --ink:#E7ECF5; --heading:#F4F7FC; --muted:#9DABC4;
+  --line:#3A5785; --sh:#26406B; --soft:#1F3054; --peach:#3A2416; --field:#2E4369; --me:#2B4D86; --dash:rgba(255,255,255,.12);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:84px}
-body{margin:0;font-family:"DM Sans",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
-img,svg{display:block}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:16px;line-height:1.5;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);color:var(--heading);margin:0;line-height:1.05;letter-spacing:-.02em}
+:root[data-lang=zh] h1,:root[data-lang=zh] h2,:root[data-lang=zh] h3{letter-spacing:0;line-height:1.2}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit}
-h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.025em;line-height:1.02;margin:0;color:var(--navy)}
-.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+svg{display:block}
 .i{width:1em;height:1em;flex:none}
 [hidden]{display:none!important}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:8px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:8px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
 
-/* ---------- Buttons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;font-weight:700;font-size:16px;border-radius:999px;padding:14px 24px;border:2px solid var(--navy);text-decoration:none;transition:transform .16s ease, box-shadow .16s ease, background .2s;white-space:nowrap;user-select:none}
-.btn .i{width:18px;height:18px}
-.btn-primary{background:var(--orange);color:#fff;box-shadow:var(--shadow)}
-.btn-ghost{background:#fff;color:var(--navy);box-shadow:var(--shadow)}
-.btn-primary:hover,.btn-ghost:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--navy)}
-.btn-primary:active,.btn-ghost:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--navy)}
-.btn-primary:hover .i-arrow{transform:translateX(3px)}
-.i-arrow{transition:transform .2s}
-.btn[disabled]{opacity:.45;pointer-events:none}
+/* Header */
+.hdr{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:2px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:10px;height:60px;max-width:1100px}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:auto}
+.logo svg{width:36px;height:36px}
+.lm-bg{fill:var(--navy)}.lm-i{fill:var(--orange)}
+:root[data-theme=dark] .lm-bg{fill:var(--orange)}:root[data-theme=dark] .lm-i{fill:var(--navy)}
+.logo b{font-family:var(--display);font-weight:800;font-size:18px;line-height:.9;color:var(--heading)}
+.logo b small{display:block;font-size:10.5px;letter-spacing:.16em;color:var(--orange);margin-top:3px}
+.hlink{font-weight:700;font-size:14.5px;text-decoration:none;padding:8px 12px;border-radius:999px;color:var(--heading)}
+.hlink:hover{background:var(--soft)}
+.hbtn{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--heading);padding:0}
+.lang{position:relative;display:flex;align-items:center;height:40px;padding:3px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:800;font-size:13px}
+.lang span{position:relative;z-index:1;width:34px;text-align:center;line-height:30px;transition:color .3s}
+.lang::before{content:"";position:absolute;top:3px;left:3px;width:34px;height:30px;border-radius:999px;background:var(--heading);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+:root[data-lang=zh] .lang::before{transform:translateX(34px)}
+:root[data-lang=en] .lang .l-en,:root[data-lang=zh] .lang .l-zh{color:var(--bg)}
+/* sun ⇄ moon */
+.theme-btn svg{width:20px;height:20px;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.theme-btn .core{transform-origin:12px 12px;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.theme-btn .mm{transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.theme-btn .rays{transform-origin:12px 12px;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .3s}
+:root[data-theme=dark] .theme-btn svg{transform:rotate(-40deg)}
+:root[data-theme=dark] .theme-btn .core{transform:scale(1.7)}
+:root[data-theme=dark] .theme-btn .mm{transform:translate(-10px,6px)}
+:root[data-theme=dark] .theme-btn .rays{transform:scale(.4) rotate(45deg);opacity:0}
 
-/* ---------- Header ---------- */
-.hdr{position:sticky;top:0;z-index:50;transition:background .25s, box-shadow .25s, border-color .25s;border-bottom:2px solid transparent;background:rgba(255,247,238,.6);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px)}
-.hdr.scrolled{background:rgba(255,247,238,.88);border-color:var(--navy)}
-.hdr .wrap{display:flex;align-items:center;gap:20px;height:72px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
-.logo-mark{width:42px;height:42px;transition:transform .5s var(--ease-spring)}
-.logo:hover .logo-mark{transform:rotate(-12deg) scale(1.06)}
-.logo-text{font-family:"Bricolage Grotesque";font-weight:800;line-height:.9;color:var(--navy);font-size:20px;letter-spacing:-.02em}
-.logo-text small{display:block;font-size:11.5px;letter-spacing:.16em;color:var(--orange);font-weight:700;margin-top:3px}
-.nav{display:flex;gap:4px}
-.nav a{text-decoration:none;font-weight:600;padding:9px 14px;border-radius:999px;color:var(--navy);transition:background .2s}
-.nav a:hover{background:rgba(19,41,75,.08)}
-.hdr-cta{padding:11px 18px;font-size:15px}
-.hdr-cart{position:relative;width:46px;height:46px;border-radius:50%;border:2px solid var(--navy);background:#fff;display:grid;place-items:center;box-shadow:3px 3px 0 var(--navy);transition:transform .15s, box-shadow .15s}
-.hdr-cart:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--navy)}
-.hdr-cart .i{width:20px;height:20px;color:var(--navy)}
-.badge{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--orange);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;border:2px solid var(--navy);transform:scale(0);transition:transform .35s var(--ease-spring)}
-.badge.show{transform:scale(1)}
-.bump{animation:bump .45s var(--ease-spring)}
-@keyframes bump{30%{transform:scale(1.35)}100%{transform:scale(1)}}
-.burger{display:none;width:46px;height:46px;border-radius:50%;border:2px solid var(--navy);background:#fff;place-items:center}
-.burger span{display:block;width:18px;height:2px;background:var(--navy);border-radius:2px;position:relative;transition:transform .3s, background .3s}
-.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--navy);border-radius:2px;transition:transform .3s}
-.burger span::before{top:-6px}.burger span::after{top:6px}
-.menu-open .burger span{background:transparent}
-.menu-open .burger span::before{transform:translateY(6px) rotate(45deg)}
-.menu-open .burger span::after{transform:translateY(-6px) rotate(-45deg)}
+/* Theme / language transitions (View Transitions API) */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
+:root.vt-theme::view-transition-old(root),:root.vt-theme::view-transition-new(root){animation:none;mix-blend-mode:normal}
+:root.vt-theme::view-transition-old(root){z-index:1}:root.vt-theme::view-transition-new(root){z-index:2}
+:root.theme-fade,:root.theme-fade *{transition:background-color .35s,color .35s,border-color .35s!important}
 
-/* ---------- Hero ---------- */
-.hero{position:relative;padding:48px 0 72px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(19,41,75,.13) 1.2px,transparent 1.2px);background-size:22px 22px;mask-image:linear-gradient(to bottom,#000 30%,transparent 95%);-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent 95%);pointer-events:none}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--navy);border-radius:999px;padding:7px 14px 7px 10px;font-weight:700;font-size:14px;color:var(--navy);box-shadow:3px 3px 0 var(--navy)}
-.pulse{width:10px;height:10px;border-radius:50%;background:var(--orange);position:relative}
-.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--orange);animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite}
-@keyframes ping{75%,100%{transform:scale(2.6);opacity:0}}
-.hero h1{font-size:clamp(46px,7.4vw,96px);font-weight:800;margin:22px 0 22px}
-.hero h1 .ln{display:block}
-.hl{color:var(--orange);position:relative;white-space:nowrap}
-.rot{display:inline-block;position:relative;color:var(--orange)}
-.rot-word{display:inline-block;transition:transform .45s var(--ease-spring), opacity .3s}
-.rot-word.out{transform:translateY(-70%) rotate(-4deg);opacity:0}
-.rot-word.pre{transform:translateY(70%) rotate(4deg);opacity:0;transition:none}
-.squiggle{position:absolute;left:0;right:0;bottom:-.12em;height:.22em;width:100%;color:var(--navy)}
-.squiggle path{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.1s .6s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.lede{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:540px;margin:0 0 30px}
-.lede b{color:var(--navy)}
-.hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
-.proof{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:34px;padding:0;list-style:none}
-.proof li{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy);font-size:15px}
-.proof .i{width:20px;height:20px;color:var(--orange)}
-
-.stage{position:relative;aspect-ratio:1/1.04;border-radius:36px;border:2px solid var(--navy);background:
-  radial-gradient(120% 80% at 85% 10%, rgba(255,95,5,.55), transparent 55%),
-  radial-gradient(90% 70% at 0% 100%, rgba(255,255,255,.08), transparent 60%),
-  var(--navy);
-  box-shadow:10px 10px 0 var(--orange);overflow:hidden;--mx:0;--my:0}
-.stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:36px 36px}
-.bubble{position:absolute;bottom:-60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.95),rgba(255,255,255,.25) 40%,rgba(255,255,255,.05) 70%);border:1px solid rgba(255,255,255,.35);animation:rise linear infinite}
-@keyframes rise{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-55vh) translateX(18px)}100%{transform:translateY(-110vh) translateX(-10px);opacity:.1}}
-.par{position:absolute;transform:translate(calc(var(--mx)*var(--d,12px)),calc(var(--my)*var(--d,12px)));transition:transform .25s ease-out}
-.qcard{left:11%;top:13%;width:68%;--d:-10px}
-.qcard-in{background:#fff;border:2px solid var(--navy);border-radius:22px;padding:20px 20px 18px;transform:rotate(-4deg);box-shadow:7px 7px 0 var(--orange);animation:floaty 6s ease-in-out infinite}
-.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.qhead b{font-family:"Bricolage Grotesque";font-size:20px;color:var(--navy)}
-.qtag{font-size:11px;font-weight:800;letter-spacing:.08em;background:var(--peach);color:var(--orange);padding:4px 9px;border-radius:999px}
-.qline{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1.5px dashed var(--soft);font-size:14.5px;font-weight:600;color:var(--navy);opacity:0;transform:translateX(-12px);animation:qin .5s var(--ease-spring) forwards}
-.qline .ico{width:30px;height:30px;border-radius:9px;background:var(--peach);color:var(--orange);display:grid;place-items:center}
-.qline .ico .i{width:16px;height:16px}
-.qline span:nth-child(2){flex:1}
-.qline em{font-style:normal;color:var(--muted);font-weight:500}
-@keyframes qin{to{opacity:1;transform:none}}
-.qtotal{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;opacity:0;animation:qin .5s 1.5s forwards}
-.qtotal span{font-weight:700;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
-.qtotal b{font-family:"Bricolage Grotesque";font-size:34px;color:var(--navy)}
-.qbtn{margin-top:12px;width:100%;background:var(--orange);color:#fff;border-radius:12px;padding:11px;text-align:center;font-weight:700;font-size:14px;opacity:0;animation:qin .5s 1.75s forwards}
-.chip{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--navy);border-radius:999px;padding:9px 14px 9px 9px;font-weight:700;font-size:14px;color:var(--navy);box-shadow:4px 4px 0 var(--navy-3);white-space:nowrap;animation:floaty 5s ease-in-out infinite}
-.chip .ico{width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center}
-.chip .ico .i{width:16px;height:16px}
-.chip.orange{background:var(--orange);color:#fff}
-.chip.orange .ico{background:#fff;color:var(--orange)}
-.c1{right:5%;top:5%;--d:18px}.c1 .chip{animation-delay:-1s}
-.c2{left:4%;bottom:10%;--d:22px}.c2 .chip{animation-delay:-2.5s}
-.c3{right:6%;bottom:22%;--d:14px}.c3 .chip{animation-delay:-4s}
-.sparkle{position:absolute;color:#fff;animation:twinkle 2.6s ease-in-out infinite}
-@keyframes twinkle{50%{transform:scale(.4) rotate(45deg);opacity:.4}}
-@keyframes floaty{50%{translate:0 -10px}}
-
-/* ---------- Marquee ---------- */
-.marquee{background:var(--navy);color:#fff;border-block:2px solid var(--navy);overflow:hidden;transform:rotate(-1.2deg);margin:0 -20px;position:relative;z-index:2}
-.marquee-track{display:flex;width:max-content;animation:marq 32s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-item{display:flex;align-items:center;gap:26px;padding:18px 13px;font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(20px,2.6vw,30px);white-space:nowrap}
-.marquee-item .i{color:var(--orange);width:26px;height:26px}
-@keyframes marq{to{transform:translateX(-50%)}}
-
-/* ---------- Sections ---------- */
-section{position:relative}
-.sec{padding:110px 0}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:44px;flex-wrap:wrap}
-.kicker{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
-.kicker::before{content:"";width:22px;height:3px;border-radius:3px;background:var(--orange)}
-.sec h2{font-size:clamp(36px,5vw,62px);font-weight:800;max-width:720px}
-.sec-head p{color:var(--muted);max-width:420px;margin:0;font-size:17px}
-
-/* Steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
-.step{background:#fff;border:2px solid var(--navy);border-radius:var(--r);padding:28px;position:relative;transition:transform .25s var(--ease-spring), box-shadow .25s}
-.step:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:7px 7px 0 var(--navy)}
-.step-n{font-family:"Bricolage Grotesque";font-weight:800;font-size:76px;line-height:.8;color:transparent;-webkit-text-stroke:2px var(--navy);margin-bottom:18px}
-.step:nth-child(2) .step-n{-webkit-text-stroke-color:var(--orange)}
-.step h3{font-size:26px;margin-bottom:8px}
-.step p{margin:0;color:var(--muted)}
-.step .ico{position:absolute;top:24px;right:24px;width:54px;height:54px;border-radius:16px;background:var(--peach);color:var(--orange);display:grid;place-items:center;transform:rotate(8deg)}
-.step .ico .i{width:26px;height:26px}
-
-/* ---------- Builder ---------- */
-.builder-sec{background:#fff;border-block:2px solid var(--navy)}
-.builder-sec::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 40% at 100% 0%,rgba(255,95,5,.07),transparent 70%);pointer-events:none}
-.builder{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start}
-.tabs{position:relative;display:flex;gap:4px;background:var(--cream);border:2px solid var(--navy);border-radius:999px;padding:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:28px}
-.tabs::-webkit-scrollbar{display:none}
-.tab-pill{position:absolute;top:6px;bottom:6px;left:0;width:0;background:var(--navy);border-radius:999px;transition:transform .45s var(--ease-spring), width .45s var(--ease-spring);z-index:0}
-.tab{position:relative;z-index:1;flex:1 0 auto;border:0;background:none;padding:12px 18px;border-radius:999px;font-weight:700;font-size:15.5px;color:var(--navy);display:flex;gap:8px;align-items:center;justify-content:center;white-space:nowrap;transition:color .3s}
-.tab .i{width:18px;height:18px}
-.tab[aria-selected=true]{color:#fff}
-.tab .count{background:var(--orange);color:#fff;font-size:11.5px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;display:none;place-items:center}
-.tab .count.on{display:inline-grid}
-.cat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.cat-head h3{font-size:clamp(28px,3.2vw,38px);font-weight:800}
-.cat-head p{margin:6px 0 0;color:var(--muted);max-width:560px}
-.pill{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--navy);border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;color:var(--navy);background:var(--cream)}
-.pill .i{width:15px;height:15px;color:var(--orange)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
-.grp{grid-column:1/-1;display:flex;align-items:center;gap:12px;font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;color:var(--navy);margin-top:6px}
-.grp::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--navy) 0 6px,transparent 6px 12px);opacity:.25}
-.grp:not(:first-child){margin-top:18px}
-.card{position:relative;background:#fff;border:2px solid var(--navy);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px;transition:transform .25s var(--ease-spring), box-shadow .25s, border-color .25s;animation:cardIn .55s var(--ease-spring) backwards;animation-delay:calc(var(--i,0)*45ms)}
-@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}}
-.card:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--navy)}
-.card.in-cart{border-color:var(--orange);box-shadow:6px 6px 0 var(--orange);background:linear-gradient(180deg,#FFF6F0,#fff 40%)}
-.card.wide{grid-column:1/-1}
-.card.wide .checklist{columns:2;column-gap:28px}
-.card.wide .checklist li{break-inside:avoid}
-.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.card .ico{width:50px;height:50px;border-radius:15px;background:var(--peach);color:var(--orange);display:grid;place-items:center;transition:transform .4s var(--ease-spring)}
-.card:hover .ico{transform:rotate(-8deg) scale(1.06)}
-.card .ico .i{width:24px;height:24px}
-.card.in-cart .ico{background:var(--orange);color:#fff}
-.tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.tag{font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:4px 9px;border-radius:999px;background:var(--soft);color:var(--navy);white-space:nowrap}
-.tag.hot{background:var(--orange);color:#fff}
-.tag.var{background:#FFF0D6;color:#9A4A00}
-.card h4{font-size:22px;font-weight:800;display:flex;align-items:center;gap:4px}
-.star{color:var(--orange);font-size:.9em;cursor:help}
-.price{display:flex;align-items:baseline;gap:6px;font-family:"Bricolage Grotesque";color:var(--navy)}
-.price b{font-size:38px;font-weight:800;line-height:1;letter-spacing:-.03em}
-.price b sup{font-size:.5em;vertical-align:.7em;margin-right:1px}
-.price span{font-family:"DM Sans";color:var(--muted);font-weight:600;font-size:14.5px}
-.checklist{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-.card.wide .checklist{display:block}
-.card.wide .checklist li{margin-bottom:7px}
-.checklist li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:14px;color:var(--muted);line-height:1.45}
-.checklist li .i{width:16px;height:16px;margin-top:2px;color:var(--orange);stroke-width:3}
-.checklist b{color:var(--navy);font-weight:700}
-.checklist .hide{display:none}
-.card.open .checklist .hide{display:grid}
-.card.wide.open .checklist .hide{display:grid}
-.more{align-self:flex-start;border:0;background:none;padding:0;font-weight:700;font-size:13.5px;color:var(--navy);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:4px}
-.foot{margin-top:auto;padding-top:6px;display:flex;align-items:center;gap:12px;min-height:52px}
-.add{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:2px solid var(--navy);border-radius:14px;padding:12px 14px;font-weight:700;font-size:15px;transition:background .2s, transform .15s}
-.add:hover{background:var(--orange);border-color:var(--orange)}
-.add:active{transform:scale(.97)}
-.add .i{width:18px;height:18px;stroke-width:2.6}
-.add.ghost{background:#fff;color:var(--navy)}
-.add.ghost:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
-.add.done{background:var(--orange);border-color:var(--orange)}
-.stepper{flex:1;display:flex;align-items:center;border:2px solid var(--navy);border-radius:14px;overflow:hidden;background:#fff;animation:pop .35s var(--ease-spring)}
-@keyframes pop{from{transform:scale(.9)}}
-.stepper button{width:46px;height:46px;border:0;background:#fff;display:grid;place-items:center;transition:background .15s}
-.stepper button:hover{background:var(--peach)}
-.stepper button .i{width:18px;height:18px;stroke-width:2.6}
-.stepper output{flex:1;text-align:center;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
-.line-total{font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;color:var(--orange);min-width:58px;text-align:right}
-
-/* Cart */
-.cart{position:sticky;top:92px;background:var(--navy);color:#fff;border-radius:28px;padding:22px;border:2px solid var(--navy);box-shadow:8px 8px 0 var(--orange);display:flex;flex-direction:column;max-height:calc(100vh - 116px)}
-.cart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.cart-head h3{color:#fff;font-size:26px;display:flex;align-items:center;gap:10px}
-.cart-head h3 .i{color:var(--orange)}
-.cart-x{display:none;width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;place-items:center}
-.cart-x .i{width:18px;height:18px}
-.clear{border:0;background:none;color:rgba(255,255,255,.65);font-weight:600;font-size:13px;text-decoration:underline;text-underline-offset:3px}
-.clear:hover{color:#fff}
-.lines{list-style:none;margin:0 -8px;padding:0 8px;overflow:auto;flex:1;min-height:0;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent}
-.lgrp{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-2);margin:14px 0 4px}
-.lgrp:first-child{margin-top:0}
-.lline{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1);animation:lin .4s var(--ease-spring)}
-@keyframes lin{from{opacity:0;transform:translateX(16px)}}
-.lline .ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.1);color:var(--orange-2);display:grid;place-items:center}
-.lline .ico .i{width:17px;height:17px}
-.lline b{display:block;font-size:14.5px;font-weight:700;line-height:1.2}
-.lline small{color:rgba(255,255,255,.6);font-size:12.5px}
-.lright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.lright strong{font-family:"Bricolage Grotesque";font-size:17px}
-.mini{display:flex;align-items:center;gap:2px}
-.mini button{width:24px;height:24px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#fff;display:grid;place-items:center;transition:background .15s, border-color .15s}
-.mini button:hover{background:var(--orange);border-color:var(--orange)}
-.mini button .i{width:12px;height:12px;stroke-width:3}
-.empty{text-align:center;padding:26px 8px 18px;color:rgba(255,255,255,.7)}
-.empty-art{width:120px;height:96px;margin:0 auto 14px;position:relative}
-.empty-art .box{position:absolute;inset:auto 18px 0 18px;height:64px;border:2px dashed rgba(255,255,255,.4);border-radius:14px}
-.empty-art .sp{position:absolute;color:var(--orange);animation:twinkle 2.4s infinite}
-.empty b{display:block;color:#fff;font-family:"Bricolage Grotesque";font-size:20px;margin-bottom:4px}
-.empty p{margin:0;font-size:14px}
-.totals{border-top:2px dashed rgba(255,255,255,.25);margin-top:12px;padding-top:14px}
-.trow{display:flex;justify-content:space-between;align-items:baseline}
-.trow span{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65)}
-.trow .big{font-family:"Bricolage Grotesque";font-size:46px;font-weight:800;line-height:1;letter-spacing:-.03em}
-.trow.mo{margin-top:6px}
-.trow.mo b{font-family:"Bricolage Grotesque";font-size:20px;color:var(--orange-2)}
-.note{font-size:12.5px;color:rgba(255,255,255,.6);margin:10px 0 0;display:flex;gap:6px}
-.note .i{width:14px;height:14px;margin-top:2px;color:var(--orange-2)}
-.cart .btn-primary{width:100%;margin-top:16px;padding:16px;font-size:17px;box-shadow:4px 4px 0 #000}
-.cart .btn-primary:hover{box-shadow:6px 6px 0 #000}
-.fly{position:fixed;z-index:200;pointer-events:none;font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;color:#fff;background:var(--orange);border:2px solid var(--navy);padding:4px 10px;border-radius:999px;box-shadow:3px 3px 0 var(--navy)}
-
-.cartbar{display:none}
-.scrim{display:none}
-
-/* Combos */
-.combos{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.combo{border:2px solid var(--navy);border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;transition:transform .3s var(--ease-spring), box-shadow .3s}
-.combo:hover{transform:translateY(-6px) rotate(.5deg);box-shadow:8px 8px 0 var(--navy)}
-.combo:nth-child(1){background:#fff}
-.combo:nth-child(2){background:var(--orange);color:#fff}
-.combo:nth-child(3){background:var(--navy);color:#fff}
-.combo:nth-child(3):hover{box-shadow:8px 8px 0 var(--orange)}
-.combo:nth-child(2) h3,.combo:nth-child(3) h3{color:#fff}
-.combo .emoji{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:var(--peach);color:var(--orange);border:2px solid var(--navy)}
-.combo:nth-child(2) .emoji{background:#fff}
-.combo:nth-child(3) .emoji{background:var(--orange);color:#fff}
-.combo .emoji .i{width:28px;height:28px}
-.combo h3{font-size:30px}
-.combo .sub{margin:-8px 0 0;opacity:.8}
-.combo ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.combo li{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:15px;padding-bottom:8px;border-bottom:1.5px dashed currentColor;border-color:rgba(19,41,75,.18)}
-.combo:nth-child(n+2) li{border-color:rgba(255,255,255,.3)}
-.combo li span:last-child{font-variant-numeric:tabular-nums}
-.combo .ctotal{display:flex;justify-content:space-between;align-items:baseline;margin-top:auto}
-.combo .ctotal b{font-family:"Bricolage Grotesque";font-size:44px;line-height:1;letter-spacing:-.03em}
-.combo .ctotal small{display:block;font-weight:700;opacity:.8}
-.combo .btn{width:100%}
-.combo:nth-child(2) .btn{background:var(--navy);color:#fff}
-.combo:nth-child(3) .btn{box-shadow:5px 5px 0 #000}
-.combo .ribbon{position:absolute;top:22px;right:-38px;transform:rotate(35deg);background:var(--navy);color:#fff;font-weight:800;font-size:12px;letter-spacing:.1em;padding:6px 44px}
-
-/* Why */
-.why{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.why-card{border:2px solid var(--navy);border-radius:var(--r);padding:24px;background:#fff}
-.why-card .ico{width:48px;height:48px;border-radius:14px;background:var(--navy);color:var(--orange);display:grid;place-items:center;margin-bottom:16px}
-.why-card .ico .i{width:24px;height:24px}
-.why-card h3{font-size:21px;margin-bottom:6px}
-.why-card p{margin:0;color:var(--muted);font-size:15px}
-
-/* FAQ */
-.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start}
-.faq{display:grid;gap:12px}
-.faq details{background:#fff;border:2px solid var(--navy);border-radius:18px;overflow:hidden;transition:box-shadow .2s}
-.faq details[open]{box-shadow:5px 5px 0 var(--orange)}
-.faq summary{list-style:none;cursor:pointer;padding:20px 22px;font-weight:700;font-size:17px;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary .pm{width:32px;height:32px;border-radius:50%;border:2px solid var(--navy);display:grid;place-items:center;flex:none;transition:transform .35s var(--ease-spring), background .2s}
-.faq summary .pm .i{width:16px;height:16px;stroke-width:2.6}
-.faq details[open] .pm{transform:rotate(45deg);background:var(--orange);border-color:var(--orange);color:#fff}
-.faq .ans{padding:0 22px 20px;color:var(--muted)}
-.faq .ans p{margin:0}
-
-/* CTA */
-.cta{padding:30px 0 110px}
-.cta-box{background:var(--orange);border:2px solid var(--navy);border-radius:36px;padding:clamp(36px,6vw,72px);position:relative;overflow:hidden;box-shadow:10px 10px 0 var(--navy);display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}
-.cta-box::before{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;border:40px solid rgba(255,255,255,.15)}
-.cta-box::after{content:"";position:absolute;left:30%;bottom:-120px;width:240px;height:240px;border-radius:50%;background:rgba(19,41,75,.12)}
-.cta-box h2{font-size:clamp(36px,5.4vw,68px);color:#fff;position:relative;z-index:1}
-.cta-box h2 span{color:var(--navy)}
-.cta-side{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
-.cta-side p{margin:0;color:#fff;font-size:18px;font-weight:500}
-.cta-box .btn-ghost{font-size:18px;padding:16px 28px}
-
-/* Footer */
-footer{background:var(--navy);color:rgba(255,255,255,.75);padding:64px 0 calc(28px + env(safe-area-inset-bottom))}
-.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.12)}
-footer .logo-text{color:#fff}
-footer h4{color:#fff;font-size:16px;margin-bottom:14px;letter-spacing:0}
-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-footer a{text-decoration:none}
-footer a:hover{color:var(--orange-2)}
-.fine{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;font-size:13px}
-.big-word{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(60px,15vw,210px);line-height:.8;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.18);margin:40px 0 0;white-space:nowrap;user-select:none}
-
-/* 3D objects */
-.stage-wrap{position:relative;--mx:0;--my:0}
-.obj{position:absolute;z-index:4;pointer-events:none;user-select:none;height:auto;filter:drop-shadow(0 26px 28px rgba(19,41,75,.28));transform:translate(calc(var(--mx)*var(--d,20px)),calc(var(--my)*var(--d,20px)));transition:transform .3s ease-out;animation:objFloat 7s ease-in-out infinite}
-@keyframes objFloat{0%,100%{translate:0 0}50%{translate:0 -16px}}
-.o-spray{width:36%;left:-15%;top:-7%;rotate:-14deg;--d:-26px}
-.o-sponge{width:31%;right:-11%;bottom:-9%;rotate:9deg;--d:30px;animation-delay:-2.4s}
-.o-bubbles{width:25%;right:-7%;top:-11%;--d:40px;animation-delay:-4.2s;animation-duration:9s}
-.drift{position:absolute;pointer-events:none;user-select:none;z-index:1;height:auto;filter:drop-shadow(0 22px 26px rgba(19,41,75,.22));will-change:transform}
-.d-bucket{width:clamp(110px,14vw,200px);right:3%;top:60px}
-.d-box{width:clamp(110px,13vw,190px);left:-1%;top:30px}
-.d-glove{width:clamp(110px,13vw,190px);right:2%;top:-70px;z-index:3}
-.d-bubbles{width:clamp(70px,8vw,120px);right:1%;top:-70px}
-.sec-head,.cta-box,.steps,.combos{position:relative;z-index:2}
-#how .sec-head p,#combos .sec-head p{margin-right:clamp(0px,12vw,180px)}
-#combos .sec-head{padding-left:clamp(0px,11vw,170px)}
-
-/* Results */
-.cases-sec{background:linear-gradient(180deg,var(--cream),#fff 30%,#fff 70%,var(--cream));overflow:hidden}
-.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:250px;gap:18px;perspective:1200px}
-.case{position:relative;margin:0;border:2px solid var(--navy);border-radius:26px;overflow:hidden;cursor:pointer;background:var(--navy);transform-style:preserve-3d;transition:transform .35s var(--ease-spring), box-shadow .3s;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
-.case:hover{box-shadow:8px 8px 0 var(--orange)}
-.case img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.case:hover img{transform:scale(1.07)}
-.case::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,26,51,.88));pointer-events:none}
-.case .shine{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(400px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.22),transparent 45%);opacity:0;transition:opacity .3s}
-.case:hover .shine{opacity:1}
-.case figcaption{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:20px 22px;color:#fff;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
-.case figcaption b{display:block;font-family:"Bricolage Grotesque";font-size:clamp(20px,2vw,26px);line-height:1.05;letter-spacing:-.02em}
-.case figcaption small{display:block;color:rgba(255,255,255,.75);font-weight:600;margin-top:4px}
-.case .ctag{position:absolute;top:16px;left:16px;z-index:3;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:6px}
-.case .ctag .i{width:14px;height:14px;color:var(--orange)}
-.case .go{width:44px;height:44px;flex:none;border-radius:50%;background:var(--orange);display:grid;place-items:center;border:2px solid #fff;transition:transform .35s var(--ease-spring)}
-.case:hover .go{transform:rotate(-45deg) scale(1.08)}
-.case .go .i{width:18px;height:18px}
-.c-kitchen{grid-column:span 2;grid-row:span 2}
-.c-movers,.c-storage,.c-living{grid-column:span 2}
-.disclaim{font-size:13px;color:var(--muted);margin:18px 0 0;text-align:right}
-.lb{width:min(1100px,calc(100vw - 24px))}
-.lb-in{position:relative;display:grid;grid-template-columns:1.6fr 1fr}
-.lb-in img{width:100%;height:100%;max-height:calc(100dvh - 28px);object-fit:cover;display:block;background:var(--navy)}
-.lb-side{padding:34px 30px;display:flex;flex-direction:column;gap:14px}
-.lb-side h3{font-size:34px}
-.lb-side p{margin:0;color:var(--muted)}
-.lb-side .checklist{margin-top:4px}
-.lb-side .btn{margin-top:auto}
-
-/* ---------- AI chat ---------- */
-.ai-fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:105;display:flex;align-items:center;gap:10px;border:2px solid var(--navy);background:var(--orange);color:#fff;border-radius:999px;padding:8px 18px 8px 8px;font-weight:800;font-size:15px;box-shadow:4px 4px 0 var(--navy);transition:transform .35s var(--ease-spring), box-shadow .2s, bottom .45s var(--ease-spring), opacity .25s}
-.ai-fab:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--navy)}
-.ai-fab .av{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;position:relative}
-.ai-fab .av svg{width:24px;height:24px}
-.ai-fab .av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:#22C55E;border:2px solid #fff}
-.ai-fab.hide{opacity:0;pointer-events:none;transform:scale(.8)}
-.ai-nudge{position:fixed;right:20px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:105;max-width:250px;background:#fff;border:2px solid var(--navy);border-radius:18px 18px 4px 18px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--navy);box-shadow:4px 4px 0 var(--navy);transform:translateY(10px) scale(.95);opacity:0;pointer-events:none;transition:all .4s var(--ease-spring)}
-.ai-nudge.show{opacity:1;transform:none;pointer-events:auto;cursor:pointer}
-.ai-nudge button{position:absolute;top:-10px;left:-10px;width:24px;height:24px;border-radius:50%;border:2px solid var(--navy);background:#fff;display:grid;place-items:center;padding:0}
-.ai-nudge button .i{width:12px;height:12px;stroke-width:3}
-.ai{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:130;width:400px;height:min(640px,calc(100dvh - 120px));display:flex;flex-direction:column;background:var(--cream);border:2px solid var(--navy);border-radius:28px;box-shadow:8px 8px 0 var(--orange);overflow:hidden;transform-origin:bottom right;transform:scale(.6) translateY(40px);opacity:0;pointer-events:none;transition:transform .45s var(--ease-spring), opacity .25s}
-.ai.open{transform:none;opacity:1;pointer-events:auto}
-.ai-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;background:var(--navy);color:#fff}
-.ai-head .av{width:42px;height:42px;border-radius:14px;background:var(--orange);display:grid;place-items:center;flex:none}
-.ai-head .av svg{width:26px;height:26px}
-.ai-head b{display:block;font-family:"Bricolage Grotesque";font-size:18px;line-height:1.1}
-.ai-head small{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:12.5px;font-weight:600}
-.ai-head small::before{content:"";width:8px;height:8px;border-radius:50%;background:#22C55E}
-.ai-head .sp{flex:1}
-.ai-head button{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;display:grid;place-items:center;transition:background .2s}
-.ai-head button:hover{background:rgba(255,255,255,.12)}
-.ai-head button .i{width:17px;height:17px}
-.ai-body{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;overscroll-behavior:contain}
-.msg{max-width:88%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;word-wrap:break-word;animation:msgIn .35s var(--ease-spring)}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.97)}}
-.msg.bot{align-self:flex-start;background:#fff;border:2px solid var(--navy);border-bottom-left-radius:6px;color:var(--ink)}
-.msg.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:6px}
-.msg.err{background:#FDECEC;border-color:#E9A0A0;color:#A12222}
-.msg b,.msg strong{color:var(--navy);font-weight:800}
-.msg.me b{color:#fff}
-.msg ul{margin:6px 0;padding-left:18px}
-.msg li{margin:2px 0}
+/* Agent */
+.agent{padding:22px 0 26px}
+.intro{text-align:center;margin-bottom:16px}
+.intro h1{font-size:clamp(28px,5.2vw,48px);font-weight:800}
+.intro h1 em{font-style:normal;color:var(--orange)}
+.intro p{margin:8px auto 0;color:var(--muted);max-width:560px;font-size:clamp(15px,1.8vw,17px)}
+.chat{display:flex;flex-direction:column;height:calc(100dvh - 60px - 170px);min-height:440px;max-height:760px;background:var(--surface);border:2px solid var(--line);border-radius:24px;box-shadow:6px 6px 0 var(--orange);overflow:hidden}
+.chat-head{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border-bottom:2px solid var(--line)}
+.av{width:36px;height:36px;border-radius:12px;background:var(--orange);display:grid;place-items:center;flex:none}
+.av svg{width:22px;height:22px}
+.chat-head b{display:block;font-size:15px;color:var(--heading);line-height:1.2}
+.chat-head small{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12.5px;font-weight:600}
+.chat-head small::before{content:"";width:7px;height:7px;border-radius:50%;background:#22C55E}
+.chat-head .sp{flex:1}
+.chat-head .hbtn{width:34px;height:34px}
+.chat-head .hbtn .i{width:16px;height:16px}
+.body{flex:1;overflow-y:auto;padding:16px 14px 6px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.msg{max-width:86%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.msg.bot{align-self:flex-start;background:var(--surface-2);border:1.5px solid var(--dash);border-bottom-left-radius:5px}
+.msg.me{align-self:flex-end;background:var(--me);color:#fff;border-bottom-right-radius:5px}
+.msg.err{background:#FDECEC;color:#A12222;border-color:#F0B4B4}
+.msg b{color:var(--heading)}.msg.me b{color:#fff}
 .msg p{margin:0 0 6px}.msg p:last-child{margin:0}
-.msg .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.act{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--navy);background:var(--peach);color:var(--navy);border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;transition:transform .15s, background .2s}
-.act:hover{background:var(--orange);color:#fff;transform:translateY(-1px)}
-.act .i{width:14px;height:14px;stroke-width:2.6}
-.act.done{background:var(--navy);color:#fff;pointer-events:none}
-.act.primary{background:var(--orange);color:#fff}
-.dots{display:inline-flex;gap:4px;padding:4px 2px}
-.dots i{width:7px;height:7px;border-radius:50%;background:var(--navy);opacity:.35;animation:dot 1.2s infinite}
+.msg ul{margin:4px 0 6px;padding-left:18px}.msg li{margin:1px 0}
+.dots{display:inline-flex;gap:4px;padding:5px 2px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--heading);opacity:.3;animation:dot 1.1s infinite}
 .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
-@keyframes dot{30%{opacity:1;transform:translateY(-3px)}}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0 4px}
-.chip-q{border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:14px;padding:8px 12px;font-size:13.5px;font-weight:600;text-align:left;transition:background .2s, transform .15s}
-.chip-q:hover{background:var(--peach);transform:translateY(-1px)}
-.ai-foot{padding:10px 12px 12px;border-top:2px solid var(--navy);background:#fff}
-.ai-form{display:flex;align-items:flex-end;gap:8px;background:var(--cream);border:2px solid var(--navy);border-radius:20px;padding:6px 6px 6px 14px;transition:box-shadow .2s}
-.ai-form:focus-within{box-shadow:0 0 0 4px rgba(255,95,5,.25)}
-.ai-form textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:16px;line-height:1.4;max-height:120px;padding:7px 0;outline:none;color:var(--ink)}
-.ai-form button{width:40px;height:40px;flex:none;border-radius:14px;border:0;background:var(--orange);color:#fff;display:grid;place-items:center;transition:transform .15s, opacity .2s}
-.ai-form button:disabled{opacity:.4}
-.ai-form button:not(:disabled):hover{transform:scale(1.06)}
-.ai-form button .i{width:18px;height:18px;stroke-width:2.6}
-.ai-note{margin:8px 4px 0;font-size:11.5px;color:var(--muted);text-align:center}
-@media (max-width:1023px){
-  body.bar-on .ai-fab{bottom:calc(96px + env(safe-area-inset-bottom))}
-  body.bar-on .ai-nudge{bottom:calc(160px + env(safe-area-inset-bottom))}
-}
-@media (max-width:640px){
-  .ai{right:0;bottom:0;width:100%;height:100dvh;border-radius:0;border:0;box-shadow:none;transform-origin:bottom center}
-  .ai-head{padding-top:calc(14px + env(safe-area-inset-top))}
-  .ai-foot{padding-bottom:calc(12px + env(safe-area-inset-bottom))}
-  .ai-fab{padding:6px;right:14px}
-  .ai-fab .lbl{display:none}
-  .ai-nudge{right:14px}
-}
+@keyframes dot{40%{opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--heading);border-radius:999px;padding:7px 12px;font-size:14px;font-weight:600;text-align:left}
+.chip:hover{background:var(--peach)}
+.foot{padding:10px 12px 10px;border-top:2px solid var(--line)}
+.form{display:flex;align-items:flex-end;gap:8px;background:var(--surface-2);border:2px solid var(--line);border-radius:18px;padding:5px 5px 5px 14px}
+.form:focus-within{border-color:var(--orange)}
+.form textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:16px;line-height:1.4;max-height:120px;padding:8px 0;outline:none;color:var(--ink)}
+.send{width:40px;height:40px;flex:none;border-radius:13px;border:0;background:var(--orange);color:#fff;display:grid;place-items:center}
+.send:disabled{opacity:.4;cursor:default}
+.send .i{width:18px;height:18px}
+.note{margin:6px 2px 0;font-size:11.5px;color:var(--muted);text-align:center}
 
-/* Reveal */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s var(--ease-spring);transition-delay:var(--rd,0s)}
-.reveal.in{opacity:1;transform:none}
-
-/* ---------- Dialog ---------- */
-dialog{border:2px solid var(--navy);border-radius:30px;padding:0;width:min(980px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:#fff;color:var(--ink);box-shadow:10px 10px 0 var(--orange);overflow:hidden}
-dialog[open]{animation:dlg .45s var(--ease-spring)}
-@keyframes dlg{from{opacity:0;transform:translateY(30px) scale(.96)}}
-dialog::backdrop{background:rgba(11,26,51,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.dlg{display:grid;grid-template-columns:.85fr 1.15fr;max-height:calc(100dvh - 28px)}
-.dlg-sum{background:var(--navy);color:#fff;padding:32px;overflow:auto}
-.dlg-sum h3{color:#fff;font-size:28px;margin-bottom:4px}
-.dlg-sum > p{color:rgba(255,255,255,.65);margin:0 0 18px;font-size:14px}
-.dlg-sum .lines{overflow:visible;margin:0;padding:0}
-.dlg-form{padding:32px;overflow:auto;position:relative}
-.dlg-form h3{font-size:30px;margin-bottom:6px}
-.dlg-form > p{color:var(--muted);margin:0 0 22px}
-.dlg-close{position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;border:2px solid var(--navy);background:#fff;display:grid;place-items:center;z-index:2;transition:transform .3s var(--ease-spring)}
-.dlg-close:hover{transform:rotate(90deg);background:var(--peach)}
-.dlg-close .i{width:18px;height:18px}
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:flex;flex-direction:column;gap:6px}
-.field.full{grid-column:1/-1}
-.field label,.field legend{font-weight:700;font-size:14px;color:var(--navy)}
-.field input,.field textarea{font:inherit;font-size:16px;border:2px solid #D3D9E4;border-radius:14px;padding:12px 14px;background:#fff;color:var(--ink);transition:border-color .2s, box-shadow .2s;width:100%}
-.field textarea{min-height:88px;resize:vertical}
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(255,95,5,.25)}
-.field input:user-invalid{border-color:#D93A3A}
-fieldset.field{border:0;padding:0;margin:0}
-.slots{display:flex;gap:8px;flex-wrap:wrap}
-.slot input{position:absolute;opacity:0;pointer-events:none}
-.slot span{display:inline-flex;align-items:center;gap:6px;border:2px solid #D3D9E4;border-radius:999px;padding:9px 14px;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s}
-.slot input:checked + span{border-color:var(--navy);background:var(--navy);color:#fff}
-.slot input:focus-visible + span{outline:3px solid var(--orange);outline-offset:2px}
-.dlg-form .btn-primary{width:100%;margin-top:20px;padding:16px;font-size:17px}
-.form-err{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#FDECEC;color:#A12222;font-weight:600;font-size:14px;border:1.5px solid #F3B6B6}
-.form-err a{color:inherit}
-.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite}
+/* Cards inside chat (quote / booking) */
+.card{align-self:stretch;max-width:520px;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px;font-size:14.5px}
+.card h4{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange)}
+.qrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--dash)}
+.qrow span:last-child{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.qtot{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;font-weight:800;color:var(--heading)}
+.qtot b{font-family:var(--display);font-size:24px}
+.qsub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.cbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:2px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:14.5px;background:var(--surface);color:var(--heading);text-decoration:none}
+.btn.pri{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.btn .i{width:16px;height:16px}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bgrid label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--muted)}
+.bgrid .full{grid-column:1/-1}
+.bgrid input,.bgrid select,.bgrid textarea{font:inherit;font-size:16px;border:1.5px solid var(--field);border-radius:10px;padding:8px 10px;background:var(--surface-2);color:var(--ink);width:100%}
+.bgrid textarea{min-height:56px;resize:vertical}
+.bgrid input:focus,.bgrid select:focus,.bgrid textarea:focus{outline:none;border-color:var(--orange)}
+.bitems{margin:10px 0 2px}
+.berr{color:#D13A3A;font-size:13px;font-weight:600;margin-top:8px}
+.ok{display:flex;gap:10px;align-items:flex-start}
+.ok .tick{width:32px;height:32px;border-radius:50%;background:#22C55E;color:#fff;display:grid;place-items:center;flex:none}
+.ok code{font-weight:800;color:var(--orange)}
+.spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.legal{font-size:12.5px;color:var(--muted);margin:12px 0 0;text-align:center}
-.success{text-align:center;padding:30px 10px}
-.success .check{width:92px;height:92px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;margin:0 auto 20px;border:2px solid var(--navy);box-shadow:5px 5px 0 var(--navy);animation:pop .6s var(--ease-spring)}
-.success .check .i{width:46px;height:46px;stroke-width:3}
-.success h3{font-size:36px;margin-bottom:10px}
-.success p{color:var(--muted);max-width:380px;margin:0 auto 8px}
-.ref{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-weight:700;background:var(--peach);color:var(--orange);padding:6px 12px;border-radius:10px;margin:8px 0 22px;letter-spacing:.06em}
 
-.toast{position:fixed;left:50%;bottom:28px;z-index:300;transform:translate(-50%,140%);background:var(--navy);color:#fff;border:2px solid var(--navy);border-radius:999px;padding:12px 20px 12px 12px;display:flex;align-items:center;gap:10px;font-weight:700;box-shadow:4px 4px 0 var(--orange);transition:transform .45s var(--ease-spring);max-width:calc(100vw - 32px)}
-.toast.show{transform:translate(-50%,0)}
-.toast .ico{width:30px;height:30px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex:none}
-.toast .ico .i{width:16px;height:16px;stroke-width:3}
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:1000}
+/* Pricing reference */
+.pricing{padding:34px 0 44px;content-visibility:auto;contain-intrinsic-size:auto 1800px}
+.pricing .wrap{max-width:1100px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.ph h2{font-size:clamp(26px,4vw,38px);font-weight:800}
+.ph p{margin:0;color:var(--muted);max-width:440px;font-size:15px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pcard{background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:16px 18px}
+.pcard header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.pcard h3{font-size:21px;font-weight:800}
+.badge{font-size:11.5px;font-weight:800;letter-spacing:.04em;background:var(--peach);color:var(--orange);padding:4px 9px;border-radius:999px;white-space:nowrap}
+.grp{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:12px 0 2px}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:9px 0;border-bottom:1px dashed var(--dash)}
+.row:last-child{border-bottom:0}
+.row .n{font-weight:700;color:var(--heading)}
+.row .n sup{color:var(--orange);font-size:.8em}
+.row .p{font-weight:800;color:var(--heading);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .p small{font-weight:600;color:var(--muted);font-size:12.5px}
+.row .d{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.row details{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.row summary{cursor:pointer;font-weight:700;color:var(--heading);font-size:13px;list-style:none;display:inline-flex;align-items:center;gap:4px}
+.row summary::-webkit-details-marker{display:none}
+.row summary::after{content:"+";font-weight:800;color:var(--orange)}
+.row details[open] summary::after{content:"–"}
+.row details ul{margin:6px 0 2px;padding-left:18px}
+.row details li{margin:2px 0}
+.ask{grid-column:1/-1;justify-self:start;border:0;background:none;padding:0;color:var(--orange);font-weight:700;font-size:13px}
+.fine{margin-top:16px;display:grid;gap:6px;font-size:13.5px;color:var(--muted)}
+.fine b{color:var(--heading)}
 
-/* ---------- Responsive ---------- */
-@media (max-width:1100px){
-  .why{grid-template-columns:repeat(2,1fr)}
-  .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:240px}
-  .c-movers,.c-storage,.c-living{grid-column:span 1}
-  .c-living{grid-column:span 2}
+footer{border-top:2px solid var(--line);padding:22px 0 calc(24px + env(safe-area-inset-bottom));font-size:13.5px;color:var(--muted)}
+footer .wrap{max-width:1100px;display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
+footer a{color:var(--heading);font-weight:700}
+
+.to-chat{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:15;display:flex;align-items:center;gap:8px;border:2px solid var(--line);background:var(--orange);color:#fff;border-radius:999px;padding:6px 16px 6px 6px;font-weight:800;font-size:14.5px;box-shadow:3px 3px 0 var(--sh);transform:translateY(140%);transition:transform .3s ease}
+.to-chat.show{transform:none}
+.to-chat .av{width:32px;height:32px;border-radius:50%;background:#fff}
+.to-chat .av svg{width:20px;height:20px}
+
+@media (max-width:760px){
+  .pgrid{grid-template-columns:1fr}
+  .hlink{display:none}
+  .agent{padding:14px 0 18px}
+  .intro{margin-bottom:12px}
+  .intro p{display:none}
+  .chat{height:calc(100dvh - 60px - 92px);min-height:400px;border-radius:20px;box-shadow:4px 4px 0 var(--orange)}
+  .msg{max-width:92%}
+  .bgrid{grid-template-columns:1fr}
+  .logo b small{letter-spacing:.1em}
 }
-@media (max-width:1023px){
-  .builder{grid-template-columns:minmax(0,1fr)}
-  .cart{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:120;border-radius:28px 28px 0 0;max-height:86dvh;transform:translateY(105%);transition:transform .45s var(--ease-spring);box-shadow:0 -10px 40px rgba(0,0,0,.25);padding-bottom:calc(22px + env(safe-area-inset-bottom))}
-  .cart::before{content:"";position:absolute;top:8px;left:50%;width:44px;height:5px;margin-left:-22px;border-radius:5px;background:rgba(255,255,255,.3)}
-  .cart.open{transform:none}
-  .cart-x{display:grid}
-  .scrim{display:block;position:fixed;inset:0;background:rgba(11,26,51,.55);z-index:110;opacity:0;pointer-events:none;transition:opacity .3s}
-  .scrim.on{opacity:1;pointer-events:auto}
-  .cartbar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:100;align-items:center;gap:12px;background:var(--navy);color:#fff;border:2px solid var(--navy);border-radius:20px;padding:10px 10px 10px 16px;box-shadow:5px 5px 0 var(--orange);transform:translateY(160%);transition:transform .45s var(--ease-spring)}
-  .cartbar.show{transform:none}
-  .cartbar .cb-info{flex:1;line-height:1.15}
-  .cartbar small{display:block;color:rgba(255,255,255,.65);font-size:12.5px;font-weight:600}
-  .cartbar b{font-family:"Bricolage Grotesque";font-size:24px}
-  .cartbar .btn{padding:12px 18px;font-size:15px;box-shadow:3px 3px 0 #000}
-  body.has-bar footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
-  .combos{grid-template-columns:1fr;max-width:560px;margin:0 auto}
-  .faq-grid{grid-template-columns:1fr;gap:28px}
-  .cta-box{grid-template-columns:1fr}
-}
-@media (max-width:959px){
-  .hero{padding:28px 0 64px}
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .stage{max-width:520px;width:100%;margin:0 auto}
-  .steps{grid-template-columns:1fr}
-  .nav,.hdr-cta{display:none}
-  .burger{display:grid}
-  .nav.mobile{display:flex}
-  .mnav{position:fixed;inset:72px 0 auto 0;background:var(--cream);border-bottom:2px solid var(--navy);padding:12px 20px 22px;display:flex;flex-direction:column;gap:4px;transform:translateY(-120%);transition:transform .4s var(--ease-spring);z-index:49}
-  .menu-open .mnav{transform:none}
-  .mnav a{font-family:"Bricolage Grotesque";font-weight:800;font-size:28px;color:var(--navy);text-decoration:none;padding:8px 0;border-bottom:1.5px dashed rgba(19,41,75,.15)}
-  .mnav .btn{margin-top:14px;font-family:"DM Sans";font-size:17px;border-bottom:2px solid var(--navy)}
-  .foot-grid{grid-template-columns:1fr 1fr}
-  .foot-grid > div:first-child{grid-column:1/-1}
-  .dlg{grid-template-columns:1fr;overflow:auto}
-  .dlg-sum,.dlg-form{overflow:visible}
-  .dlg-sum{order:2;padding:24px}
-  .dlg-form{padding:28px 22px}
-}
-@media (min-width:960px){ .mnav{display:none} }
-@media (max-width:959px){
-  .stage-wrap{max-width:520px;width:100%;margin:0 auto}
-  .o-spray{width:30%;left:-4%;top:-8%}
-  .o-sponge{width:27%;right:-3%;bottom:-7%}
-  .o-bubbles{width:21%;right:-2%;top:-9%}
-  .lb-in{grid-template-columns:1fr}
-  .lb-in img{max-height:50dvh}
-  .lb-side{padding:24px 22px}
-}
-@media (max-width:640px){
-  .sec{padding:76px 0}
-  .wrap{padding:0 16px}
-  .why{grid-template-columns:1fr}
-  .bento{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -16px;padding:4px 16px 18px;scrollbar-width:none}
-  .bento::-webkit-scrollbar{display:none}
-  .case{flex:0 0 84%;height:340px;scroll-snap-align:center}
-  .d-bucket,.d-box{width:96px}
-  .d-bucket{top:20px;right:0}
-  .d-box{display:none}
-  #combos .sec-head{padding-left:0}
-  #how .sec-head h2{padding-right:70px}
-  .d-glove{width:100px;top:-56px}
-  .disclaim{text-align:left}
-  .grid{grid-template-columns:1fr}
-  .card.wide .checklist{columns:1}
-  .fgrid{grid-template-columns:1fr}
-  .tab{padding:11px 14px;font-size:14.5px}
-  .tabs{border-radius:20px}
-  .tab-pill{border-radius:15px}
-  .chip{font-size:12.5px;padding:7px 11px 7px 7px}
-  .chip .ico{width:24px;height:24px}
-  .qline{font-size:13px;padding:7px 0}
-  .qcard{left:8%;width:76%;top:12%}
-  .c3{display:none}
-  .c2{bottom:4%}
-  .qtotal b{font-size:28px}
-  .hero-ctas .btn{flex:1}
-  .logo-text{font-size:18px}
-  .hdr .wrap{gap:10px}
-  dialog{border-radius:24px;box-shadow:6px 6px 0 var(--orange)}
-}
-@media (max-width:380px){
-  .c3{display:none}
-  .hero h1{font-size:42px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  .reveal{opacity:1;transform:none}
-  .qline,.qtotal,.qbtn{opacity:1;transform:none}
-  .bubble{display:none}
-}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
-<header class="hdr" id="hdr">
+<header class="hdr">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="Illini Move & Clean home">
-      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
-        <rect x="1" y="1" width="46" height="46" rx="13" fill="#13294B"/>
-        <path d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z" fill="#FF5F05"/>
-        <path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/>
-      </svg>
-      <span class="logo-text">ILLINI<small>MOVE &amp; CLEAN</small></span>
+    <a class="logo" href="#chat" aria-label="Illini Move & Clean">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
+      <b>ILLINI<small>MOVE &amp; CLEAN</small></b>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="#services">Services</a>
-      <a href="#combos">Combos</a>
-      <a href="#results">Results</a>
-      <a href="#how">How it works</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a href="#services" class="btn btn-primary hdr-cta">Get a quote</a>
-    <button class="hdr-cart" id="hdrCart" aria-label="Open your quote">
-      <span data-icon="bag"></span>
-      <span class="badge" id="badge">0</span>
+    <a class="hlink" href="#pricing" data-i18n="navPricing">Pricing</a>
+    <button class="lang" id="langBtn" aria-label="Switch language / 切换语言"><span class="l-en">EN</span><span class="l-zh">中</span></button>
+    <button class="hbtn theme-btn" id="themeBtn" aria-label="Toggle dark mode">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <mask id="mmask"><rect width="24" height="24" fill="#fff"/><circle class="mm" cx="26" cy="2" r="6.5" fill="#000"/></mask>
+        <circle class="core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#mmask)"/>
+        <g class="rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v2M12 20.5v2M4.6 4.6 6 6M18 18l1.4 1.4M1.5 12h2M20.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></g>
+      </svg>
     </button>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span></button>
   </div>
 </header>
-<nav class="mnav" id="mnav" aria-label="Mobile">
-  <a href="#services">Services</a>
-  <a href="#combos">Combos</a>
-  <a href="#results">Results</a>
-  <a href="#how">How it works</a>
-  <a href="#faq">FAQ</a>
-  <a href="#services" class="btn btn-primary">Build my quote</a>
-</nav>
 
-<main id="top">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow"><span class="pulse"></span>Champaign–Urbana · Moving · Cleaning · Storage</span>
-        <h1>
-          <span class="ln">Move out.</span>
-          <span class="ln">Clean up.</span>
-          <span class="ln"><span class="rot"><span class="rot-word" id="rot">Chill out.</span><svg class="squiggle" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 40 2, 70 2, 100 12 S 160 20, 200 9 S 260 2, 297 12" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span></span>
-        </h1>
-        <p class="lede">Movers, a truck, a deep clean and a spot to stash your stuff over break — <b>all on one quote, with every price listed upfront.</b> Build yours in about 30 seconds.</p>
-        <div class="hero-ctas">
-          <a href="#services" class="btn btn-primary">Build my quote <span data-icon="arrow" data-cls="i-arrow"></span></a>
-          <a href="#combos" class="btn btn-ghost">See combos</a>
-        </div>
-        <ul class="proof">
-          <li><span data-icon="tag"></span>Rooms from $40</li>
-          <li><span data-icon="truck"></span>Truck &amp; gear included in packages</li>
-          <li><span data-icon="box"></span>Storage from $10/mo</li>
-        </ul>
-      </div>
-
-      <div class="stage-wrap" id="stageWrap">
-      <img class="obj o-spray" src="assets/3d/spray.png" alt="" width="600" height="600" decoding="async">
-      <img class="obj o-bubbles" src="assets/3d/bubbles.png" alt="" width="600" height="600" decoding="async">
-      <img class="obj o-sponge" src="assets/3d/sponge.png" alt="" width="600" height="600" decoding="async">
-      <div class="stage" id="stage" aria-hidden="true">
-        <div class="bubble" style="left:8%;width:26px;height:26px;animation-duration:9s"></div>
-        <div class="bubble" style="left:28%;width:14px;height:14px;animation-duration:7s;animation-delay:-3s"></div>
-        <div class="bubble" style="left:52%;width:34px;height:34px;animation-duration:11s;animation-delay:-5s"></div>
-        <div class="bubble" style="left:74%;width:18px;height:18px;animation-duration:8s;animation-delay:-1s"></div>
-        <div class="bubble" style="left:90%;width:24px;height:24px;animation-duration:10s;animation-delay:-7s"></div>
-        <svg class="sparkle" style="left:8%;top:8%;width:22px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-        <svg class="sparkle" style="right:12%;top:46%;width:14px;animation-delay:-1.2s" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-        <svg class="sparkle" style="left:42%;bottom:6%;width:18px;animation-delay:-.6s;color:#FF5F05" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-
-        <div class="par qcard">
-          <div class="qcard-in">
-            <div class="qhead"><b>Your quote</b><span class="qtag">MOVE-OUT</span></div>
-            <div class="qline" style="animation-delay:.3s"><span class="ico" data-icon="bed"></span><span>Bedroom <em>×2</em></span><span>$80</span></div>
-            <div class="qline" style="animation-delay:.55s"><span class="ico" data-icon="bath"></span><span>Bathroom <em>×1</em></span><span>$60</span></div>
-            <div class="qline" style="animation-delay:.8s"><span class="ico" data-icon="chef"></span><span>Kitchen deep clean</span><span>$200</span></div>
-            <div class="qline" style="animation-delay:1.05s"><span class="ico" data-icon="truck"></span><span>EZ Move <em>· 2 hrs</em></span><span>$300</span></div>
-            <div class="qtotal"><span>Total</span><b id="heroTotal">$640</b></div>
-            <div class="qbtn">Book it →</div>
-          </div>
-        </div>
-        <div class="par c1"><div class="chip orange"><span class="ico" data-icon="truck"></span>26 ft truck available</div></div>
-        <div class="par c2"><div class="chip"><span class="ico" data-icon="sparkles"></span>Itemized checklists</div></div>
-        <div class="par c3"><div class="chip"><span class="ico" data-icon="box"></span>Boxes $10/mo</div></div>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marq"></div></div>
-
-  <!-- HOW -->
-  <section class="sec" id="how">
-    <div class="wrap" style="position:relative">
-      <img class="drift d-bucket" data-speed=".12" data-rot="8" src="assets/3d/bucket.png" alt="" width="600" height="600" loading="lazy" decoding="async">
-      <div class="sec-head reveal">
-        <div><div class="kicker">How it works</div><h2>Three steps. Zero stress.</h2></div>
-        <p>No phone tag, no mystery pricing. Pick what you need, choose a date, and we take it from there.</p>
-      </div>
-      <div class="steps">
-        <div class="step reveal"><span class="ico" data-icon="list"></span><div class="step-n">01</div><h3>Build your quote</h3><p>Tap to add rooms, appliances, movers or storage. Your total updates live.</p></div>
-        <div class="step reveal" style="--rd:.1s"><span class="ico" data-icon="calendar"></span><div class="step-n">02</div><h3>Pick a date</h3><p>Choose a day and time window that fits around finals, lease end, or flights home.</p></div>
-        <div class="step reveal" style="--rd:.2s"><span class="ico" data-icon="sparkles"></span><div class="step-n">03</div><h3>We handle it</h3><p>Our crew shows up, works the checklist, and leaves the place spotless — or moved, or stored.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BUILDER -->
-  <section class="sec builder-sec" id="services">
+<main>
+  <section class="agent" id="chat">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div><div class="kicker">Services &amp; pricing</div><h2>Build your quote, <span style="color:var(--orange)">your way.</span></h2></div>
-        <p>Mix cleaning, moving and storage in one order. Everything you see is the real price.</p>
+      <div class="intro">
+        <h1 data-i18n="h1">Move out. Clean up. <em>Chill out.</em></h1>
+        <p data-i18n="sub">Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.</p>
       </div>
-      <div class="builder">
-        <div>
-          <div class="tabs" role="tablist" id="tabs"><span class="tab-pill" id="tabPill"></span></div>
-          <div id="panel" role="tabpanel" aria-live="polite"></div>
+      <div class="chat" role="region" aria-label="Illini Assistant">
+        <div class="chat-head">
+          <span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#fff"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/><circle cx="5.5" cy="4.5" r="1.5" fill="#13294B"/></svg></span>
+          <div><b data-i18n="aiName">Illini Assistant</b><small data-i18n="aiStatus">Quotes · questions · booking</small></div>
+          <span class="sp"></span>
+          <button class="hbtn" id="reset" aria-label="New chat" data-i18n-aria="newChat"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button>
         </div>
-
-        <aside class="cart" id="cart" aria-label="Your quote">
-          <div class="cart-head">
-            <h3><span data-icon="bag"></span>Your quote</h3>
-            <div style="display:flex;gap:10px;align-items:center">
-              <button class="clear" id="clearBtn" hidden>Clear</button>
-              <button class="cart-x" id="cartX" aria-label="Close quote"><span data-icon="x"></span></button>
-            </div>
-          </div>
-          <ul class="lines" id="lines"></ul>
-          <div class="totals">
-            <div class="trow"><span>Total</span><span class="big" id="total">$0</span></div>
-            <div class="trow mo" id="moRow" hidden><span>+ Storage</span><b id="moTotal">$0/mo</b></div>
-            <p class="note" id="starNote" hidden><span data-icon="info"></span><span>Items marked * may vary with size or condition — we'll confirm the final price before any work starts.</span></p>
-          </div>
-          <button class="btn btn-primary" id="bookBtn" disabled>Book now <span data-icon="arrow" data-cls="i-arrow"></span></button>
-        </aside>
+        <div class="body" id="body" aria-live="polite"></div>
+        <div class="foot">
+          <form class="form" id="form">
+            <textarea id="input" rows="1" maxlength="1000" placeholder="e.g. 2-bed move-out clean next Friday?" data-i18n-ph="ph" aria-label="Message"></textarea>
+            <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          </form>
+          <p class="note" data-i18n="aiNote">AI can make mistakes. Final prices are confirmed by our team before any work.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- COMBOS -->
-  <section class="sec" id="combos">
-    <div class="wrap" style="position:relative">
-      <img class="drift d-box" data-speed=".1" data-rot="-8" src="assets/3d/box.png" alt="" width="600" height="600" loading="lazy" decoding="async">
-      <div class="sec-head reveal">
-        <div><div class="kicker">Popular combos</div><h2>Not sure where to start?</h2></div>
-        <p>One tap loads a ready-made bundle into your quote. Tweak anything after — it's just a head start.</p>
-      </div>
-      <div class="combos" id="comboGrid"></div>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="sec cases-sec" id="results">
-    <div class="wrap" style="position:relative">
-      <img class="drift d-bubbles" data-speed=".16" data-rot="0" src="assets/3d/bubbles.png" alt="" width="600" height="600" loading="lazy" decoding="async">
-      <div class="sec-head reveal">
-        <div><div class="kicker">The Illini finish</div><h2>Spotless, <span style="color:var(--orange)">room after room.</span></h2></div>
-        <p>The standard we hold every job to — from gleaming kitchens to perfectly stacked storage. Tap any photo to see what's included.</p>
-      </div>
-      <div class="bento" id="bento"></div>
-      <p class="disclaim">Photos are illustrative of our service standard.</p>
-    </div>
-  </section>
-
-  <!-- WHY -->
-  <section class="sec" style="padding-top:0">
+  <section class="pricing" id="pricing">
     <div class="wrap">
-      <div class="why">
-        <div class="why-card reveal"><div class="ico" data-icon="tag"></div><h3>Upfront pricing</h3><p>Every rate is right here on the page. Build your quote and you'll see your total before you book.</p></div>
-        <div class="why-card reveal" style="--rd:.08s"><div class="ico" data-icon="list"></div><h3>Real checklists</h3><p>Each service lists exactly what gets cleaned — down to the dryer lint and fridge drawers.</p></div>
-        <div class="why-card reveal" style="--rd:.16s"><div class="ico" data-icon="layers"></div><h3>One booking</h3><p>Move, clean and store in a single order. No juggling three different companies.</p></div>
-        <div class="why-card reveal" style="--rd:.24s"><div class="ico" data-icon="truck"></div><h3>Truck included</h3><p>Move packages come with movers, equipment and a 10 ft or 26 ft truck. Just point.</p></div>
+      <div class="ph">
+        <h2 data-i18n="pTitle">Real prices, at a glance</h2>
+        <p data-i18n="pSub">The same rates our AI uses. Tap “Ask” on anything to get a quote or book it.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="sec" id="faq" style="padding-top:20px">
-    <div class="wrap faq-grid">
-      <div class="reveal">
-        <div class="kicker">FAQ</div>
-        <h2 style="font-size:clamp(36px,5vw,62px)">Questions? We've got answers.</h2>
-        <p style="color:var(--muted);font-size:17px;margin:18px 0 26px">Still curious? Add a note when you book and we'll get back to you.</p>
-        <a href="#services" class="btn btn-ghost">Start my quote <span data-icon="arrow" data-cls="i-arrow"></span></a>
-      </div>
-      <div class="faq reveal" style="--rd:.1s">
-        <details open><summary>What does the * next to some prices mean?<span class="pm" data-icon="plus"></span></summary><div class="ans"><p>Those items can vary depending on size or condition (a huge living room, a very full set of cabinets, an oversized sofa). We'll confirm the final price with you before any work starts.</p></div></details>
-        <details><summary>How do hourly moving packages work?<span class="pm" data-icon="plus"></span></summary><div class="ans"><p>The EZ Move Package is $150/hr with two movers, equipment and a 10 ft truck or van (2-hour minimum). The Commercial Move Package is $200/hr with three movers, equipment and a 26 ft truck (3-hour minimum). Need muscle only? Book movers à la carte from $60/hr and add the $40 equipment fee if you need gear.</p></div></details>
-        <details><summary>What's the difference between Basic and Deep kitchen cleaning?<span class="pm" data-icon="plus"></span></summary><div class="ans"><p>Kitchen (Basic, $60) covers the sink, floors and appliance exteriors. The Deep Kitchen ($200) adds the inside of the fridge, stove and oven, microwave, a dishwasher cleaning cycle, plus emptying and wiping every cabinet and drawer.</p></div></details>
-        <details><summary>How is storage billed?<span class="pm" data-icon="plus"></span></summary><div class="ans"><p>Storage is billed per item, per month — $10 for a standard stackable box, $20 for large items like a mini-fridge, bike, TV or desk chair, $50 for a sofa or bed frame, and $75 for a mattress.</p></div></details>
-        <details><summary>Can you store my car?<span class="pm" data-icon="plus"></span></summary><div class="ans"><p>Possibly! Vehicle storage is by inquiry only. Hit “Ask about it” on the Auto/Car card in the Storage tab and tell us what you've got.</p></div></details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="wrap" style="position:relative">
-      <img class="drift d-glove" data-speed=".08" data-rot="10" src="assets/3d/glove.png" alt="" width="600" height="600" loading="lazy" decoding="async">
-      <div class="cta-box reveal">
-        <h2>Finals are hard.<br><span>Moving out shouldn't be.</span></h2>
-        <div class="cta-side">
-          <p>Lock in your date before move-out week gets busy. Your quote takes 30 seconds.</p>
-          <a href="#services" class="btn btn-ghost">Build my quote <span data-icon="arrow" data-cls="i-arrow"></span></a>
-        </div>
+      <div class="pgrid" id="pgrid"></div>
+      <div class="fine">
+        <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
+        <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
       </div>
     </div>
   </section>
@@ -826,861 +264,356 @@ fieldset.field{border:0;padding:0;margin:0}
 
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a class="logo" href="#top" style="margin-bottom:14px">
-          <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="13" fill="#FF5F05"/><path d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z" fill="#13294B"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
-          <span class="logo-text">ILLINI<small>MOVE &amp; CLEAN</small></span>
-        </a>
-        <p style="max-width:340px;margin:0">Moving, cleaning and storage for students and renters in Champaign–Urbana.</p>
-      </div>
-      <div><h4>Services</h4><ul>
-        <li><a href="#services" data-goto="standard">Standard Clean</a></li>
-        <li><a href="#services" data-goto="deep">Deep Cleaning</a></li>
-        <li><a href="#services" data-goto="moving">Moving</a></li>
-        <li><a href="#services" data-goto="storage">Storage</a></li>
-      </ul></div>
-      <div><h4>Company</h4><ul>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#combos">Combos</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#" id="footBook">Book now</a></li>
-      </ul></div>
-    </div>
-    <div class="fine">
-      <span>© <span id="yr"></span> Illini Move &amp; Clean. All prices in USD.</span>
-      <span>Independent business — not affiliated with the University of Illinois.</span>
-    </div>
-    <div class="big-word" aria-hidden="true">MOVE&amp;CLEAN</div>
+    <span>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></span>
+    <span data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</span>
   </div>
 </footer>
 
-<!-- Mobile cart bar -->
-<div class="cartbar" id="cartbar">
-  <div class="cb-info"><small id="cbCount">0 items</small><b id="cbTotal">$0</b></div>
-  <button class="btn btn-ghost" id="cbView" style="box-shadow:3px 3px 0 #000;padding:12px 14px">View</button>
-  <button class="btn btn-primary" id="cbBook">Book <span data-icon="arrow" data-cls="i-arrow"></span></button>
-</div>
-<div class="scrim" id="scrim"></div>
-
-<!-- Booking dialog -->
-<dialog id="dlg" aria-labelledby="dlgTitle">
-  <div class="dlg">
-    <div class="dlg-sum">
-      <h3>Your order</h3>
-      <p id="dlgSumSub">Review before you send.</p>
-      <ul class="lines" id="dlgLines"></ul>
-      <div class="totals">
-        <div class="trow"><span>Total</span><span class="big" id="dlgTotal">$0</span></div>
-        <div class="trow mo" id="dlgMoRow" hidden><span>+ Storage</span><b id="dlgMo">$0/mo</b></div>
-      </div>
-    </div>
-    <div class="dlg-form">
-      <button class="dlg-close" id="dlgClose" aria-label="Close"><span data-icon="x"></span></button>
-      <div id="formView">
-        <h3 id="dlgTitle">Almost done!</h3>
-        <p>Tell us where and when. We'll reach out to confirm your booking and final price.</p>
-        <form id="form" novalidate>
-          <div class="fgrid">
-            <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" required autocomplete="name" placeholder="Alma Mater"></div>
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(217) 555-0123"></div>
-            <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required autocomplete="email" placeholder="you@illinois.edu"></div>
-            <div class="field full"><label for="f-addr">Service address</label><input id="f-addr" name="address" required autocomplete="street-address" placeholder="Street, apt / dorm, city"></div>
-            <div class="field"><label for="f-date">Preferred date</label><input id="f-date" name="date" type="date" required></div>
-            <fieldset class="field"><legend>Time window</legend>
-              <div class="slots">
-                <label class="slot"><input type="radio" name="slot" value="Morning" checked><span>Morning</span></label>
-                <label class="slot"><input type="radio" name="slot" value="Afternoon"><span>Afternoon</span></label>
-                <label class="slot"><input type="radio" name="slot" value="Evening"><span>Evening</span></label>
-              </div>
-            </fieldset>
-            <div class="field full"><label for="f-notes">Notes <span style="font-weight:500;color:var(--muted)">(optional)</span></label><textarea id="f-notes" name="notes" placeholder="Stairs? Elevator? Parking? Anything we should know."></textarea></div>
-          </div>
-          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-          <p class="form-err" id="formErr" role="alert" hidden></p>
-          <button class="btn btn-primary" type="submit" id="submitBtn">Request booking <span data-icon="arrow" data-cls="i-arrow"></span></button>
-          <p class="legal">No payment now. We confirm everything with you first.</p>
-        </form>
-      </div>
-      <div id="successView" class="success" hidden>
-        <div class="check" data-icon="check"></div>
-        <h3>You're all set!</h3>
-        <p>We got your request. Expect a message soon to confirm your date and final price.</p>
-        <div class="ref" id="ref">IMC-00000</div><br>
-        <button class="btn btn-primary" id="doneBtn">Done</button>
-      </div>
-    </div>
-  </div>
-</dialog>
-
-<dialog id="lb" class="lb" aria-label="Service photo">
-  <div class="lb-in">
-    <img id="lbImg" alt="">
-    <div class="lb-side">
-      <button class="dlg-close" id="lbClose" aria-label="Close"><span data-icon="x"></span></button>
-      <span class="pill" id="lbTag"></span>
-      <h3 id="lbTitle"></h3>
-      <p id="lbText"></p>
-      <ul class="checklist" id="lbList"></ul>
-      <button class="btn btn-primary" id="lbAdd"></button>
-    </div>
-  </div>
-</dialog>
-
-<!-- AI assistant -->
-<button class="ai-fab" id="aiFab" aria-label="Chat with Illini Assistant" aria-controls="ai" aria-expanded="false"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FF5F05"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/><circle cx="5.5" cy="4.5" r="1.5" fill="#13294B"/></svg></span><span class="lbl">Ask Illini AI</span></button>
-<div class="ai-nudge" id="aiNudge" role="button" tabindex="0"><button id="aiNudgeX" aria-label="Dismiss"><span data-icon="x"></span></button>Hi! 👋 Need a quick estimate? I can build your quote in seconds.</div>
-<section class="ai" id="ai" role="dialog" aria-label="Illini Assistant chat" aria-modal="false">
-  <header class="ai-head">
-    <span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FFFFFF"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/><circle cx="5.5" cy="4.5" r="1.5" fill="#13294B"/></svg></span>
-    <div><b>Illini Assistant</b><small>AI · replies instantly</small></div>
-    <span class="sp"></span>
-    <button id="aiReset" aria-label="Start a new chat" title="New chat"><span data-icon="refresh"></span></button>
-    <button id="aiClose" aria-label="Close chat"><span data-icon="x"></span></button>
-  </header>
-  <div class="ai-body" id="aiBody" aria-live="polite"></div>
-  <div class="ai-foot">
-    <form class="ai-form" id="aiForm">
-      <textarea id="aiInput" rows="1" maxlength="1000" placeholder="Ask about prices, moving, storage…" aria-label="Message"></textarea>
-      <button type="submit" id="aiSend" aria-label="Send" disabled><span data-icon="send"></span></button>
-    </form>
-    <p class="ai-note">AI can make mistakes. Final prices are confirmed when you book.</p>
-  </div>
-</section>
-
-<div class="toast" id="toast" role="status" aria-live="polite"><span class="ico" data-icon="check"></span><span id="toastMsg"></span></div>
-<canvas id="confetti"></canvas>
+<button class="to-chat" id="toChat" aria-label="Ask the AI"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.1 6.4 6.4 2.1-6.4 2.1L12 19.5l-2.1-6.4L3.5 11l6.4-2.1z" fill="#FF5F05"/><circle cx="18.5" cy="18.5" r="2.3" fill="#13294B"/></svg></span><span data-i18n="askAi">Ask AI</span></button>
 
 <script>
 (() => {
 'use strict';
 const $ = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root = document.documentElement;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lang = root.dataset.lang;
 
-/* ---------- Icons ---------- */
-const P = d => `<path d="${d}"/>`;
-const ICONS = {
-  sparkles: P('M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z')+P('M20 3v4')+P('M22 5h-4'),
-  truck: P('M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2')+P('M15 18H9')+P('M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14')+'<circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>',
-  box: P('M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z')+P('m3.3 7 8.7 5 8.7-5')+P('M12 22V12'),
-  bed: P('M2 4v16')+P('M2 8h18a2 2 0 0 1 2 2v10')+P('M2 17h20')+P('M6 8v9'),
-  bath: P('M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.68 3 4 3.68 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5')+P('M10 5 8 7')+P('M2 12h20')+P('M7 19v2')+P('M17 19v2'),
-  sofa: P('M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3')+P('M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z')+P('M4 18v2')+P('M20 18v2')+P('M12 4v9'),
-  chef: P('M17 21a1 1 0 0 0 1-1v-5.35c0-.46.32-.84.73-1.04a4 4 0 0 0-2.13-7.59 5 5 0 0 0-9.19 0 4 4 0 0 0-2.13 7.59c.41.2.73.58.73 1.04V20a1 1 0 0 0 1 1Z')+P('M6 17h12'),
-  microwave: '<rect x="2" y="4" width="20" height="15" rx="2"/><rect x="6" y="8" width="8" height="7" rx="1"/>'+P('M18 8v7')+P('M6 19v2')+P('M18 19v2'),
-  flame: P('M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z'),
-  oven: '<rect x="3" y="3" width="18" height="18" rx="2"/>'+P('M3 9h18')+'<rect x="7" y="12" width="10" height="6" rx="1"/>'+P('M7 6h.01')+P('M11 6h.01'),
-  fridge: P('M5 6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6Z')+P('M5 10h14')+P('M15 7v6'),
-  drawer: '<rect x="2" y="3" width="20" height="5" rx="1"/>'+P('M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8')+P('M10 12h4'),
-  washer: '<rect x="3" y="2" width="18" height="20" rx="2"/><circle cx="12" cy="13" r="5"/>'+P('M7 6h1')+P('M11 6h1')+P('M10 13.5c1-1 3-1 4 0'),
-  trash: P('M3 6h18')+P('M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6')+P('M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2')+P('M10 11v6')+P('M14 11v6'),
-  rug: '<rect x="4" y="3" width="16" height="18" rx="2"/>'+P('M8 7h8')+P('M8 12h8')+P('M8 17h8')+P('M2 5h2')+P('M2 19h2')+P('M20 5h2')+P('M20 19h2'),
-  armchair: P('M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3')+P('M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z')+P('M5 18v2')+P('M19 18v2'),
-  users: P('M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2')+'<circle cx="9" cy="7" r="4"/>'+P('M22 21v-2a4 4 0 0 0-3-3.87')+P('M16 3.13a4 4 0 0 1 0 7.75'),
-  user: P('M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2')+'<circle cx="12" cy="7" r="4"/>',
-  building: '<rect x="4" y="2" width="16" height="20" rx="2"/>'+P('M9 22v-4h6v4')+P('M8 6h.01')+P('M16 6h.01')+P('M12 6h.01')+P('M12 10h.01')+P('M12 14h.01')+P('M16 10h.01')+P('M16 14h.01')+P('M8 10h.01')+P('M8 14h.01'),
-  wrench: P('M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'),
-  car: P('M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2')+'<circle cx="7" cy="17" r="2"/>'+P('M9 17h6')+'<circle cx="17" cy="17" r="2"/>',
-  tv: '<rect x="2" y="7" width="20" height="15" rx="2"/>'+P('m17 2-5 5-5-5'),
-  check: P('M20 6 9 17l-5-5'),
-  plus: P('M5 12h14')+P('M12 5v14'),
-  minus: P('M5 12h14'),
-  x: P('M18 6 6 18')+P('m6 6 12 12'),
-  bag: P('M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z')+P('M3 6h18')+P('M16 10a4 4 0 0 1-8 0'),
-  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/>'+P('M16 2v4')+P('M8 2v4')+P('M3 10h18'),
-  arrow: P('M5 12h14')+P('m12 5 7 7-7 7'),
-  tag: P('M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z')+'<circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
-  list: P('M11 5h10')+P('M11 12h10')+P('M11 19h10')+P('m3 5 1.5 1.5L7 4')+P('m3 12 1.5 1.5L7 11')+P('m3 19 1.5 1.5L7 18'),
-  layers: P('m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z')+P('m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65')+P('m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65'),
-  info: '<circle cx="12" cy="12" r="10"/>'+P('M12 16v-4')+P('M12 8h.01'),
-  home: P('M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8')+P('M3 10a2 2 0 0 1 .71-1.53l7-6a2 2 0 0 1 2.58 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'),
-  cap: P('M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z')+P('M22 10v6')+P('M6 12.5V16a6 3 0 0 0 12 0v-3.5'),
-  refresh: P('M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8')+P('M21 3v5h-5')+P('M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16')+P('M8 16H3v5'),
-  send: P('M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.03.94l7.93 3.18a2 2 0 0 1 1.11 1.11z')+P('m21.85 2.15-10.94 10.93'),
-  sun: '<circle cx="12" cy="12" r="4"/>'+P('M12 2v2')+P('M12 20v2')+P('m4.93 4.93 1.41 1.41')+P('m17.66 17.66 1.41 1.41')+P('M2 12h2')+P('M20 12h2')+P('m6.34 17.66-1.41 1.41')+P('m19.07 4.93-1.41 1.41'),
-};
-const icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ''}</svg>`;
-const hydrateIcons = (root = document) => $$('[data-icon]', root).forEach(el => { el.innerHTML = icon(el.dataset.icon, el.dataset.cls || ''); el.removeAttribute('data-icon'); });
-
-/* ---------- Data ---------- */
-const ROOM = ['Carpet/Flooring: Vacuum all carpeted areas and mop hard floors, treating any stains or scuffs as needed.','Furniture: Dust and wipe down all furniture, making sure to remove any personal items and clean underneath.','Blinds & Windows: Dust the blinds thoroughly and clean the windows with glass cleaner to remove smudges and dirt.'];
+/* ================= Catalog (single source of truth for prices) ================= */
+const ROOM_EN = ['Carpet/flooring: vacuum carpets and mop hard floors, treating stains or scuffs', 'Furniture: dust and wipe all furniture and clean underneath', 'Blinds & windows: dust blinds and clean windows with glass cleaner'];
+const ROOM_ZH = ['地毯/地板：吸尘地毯、拖洗硬质地板，处理污渍和划痕', '家具：除尘擦拭所有家具并清洁家具下方', '百叶窗和窗户：清除百叶窗灰尘，用玻璃清洁剂擦净窗户'];
 const CATS = [
-  { key:'standard', title:'Standard Clean', short:'Standard', icon:'sparkles', billing:'once', pill:'One-time · per room',
-    blurb:'A thorough room-by-room refresh. Perfect before inspection day or after a long semester.',
-    items:[
-      { id:'bedroom', name:'Bedroom', price:40, unit:'room', icon:'bed', desc:ROOM, popular:true },
-      { id:'bathroom', name:'Bathroom', price:60, unit:'room', icon:'bath', desc:[
-        'Shower: Scrub the walls, floor, and fixtures to remove soap scum, mildew, and buildup.',
-        'Toilet: Clean the bowl, seat, base, and handle thoroughly with disinfectant.',
-        'Sink: Wipe down the basin, faucet, and surrounding area to remove stains and toothpaste residue.',
-        'Mirror: Use glass cleaner to remove smudges, streaks, and water spots.',
-        'Floor: Sweep and mop the bathroom floor, paying special attention to corners and behind the toilet.',
-        'Cabinets: Empty all bathroom cabinets and drawers, then wipe inside and out to remove dust and residue.'] },
-      { id:'living', name:'Living Room', price:40, unit:'room', icon:'sofa', star:true, desc:ROOM },
-      { id:'kitchenBasic', name:'Kitchen (Basic)', price:60, unit:'kitchen', icon:'chef', star:true, desc:[
-        'Sink: Scrub the sink basin and faucet to remove stains or buildup, and ensure it is free of dishes and debris.',
-        'Floor: Sweep, vacuum, or mop all floors, including under furniture and in corners, to remove dirt and debris.',
-        'Appliances: Ensure all appliance exteriors are wiped clean, with special attention to handles, buttons, and any visible buildup.'] },
-    ]},
-  { key:'deep', title:'Deep Cleaning', short:'Deep Clean', icon:'flame', billing:'once', pill:'One-time · à la carte',
-    blurb:'Go all-in with the full kitchen package, or just pick the appliances and extras that need some love.',
-    items:[
-      { id:'kitchenDeep', name:'Kitchen Deep Clean', price:200, unit:'kitchen', icon:'chef', popular:true, wide:true, desc:[
-        'Refrigerator: Remove all food and wipe down shelves, drawers, and interior surfaces to eliminate spills and odors.',
-        'Stove/Oven: Clean the stovetop, burners, and control panel, removing any grease or food residue.',
-        'Microwave: Wipe the interior, including the turntable and door, to remove any splatters or buildup.',
-        'Dishwasher: Run an empty cleaning cycle, then wipe down the door, edges, and interior filter area.',
-        'Sink: Scrub the sink basin and faucet to remove stains or buildup, and ensure it is free of dishes and debris.',
-        'Cabinets & Drawers: Empty all cabinets and drawers, then wipe down the inside and outside surfaces to remove crumbs, dust, or residue.',
-        'Floor: Sweep, vacuum, or mop all floors, including under furniture and in corners, to remove dirt and debris.',
-        'Appliances: Ensure all appliances are wiped clean inside and out, with special attention to handles, buttons, and any visible buildup.'] },
-      { id:'fridge', name:'Refrigerator', price:50, unit:'fridge', icon:'fridge', desc:['Remove all food and wipe down shelves, drawers, and interior surfaces to eliminate spills and odors.'] },
-      { id:'ovenIn', name:'Oven Inside', price:30, unit:'oven', icon:'oven', desc:['Remove all residue inside and wipe down shelves and interior surfaces to eliminate spills and odors.'] },
-      { id:'ovenOut', name:'Oven Exterior', price:20, unit:'oven', icon:'flame', star:true, desc:['Deep clean the stovetop, burners, and control panel, removing any grease or food residue.'] },
-      { id:'microwave', name:'Microwave', price:20, unit:'unit', icon:'microwave', desc:['Wipe the interior, including the turntable and door, to remove any splatters or buildup.'] },
-      { id:'cabinets', name:'Cabinets & Drawers', price:30, unit:'set', icon:'drawer', star:true, desc:['Empty all cabinets and drawers, then wipe down the inside and outside surfaces to remove crumbs, dust, or residue.'] },
-      { id:'washer', name:'Washer / Dryer', price:30, unit:'set', icon:'washer', desc:['Wipe down the inside and outside of the washer and dryer, and remove any lint from the dryer vent.'] },
-      { id:'carpet', name:'Carpet Cleaning', price:50, unit:'room', icon:'rug', star:true, desc:['Deep carpet cleaning, priced per room.'] },
-      { id:'trash', name:'Trash Removal (Extra)', price:30, unit:'bag', icon:'trash', desc:['We haul away extra trash bags so you don\'t have to.'] },
-      { id:'furniture', name:'Furniture Removal', price:30, unit:'item', icon:'armchair', star:true, desc:['Haul away unwanted furniture, priced per item.'] },
-    ]},
-  { key:'moving', title:'Moving', short:'Moving', icon:'truck', billing:'once', pill:'Billed hourly',
-    blurb:'Combo packages bundle movers, equipment and a truck. Or go à la carte if you just need extra hands.',
-    items:[
-      { group:'Combo packages' },
-      { id:'ez', name:'EZ Move Package', price:150, unit:'hr', type:'hourly', min:2, icon:'truck', popular:true, desc:['Two movers','Moving equipment included','10 ft truck or van included','2-hour minimum'] },
-      { id:'commercial', name:'Commercial Move Package', price:200, unit:'hr', type:'hourly', min:3, icon:'building', desc:['Three movers','Moving equipment included','26 ft truck included','3-hour minimum'] },
-      { group:'À la carte' },
-      { id:'mover1', name:'Single Mover', price:60, unit:'hr', type:'hourly', min:1, icon:'user', desc:['Labor only — one mover'] },
-      { id:'mover2', name:'Two Movers', price:120, unit:'hr', type:'hourly', min:1, icon:'users', desc:['Labor only — two movers'] },
-      { id:'equip', name:'Equipment Fee', price:40, unit:'job', type:'flat', icon:'wrench', desc:['One-time flat fee per job','Dollies, straps & pads'] },
-    ]},
-  { key:'storage', title:'Storage', short:'Storage', icon:'box', billing:'monthly', pill:'Billed monthly · per item',
-    blurb:'Heading home for the summer? Stash your stuff with us and pick it up when you\'re back.',
-    items:[
-      { id:'sbox', name:'Standard Box', price:10, unit:'box / mo', icon:'box', popular:true, desc:['Stackable standard storage box'] },
-      { id:'large', name:'Large Item', price:20, unit:'item / mo', icon:'tv', star:true, desc:['Mini-fridge, bicycle, TV, desk chair'] },
-      { id:'sofaFrame', name:'Sofa or Bed Frame', price:50, unit:'item / mo', icon:'sofa', star:true, desc:['Sofas, couches and bed frames'] },
-      { id:'mattress', name:'Mattress', price:75, unit:'item / mo', icon:'bed', star:true, desc:['Any size mattress'] },
-      { id:'car', name:'Auto / Car', type:'inquiry', icon:'car', star:true, desc:['Vehicle storage — inquiry needed'] },
-    ]},
+  { key: 'standard', en: 'Standard Clean', zh: '标准清洁', badge: { en: 'One-time', zh: '一次性' }, items: [
+    { id: 'bedroom', price: 40, u: 'room', en: 'Bedroom', zh: '卧室', d: ['Floors, furniture, blinds & windows', '地面、家具、百叶窗和窗户'], list: [ROOM_EN, ROOM_ZH] },
+    { id: 'bathroom', price: 60, u: 'room', en: 'Bathroom', zh: '浴室', d: ['Shower, toilet, sink, mirror, floor & cabinets', '淋浴间、马桶、洗手池、镜子、地面和柜子'], list: [
+      ['Shower: scrub walls, floor and fixtures (soap scum, mildew)', 'Toilet: disinfect bowl, seat, base and handle', 'Sink: basin, faucet and surrounding area', 'Mirror: streak-free glass cleaning', 'Floor: sweep and mop, including corners and behind the toilet', 'Cabinets: empty and wipe inside and out'],
+      ['淋浴间：擦洗墙面、地面和五金件（皂垢、霉斑）', '马桶：消毒内壁、座圈、底座和冲水把手', '洗手池：台盆、水龙头及周边', '镜子：玻璃清洁无痕', '地面：清扫拖洗，包括角落和马桶后方', '柜子：清空并内外擦拭']] },
+    { id: 'living', price: 40, u: 'room', star: 1, en: 'Living Room', zh: '客厅', d: ['Same checklist as a bedroom', '清洁内容同卧室'], list: [ROOM_EN, ROOM_ZH] },
+    { id: 'kitchenBasic', price: 60, u: 'kitchen', star: 1, en: 'Kitchen (Basic)', zh: '厨房（基础）', d: ['Sink, floors & appliance exteriors', '水槽、地面和电器外部'] },
+  ]},
+  { key: 'deep', en: 'Deep Cleaning', zh: '深度清洁', badge: { en: 'One-time · à la carte', zh: '一次性 · 单点' }, items: [
+    { id: 'kitchenDeep', price: 200, u: 'kitchen', en: 'Kitchen Deep Clean', zh: '厨房深度清洁', d: ['Everything in Basic, plus inside the appliances and every cabinet', '基础清洁全部内容，外加电器内部和所有橱柜'], list: [
+      ['Fridge emptied, shelves & drawers wiped', 'Stovetop, burners and control panel degreased', 'Microwave interior, turntable and door', 'Dishwasher cleaning cycle + door, edges, filter', 'Sink and faucet scrubbed', 'All cabinets & drawers emptied and wiped inside and out', 'Floors swept, vacuumed or mopped', 'All appliances wiped inside and out'],
+      ['清空冰箱，擦拭搁架和抽屉', '灶面、炉头和控制面板去油', '微波炉内部、转盘和门', '洗碗机清洁程序 + 门、边缘、滤网', '擦洗水槽和水龙头', '清空并内外擦拭所有橱柜和抽屉', '地面清扫、吸尘或拖洗', '所有电器内外擦拭']] },
+    { id: 'fridge', price: 50, u: 'fridge', en: 'Refrigerator', zh: '冰箱', d: ['Emptied; shelves, drawers & interior wiped', '清空；擦拭搁架、抽屉和内壁'] },
+    { id: 'ovenIn', price: 30, u: 'oven', en: 'Oven Inside', zh: '烤箱内部', d: ['Interior residue, racks & walls', '内部残留、烤架和内壁'] },
+    { id: 'ovenOut', price: 20, u: 'oven', star: 1, en: 'Oven Exterior', zh: '烤箱外部', d: ['Stovetop, burners & control panel', '灶面、炉头和控制面板'] },
+    { id: 'microwave', price: 20, u: 'unit', en: 'Microwave', zh: '微波炉', d: ['Interior, turntable & door', '内部、转盘和门'] },
+    { id: 'cabinets', price: 30, u: 'set', star: 1, en: 'Cabinets & Drawers', zh: '橱柜和抽屉', d: ['Emptied and wiped inside & out', '清空并内外擦拭'] },
+    { id: 'washer', price: 30, u: 'set', en: 'Washer / Dryer', zh: '洗衣机 / 烘干机', d: ['Inside & out, plus dryer-vent lint', '内外擦拭，清理烘干机排风口绒毛'] },
+    { id: 'carpet', price: 50, u: 'room', star: 1, en: 'Carpet Cleaning', zh: '地毯清洁', d: ['Deep carpet clean', '地毯深度清洁'] },
+    { id: 'trash', price: 30, u: 'bag', en: 'Trash Removal (extra)', zh: '额外垃圾清运', d: ['Haul away extra bags', '运走多余垃圾袋'] },
+    { id: 'furniture', price: 30, u: 'item', star: 1, en: 'Furniture Removal', zh: '家具清运', d: ['Haul away unwanted furniture', '运走不要的家具'] },
+  ]},
+  { key: 'moving', en: 'Moving', zh: '搬家', badge: { en: 'Billed hourly', zh: '按小时计费' }, items: [
+    { group: ['Packages', '套餐'] },
+    { id: 'ez', price: 150, u: 'hr', min: 2, en: 'EZ Move Package', zh: 'EZ 搬家套餐', d: ['2 movers + equipment + 10 ft truck or van · 2 hr min', '2 名搬运工 + 设备 + 10 英尺货车或面包车 · 最低 2 小时'] },
+    { id: 'commercial', price: 200, u: 'hr', min: 3, en: 'Commercial Move Package', zh: '商业搬家套餐', d: ['3 movers + equipment + 26 ft truck · 3 hr min', '3 名搬运工 + 设备 + 26 英尺货车 · 最低 3 小时'] },
+    { group: ['À la carte', '单点'] },
+    { id: 'mover1', price: 60, u: 'hr', min: 1, en: 'Single Mover', zh: '单人搬运工', d: ['Labor only', '仅人工'] },
+    { id: 'mover2', price: 120, u: 'hr', min: 1, en: 'Two Movers', zh: '两名搬运工', d: ['Labor only', '仅人工'] },
+    { id: 'equip', price: 40, u: 'flat', en: 'Equipment Fee', zh: '设备费', d: ['One-time flat fee per job', '每单一次性固定费用'] },
+  ]},
+  { key: 'storage', en: 'Storage', zh: '仓储', badge: { en: 'Per item · monthly', zh: '按件 · 按月' }, monthly: 1, items: [
+    { id: 'sbox', price: 10, u: 'boxmo', en: 'Standard Box', zh: '标准箱', d: ['Stackable', '可堆叠'] },
+    { id: 'large', price: 20, u: 'itemmo', star: 1, en: 'Large Item', zh: '大件物品', d: ['Mini-fridge, bike, TV, desk chair', '迷你冰箱、自行车、电视、办公椅'] },
+    { id: 'sofaFrame', price: 50, u: 'itemmo', star: 1, en: 'Sofa or Bed Frame', zh: '沙发或床架' },
+    { id: 'mattress', price: 75, u: 'itemmo', star: 1, en: 'Mattress', zh: '床垫' },
+    { id: 'car', price: 0, u: 'inq', star: 1, en: 'Auto / Car', zh: '汽车', d: ['Inquiry needed', '需咨询'] },
+  ]},
 ];
 const ITEMS = {};
-CATS.forEach(c => c.items.forEach(it => { if (it.id) { it.cat = c; it.type = it.type || 'qty'; ITEMS[it.id] = it; } }));
-
-const COMBOS = [
-  { name:'Studio Reset', icon:'home', sub:'Small place, big glow-up.', items:[['bedroom',1],['bathroom',1],['kitchenBasic',1]] },
-  { name:'Move-Out Deep Clean', icon:'sparkles', sub:'Get that deposit back.', ribbon:'FAN FAVE', items:[['bedroom',2],['bathroom',1],['living',1],['kitchenDeep',1]] },
-  { name:'Summer Stash', icon:'sun', sub:'Move it, store it, fly home.', items:[['ez',2],['sbox',6],['large',1]] },
-];
-
-/* ---------- State ---------- */
-const STORE = 'imc-cart-v1';
-let cart = {};
-try { cart = JSON.parse(localStorage.getItem(STORE)) || {}; Object.keys(cart).forEach(k => { if (!ITEMS[k]) delete cart[k]; }); } catch (e) { cart = {}; }
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify(cart)); } catch (e) {} };
-let active = 'standard';
-
-const fmt = n => '$' + n.toLocaleString('en-US');
-const qtyLabel = (it, q) => it.type === 'hourly' ? `${q} hr${q > 1 ? 's' : ''}` : it.type === 'flat' ? 'Added' : `× ${q}`;
-const unitLabel = it => it.type === 'hourly' ? '/ hr' : it.type === 'flat' ? 'flat fee' : `/ ${it.unit}`;
-function totals(c = cart) {
-  let once = 0, mo = 0, star = false, count = 0;
-  for (const [id, q] of Object.entries(c)) {
-    const it = ITEMS[id]; if (!it || !it.price) continue;
-    const t = it.price * q; it.cat.billing === 'monthly' ? (mo += t) : (once += t);
-    if (it.star) star = true; count += it.type === 'hourly' || it.type === 'flat' ? 1 : q;
-  }
-  return { once, mo, star, count, lines: Object.keys(c).length };
-}
-
-/* ---------- Tabs ---------- */
-const tabsEl = $('#tabs'), pill = $('#tabPill');
-tabsEl.insertAdjacentHTML('beforeend', CATS.map(c =>
-  `<button class="tab" role="tab" id="tab-${c.key}" data-tab="${c.key}" aria-selected="${c.key === active}" aria-controls="panel">${icon(c.icon)}<span>${c.short}</span><span class="count" data-count="${c.key}"></span></button>`).join(''));
-function movePill() {
-  const t = $(`[data-tab="${active}"]`, tabsEl); if (!t) return;
-  pill.style.width = t.offsetWidth + 'px';
-  pill.style.transform = `translateX(${t.offsetLeft}px)`;
-}
-function setTab(key, focus) {
-  active = key;
-  $$('.tab', tabsEl).forEach(t => { const on = t.dataset.tab === key; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
-  const t = $(`[data-tab="${key}"]`, tabsEl);
-  t && tabsEl.scrollTo({ left: t.offsetLeft - 40, behavior: reduceMotion ? 'auto' : 'smooth' });
-  movePill(); renderPanel();
-}
-tabsEl.addEventListener('click', e => { const t = e.target.closest('.tab'); if (t) setTab(t.dataset.tab); });
-tabsEl.addEventListener('keydown', e => {
-  if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
-  const i = CATS.findIndex(c => c.key === active);
-  const n = (i + (e.key === 'ArrowRight' ? 1 : -1) + CATS.length) % CATS.length;
-  setTab(CATS[n].key, true); e.preventDefault();
-});
-function renderTabCounts() {
-  CATS.forEach(c => {
-    const n = c.items.filter(it => it.id && cart[it.id]).length;
-    const el = $(`[data-count="${c.key}"]`); el.textContent = n; el.classList.toggle('on', n > 0);
-  });
-}
-
-/* ---------- Panel / Cards ---------- */
-const panel = $('#panel');
-const descLi = (d, hide) => {
-  const m = d.match(/^([^:]{2,24}):\s*(.*)$/);
-  return `<li class="${hide ? 'hide' : ''}">${icon('check')}<span>${m ? `<b>${m[1]}</b> — ${m[2]}` : d}</span></li>`;
+CATS.forEach(c => c.items.forEach(it => { if (it.id) { it.cat = c; ITEMS[it.id] = it; } }));
+const UNITS = {
+  room: ['/ room', '/ 间'], kitchen: ['/ kitchen', '/ 厨房'], fridge: ['/ fridge', '/ 台'], oven: ['/ oven', '/ 台'], unit: ['/ unit', '/ 台'],
+  set: ['/ set', '/ 套'], bag: ['/ bag', '/ 袋'], item: ['/ item', '/ 件'], hr: ['/ hr', '/ 小时'], flat: ['flat', '固定'],
+  boxmo: ['/ box / mo', '/ 箱 / 月'], itemmo: ['/ item / mo', '/ 件 / 月'], inq: ['', ''],
 };
-function cardHTML(it, i) {
-  const limit = it.wide ? 4 : 3;
-  const d = it.desc || [];
-  const extra = d.length - limit;
-  const tags = [];
-  if (it.popular) tags.push('<span class="tag hot">Popular</span>');
-  if (it.type === 'hourly') tags.push(`<span class="tag">${it.min} hr min</span>`);
-  if (it.star) tags.push('<span class="tag var">Varies*</span>');
-  const price = it.type === 'inquiry'
-    ? `<div class="price"><b style="font-size:30px">Let's talk</b></div>`
-    : `<div class="price"><b><sup>$</sup>${it.price}</b><span>${unitLabel(it)}</span></div>`;
-  return `<article class="card${it.wide ? ' wide' : ''}${cart[it.id] ? ' in-cart' : ''}" data-id="${it.id}" style="--i:${i}">
-    <div class="card-top"><span class="ico">${icon(it.icon)}</span><div class="tags">${tags.join('')}</div></div>
-    <h4>${it.name}${it.star ? '<span class="star" title="Price may vary with size or condition">*</span>' : ''}</h4>
-    ${price}
-    <ul class="checklist">${d.map((x, j) => descLi(x, j >= limit)).join('')}</ul>
-    ${extra > 0 ? `<button class="more" data-act="more" aria-expanded="false">See full checklist (+${extra})</button>` : ''}
-    <div class="foot">${footHTML(it)}</div>
-  </article>`;
-}
-function footHTML(it) {
-  const q = cart[it.id] || 0;
-  if (it.type === 'inquiry') return `<button class="add ghost" data-act="inquire" data-id="${it.id}">Ask about it ${icon('arrow')}</button>`;
-  if (!q) return `<button class="add" data-act="inc" data-id="${it.id}">${icon('plus')} Add${it.type === 'hourly' ? ` · ${it.min} hr${it.min > 1 ? 's' : ''}` : ''}</button>`;
-  if (it.type === 'flat') return `<button class="add done" data-act="dec" data-id="${it.id}">${icon('check')} Added — tap to remove</button>`;
-  return `<div class="stepper"><button data-act="dec" data-id="${it.id}" aria-label="Remove one ${it.name}">${icon('minus')}</button><output aria-live="polite">${qtyLabel(it, q)}</output><button data-act="inc" data-id="${it.id}" aria-label="Add one more ${it.name}">${icon('plus')}</button></div><span class="line-total">${fmt(it.price * q)}</span>`;
-}
-function renderPanel() {
-  const c = CATS.find(x => x.key === active);
-  let i = 0;
-  panel.innerHTML = `<div class="cat-head"><div><h3>${c.title}</h3><p>${c.blurb}</p></div><span class="pill">${icon(c.billing === 'monthly' ? 'calendar' : 'tag')}${c.pill}</span></div>
-    <div class="grid">${c.items.map(it => it.group ? `<div class="grp">${it.group}</div>` : cardHTML(it, i++)).join('')}</div>`;
-  panel.setAttribute('aria-labelledby', 'tab-' + c.key);
-}
-function renderFoot(id) {
-  const card = $(`.card[data-id="${id}"]`); if (!card) return;
-  $('.foot', card).innerHTML = footHTML(ITEMS[id]);
-  card.classList.toggle('in-cart', !!cart[id]);
+const L = (o) => (lang === 'zh' ? o.zh : o.en);
+const P = (pair) => pair ? pair[lang === 'zh' ? 1 : 0] : '';
+const fmt = n => '$' + n.toLocaleString('en-US');
+
+/* ================= UI strings ================= */
+const STR = {
+  en: {
+    navPricing: 'Pricing', h1: 'Move out. Clean up. <em>Chill out.</em>',
+    sub: 'Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.',
+    aiName: 'Illini Assistant', aiStatus: 'Quotes · questions · booking', newChat: 'New chat',
+    ph: 'e.g. 2-bed move-out clean next Friday?', aiNote: 'AI can make mistakes. Final prices are confirmed by our team before any work.',
+    pTitle: 'Real prices, at a glance', pSub: 'The same rates our AI uses. Tap “Ask” on anything to get a quote or book it.',
+    fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
+    fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
+    notAff: 'Independent business — not affiliated with the University of Illinois.', askAi: 'Ask AI',
+    welcome: "Hi! 👋 I'm the **Illini Assistant**. Tell me what you need — cleaning, moving or storage — and I'll price it with our real rates. When you're ready, I can **book it** right here.",
+    chips: ['How much for a 2-bed move-out clean?', 'Move my studio + store 6 boxes for summer', "What's in the Kitchen Deep Clean?", 'Book a cleaning for next Saturday', '可以用中文吗？'],
+    ask: 'Ask', included: "What's included", inquiry: 'Ask us', from: 'from',
+    askAbout: 'Tell me about {x} — price and what’s included.',
+    quote: 'Estimate', total: 'Total', storage: 'Storage', perMo: '/mo', varies: '* Final price confirmed before work starts.',
+    bookThis: 'Book this', bookMsg: "I'd like to book this.",
+    booking: 'Booking request', name: 'Name', phone: 'Phone', email: 'Email', address: 'Service address', date: 'Preferred date',
+    window: 'Time window', morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', services: 'Services',
+    confirm: 'Confirm & send', sending: 'Sending…', missing: 'Please fill in name, phone, a valid email, address and date.',
+    sent: 'Request sent!', sentText: 'Reference {r}. Our team will reach out to confirm your date and final price.',
+    sendFail: "Couldn't send just now. Please try again, or email illinisolutions@gmail.com.",
+    aiFail: "Sorry, I couldn't reach the assistant just now.", retry: 'Try again', tooMany: 'Too many messages — please wait a minute.',
+    hr: 'hr', hrs: 'hrs', themeAria: 'Toggle dark mode',
+  },
+  zh: {
+    navPricing: '价格', h1: '搬家。打扫。<em>轻松搞定。</em>',
+    sub: '问价格、做方案、直接预约 — AI 按我们的真实价格回答。中文或 English 都可以。',
+    aiName: 'Illini 助手', aiStatus: '报价 · 答疑 · 预约', newChat: '新对话',
+    ph: '例如：下周五两室退房清洁多少钱？', aiNote: 'AI 可能出错。最终价格会在开工前由我们的团队确认。',
+    pTitle: '真实价格一览', pSub: '和 AI 用的是同一份价目表。点任意项目的“问问”即可报价或预约。',
+    fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
+    fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
+    notAff: '独立经营，与伊利诺伊大学无隶属关系。', askAi: '问 AI',
+    welcome: '嗨！👋 我是 **Illini 助手**。告诉我你需要什么 — 清洁、搬家还是仓储 — 我会按真实价格帮你报价。准备好了，还可以**直接在这里预约**。',
+    chips: ['两室退房清洁要多少钱？', '单间搬家 + 暑假存 6 个箱子', '厨房深度清洁包含什么？', '帮我约下周六的清洁', 'Can you answer in English?'],
+    ask: '问问', included: '包含内容', inquiry: '详询', from: '起',
+    askAbout: '介绍一下「{x}」— 价格和包含的内容。',
+    quote: '报价', total: '合计', storage: '仓储', perMo: '/月', varies: '* 最终价格开工前确认。',
+    bookThis: '预约这个', bookMsg: '我想预约这个。',
+    booking: '预约申请', name: '姓名', phone: '电话', email: '邮箱', address: '服务地址', date: '期望日期',
+    window: '时间段', morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', services: '服务',
+    confirm: '确认并提交', sending: '提交中…', missing: '请填写姓名、电话、有效邮箱、地址和日期。',
+    sent: '已提交！', sentText: '预约编号 {r}。我们的团队会联系你确认日期和最终价格。',
+    sendFail: '暂时提交失败，请重试，或发邮件到 illinisolutions@gmail.com。',
+    aiFail: '抱歉，暂时连接不上 AI 助手。', retry: '重试', tooMany: '消息太频繁了，请稍等一分钟。',
+    hr: '小时', hrs: '小时', themeAria: '切换深色模式',
+  },
+};
+const tr = (k, v) => { let s = (STR[lang] && STR[lang][k]) ?? STR.en[k] ?? k; if (v) for (const x in v) s = s.replace(`{${x}}`, v[x]); return s; };
+function applyStatic() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = tr(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = tr(el.dataset.i18nPh); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
+  $('#themeBtn').setAttribute('aria-label', tr('themeAria'));
 }
 
-/* ---------- Cart ---------- */
-function linesHTML(editable) {
-  const ids = Object.keys(cart);
-  if (!ids.length) return '';
-  let html = '';
-  CATS.forEach(c => {
-    const mine = c.items.filter(it => it.id && cart[it.id]);
-    if (!mine.length) return;
-    html += `<li class="lgrp">${c.title}</li>`;
-    mine.forEach(it => {
-      const q = cart[it.id];
-      const sub = it.type === 'flat' ? 'Flat fee' : `${qtyLabel(it, q)} · $${it.price} ${unitLabel(it)}`;
-      html += `<li class="lline"><span class="ico">${icon(it.icon)}</span><div><b>${it.name}${it.star ? ' *' : ''}</b><small>${sub}</small></div>
-        <div class="lright"><strong>${fmt(it.price * q)}${c.billing === 'monthly' ? '<small style="font-family:DM Sans;font-weight:600">/mo</small>' : ''}</strong>
-        ${editable ? `<div class="mini">${it.type !== 'flat' ? `<button data-act="dec" data-id="${it.id}" aria-label="Decrease ${it.name}">${icon('minus')}</button><button data-act="inc" data-id="${it.id}" aria-label="Increase ${it.name}">${icon('plus')}</button>` : ''}<button data-act="rm" data-id="${it.id}" aria-label="Remove ${it.name}">${icon('x')}</button></div>` : ''}</div></li>`;
-    });
-  });
-  return html;
-}
-const EMPTY = `<li class="empty"><div class="empty-art"><div class="box"></div>
-  <svg class="sp" style="left:8px;top:6px;width:18px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-  <svg class="sp" style="right:12px;top:0;width:24px;animation-delay:-1s" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-  <svg class="sp" style="left:50%;top:34px;width:14px;animation-delay:-.5s;color:#fff" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
-  </div><b>Your quote is empty</b><p>Tap “Add” on any service to start building.</p></li>`;
-
-let shownTotal = 0, rafT;
-function animateTotal(to) {
-  const el = $('#total'), from = shownTotal; shownTotal = to;
-  cancelAnimationFrame(rafT);
-  if (reduceMotion) { el.textContent = fmt(to); return; }
-  const t0 = performance.now(), dur = 450;
-  const step = now => { const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(Math.round(from + (to - from) * e)); if (p < 1) rafT = requestAnimationFrame(step); };
-  rafT = requestAnimationFrame(step);
-}
-function renderCart() {
-  const t = totals();
-  $('#lines').innerHTML = t.lines ? linesHTML(true) : EMPTY;
-  animateTotal(t.once);
-  $('#moRow').hidden = !t.mo; $('#moTotal').textContent = fmt(t.mo) + '/mo';
-  $('#starNote').hidden = !t.star;
-  $('#bookBtn').disabled = !t.lines;
-  $('#clearBtn').hidden = !t.lines;
-  const badge = $('#badge'); badge.textContent = t.count; badge.classList.toggle('show', t.count > 0);
-  $('#cbCount').textContent = `${t.count} item${t.count === 1 ? '' : 's'} in quote`;
-  $('#cbTotal').textContent = fmt(t.once) + (t.mo ? ` + ${fmt(t.mo)}/mo` : '');
-  const barOn = t.lines > 0 && !$('#cart').classList.contains('open') && builderNear;
-  $('#cartbar').classList.toggle('show', barOn);
-  document.body.classList.toggle('bar-on', barOn);
-  document.body.classList.toggle('has-bar', t.lines > 0);
+/* ================= Pricing reference ================= */
+const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function renderPricing() {
+  $('#pgrid').innerHTML = CATS.map(c => `<article class="pcard"><header><h3>${L(c)}</h3><span class="badge">${L(c.badge)}</span></header>${
+    c.items.map(it => it.group ? `<div class="grp">${P(it.group)}</div>` : `<div class="row">
+      <span class="n">${esc(L(it))}${it.star ? '<sup>*</sup>' : ''}</span>
+      <span class="p">${it.price ? `${fmt(it.price)} <small>${P(UNITS[it.u])}</small>` : `<small>${tr('inquiry')}</small>`}</span>
+      ${it.d ? `<span class="d">${esc(P(it.d))}</span>` : ''}
+      ${it.list ? `<details><summary>${tr('included')}</summary><ul>${P(it.list).map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>` : ''}
+      <button class="ask" data-ask-item="${it.id}">${tr('ask')} →</button>
+    </div>`).join('')}</article>`).join('');
 }
 
-function setQty(id, q) {
-  const prev = cart[id] || 0;
-  if (q <= 0) delete cart[id]; else cart[id] = q;
-  save(); renderFoot(id); renderCart(); renderTabCounts();
-  if (q > prev) {
-    flyChip(id, (q - prev) * ITEMS[id].price);
-    const b = $('#badge'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  }
-}
-function inc(id) {
-  const it = ITEMS[id]; let q = cart[id] || 0;
-  q = it.type === 'flat' ? 1 : it.type === 'hourly' ? (q ? q + 1 : it.min) : q + 1;
-  setQty(id, Math.min(q, 99));
-}
-function dec(id) {
-  const it = ITEMS[id]; const q = cart[id] || 0;
-  setQty(id, it.type === 'hourly' && q <= it.min ? 0 : q - 1);
-}
-function flyChip(id, amt) {
-  if (reduceMotion) return;
-  const src = $(`.card[data-id="${id}"] .foot`) || $(`.lline [data-id="${id}"]`);
-  if (!src) return;
-  const r = src.getBoundingClientRect();
-  const el = document.createElement('div'); el.className = 'fly'; el.textContent = '+' + fmt(amt);
-  el.style.left = (r.left + r.width / 2) + 'px'; el.style.top = (r.top) + 'px';
-  document.body.appendChild(el);
-  el.animate([
-    { transform: 'translate(-50%,0) scale(.6) rotate(-6deg)', opacity: 0 },
-    { transform: 'translate(-50%,-30px) scale(1.1) rotate(3deg)', opacity: 1, offset: .3 },
-    { transform: 'translate(-50%,-80px) scale(1) rotate(0)', opacity: 0 }
-  ], { duration: 900, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => el.remove();
-}
+/* ================= Chat ================= */
+const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787/chat' : 'https://illini-chat.iceocean712.workers.dev/chat';
+const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/8028b4c927389f74bb8dc76d5cee771a';
+const bodyEl = $('#body'), input = $('#input'), send = $('#send');
+const KEY = 'imc-chat-v2';
+let state = { msgs: [], sent: {} };
+try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {} }; } catch (e) {}
+const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify({ msgs: state.msgs.slice(-40), sent: state.sent })); } catch (e) {} };
+let busy = false;
 
-/* ---------- Global clicks ---------- */
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-act]'); if (!b) return;
-  const id = b.dataset.id, act = b.dataset.act;
-  if (act === 'inc') inc(id);
-  else if (act === 'dec') dec(id);
-  else if (act === 'rm') setQty(id, 0);
-  else if (act === 'more') {
-    const card = b.closest('.card'); const open = card.classList.toggle('open');
-    b.setAttribute('aria-expanded', open);
-    b.textContent = open ? 'Show less' : `See full checklist (+${$$('.checklist .hide', card).length})`;
-  }
-  else if (act === 'inquire') openBooking('Hi! I\'d like to ask about storing a car (make/model, dates): ');
-  else if (act === 'combo') addCombo(+b.dataset.i);
-});
-$('#clearBtn').addEventListener('click', () => { const ids = Object.keys(cart); cart = {}; save(); ids.forEach(renderFoot); renderCart(); renderTabCounts(); toast('Quote cleared'); });
-
-/* ---------- Mobile sheet ---------- */
-const mq = matchMedia('(max-width:1023px)');
-const cartEl = $('#cart'), scrim = $('#scrim');
-function openSheet() { if (!mq.matches) { $('#services').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }); return; } cartEl.classList.add('open'); scrim.classList.add('on'); renderCart(); }
-function closeSheet() { cartEl.classList.remove('open'); scrim.classList.remove('on'); renderCart(); }
-$('#cbView').addEventListener('click', openSheet);
-$('#hdrCart').addEventListener('click', openSheet);
-$('#cartX').addEventListener('click', closeSheet);
-scrim.addEventListener('click', closeSheet);
-mq.addEventListener('change', () => { closeSheet(); movePill(); });
-// swipe-down to close
-let sy = null;
-cartEl.addEventListener('touchstart', e => { if ($('#lines').scrollTop <= 0) sy = e.touches[0].clientY; }, { passive: true });
-cartEl.addEventListener('touchmove', e => { if (sy === null || !mq.matches) return; const dy = e.touches[0].clientY - sy; if (dy > 0) { cartEl.style.transition = 'none'; cartEl.style.transform = `translateY(${dy}px)`; } }, { passive: true });
-cartEl.addEventListener('touchend', e => { if (sy === null) return; const dy = e.changedTouches[0].clientY - sy; cartEl.style.transition = ''; cartEl.style.transform = ''; sy = null; if (dy > 90) closeSheet(); });
-
-// show cart bar only once user reaches builder
-let builderNear = false;
-new IntersectionObserver(([en]) => { if (en.isIntersecting || en.boundingClientRect.top < 0) { builderNear = true; renderCart(); } }, { rootMargin: '0px 0px -30% 0px' }).observe($('#services'));
-
-/* ---------- Combos ---------- */
-$('#comboGrid').innerHTML = COMBOS.map((c, i) => {
-  const t = totals(Object.fromEntries(c.items));
-  return `<article class="combo reveal" style="--rd:${i * .1}s">
-    ${c.ribbon ? `<span class="ribbon">${c.ribbon}</span>` : ''}
-    <div class="emoji">${icon(c.icon)}</div>
-    <h3>${c.name}</h3><p class="sub">${c.sub}</p>
-    <ul>${c.items.map(([id, q]) => { const it = ITEMS[id]; return `<li><span>${it.name}${it.type === 'hourly' ? ` · ${q} hrs` : q > 1 ? ` × ${q}` : ''}</span><span>${fmt(it.price * q)}${it.cat.billing === 'monthly' ? '/mo' : ''}</span></li>`; }).join('')}</ul>
-    <div class="ctotal"><small>Starting at</small><div style="text-align:right"><b>${fmt(t.once)}</b>${t.mo ? `<small>+ ${fmt(t.mo)}/mo storage</small>` : ''}</div></div>
-    <button class="btn ${i === 1 ? 'btn-primary' : i === 2 ? 'btn-primary' : 'btn-primary'}" data-act="combo" data-i="${i}">Add to quote ${icon('plus')}</button>
-  </article>`;
-}).join('');
-function addCombo(i) {
-  const c = COMBOS[i];
-  c.items.forEach(([id, q]) => { cart[id] = Math.max(cart[id] || 0, q); });
-  save(); renderTabCounts();
-  setTab(ITEMS[c.items[0][0]].cat.key);
-  renderCart();
-  toast(`${c.name} added to your quote`);
-  $('#services').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-  const b = $('#badge'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-}
-
-/* ---------- Results gallery ---------- */
-const CASES = [
-  { key:'kitchen', img:'kitchen.jpg', tag:'Deep Clean', title:'Move-out kitchen, reset', item:'kitchenDeep', text:'Fridge emptied and wiped, stovetop degreased, cabinets cleaned inside and out — ready for the walkthrough.' },
-  { key:'bathroom', img:'bathroom.jpg', tag:'Standard Clean', title:'Bathroom, gleaming', item:'bathroom', text:'Shower scrubbed of soap scum, toilet disinfected, mirror streak-free and floors done behind every corner.' },
-  { key:'bedroom', img:'bedroom.jpg', tag:'Standard Clean', title:'Move-out bedroom', item:'bedroom', text:'Carpet vacuumed, blinds dusted, windows cleaned and furniture wiped down — top to bottom.' },
-  { key:'movers', img:'movers.jpg', tag:'Moving', title:'Two movers + a truck', item:'ez', text:'The EZ Move Package: two movers, equipment and a 10 ft truck or van. You point, we lift.' },
-  { key:'storage', img:'storage.jpg', tag:'Storage', title:'Stored for the summer', item:'sbox', text:'Boxes, bikes, mini-fridges and mattresses kept neat and organized until you’re back on campus.' },
-  { key:'living', img:'living.jpg', tag:'Standard Clean', title:'Living room refresh', item:'living', text:'Floors vacuumed and mopped, furniture dusted, blinds and windows wiped for a bright, clean space.' },
-];
-$('#bento').innerHTML = CASES.map((c, i) => {
-  const it = ITEMS[c.item];
-  return `<figure class="case c-${c.key} reveal" style="--rd:${i * .06}s" data-case="${i}" tabindex="0" role="button" aria-label="${c.title} — view details">
-    <img src="assets/cases/${c.img}" alt="${c.title}" loading="lazy" decoding="async" width="1536" height="1024">
-    <span class="shine"></span>
-    <span class="ctag">${icon(it.icon)}${c.tag}</span>
-    <figcaption><div><b>${c.title}</b><small>${it.name} · from ${fmt(it.price)}${it.type === 'hourly' ? '/hr' : it.cat.billing === 'monthly' ? '/mo' : ''}</small></div><span class="go">${icon('arrow')}</span></figcaption>
-  </figure>`;
-}).join('');
-const lb = $('#lb');
-let lbCase = null;
-function openCase(i) {
-  const c = CASES[i], it = ITEMS[c.item]; lbCase = c;
-  $('#lbImg').src = 'assets/cases/' + c.img; $('#lbImg').alt = c.title;
-  $('#lbTag').innerHTML = icon(it.icon) + c.tag;
-  $('#lbTitle').textContent = c.title;
-  $('#lbText').textContent = c.text;
-  $('#lbList').innerHTML = (it.desc || []).slice(0, 4).map(d => descLi(d)).join('');
-  $('#lbAdd').innerHTML = `Add ${it.name} · ${fmt(it.price)}${it.type === 'hourly' ? '/hr' : it.cat.billing === 'monthly' ? '/mo' : ''} ${icon('plus')}`;
-  lb.showModal();
-}
-$('#bento').addEventListener('click', e => { const f = e.target.closest('.case'); if (f) openCase(+f.dataset.case); });
-$('#bento').addEventListener('keydown', e => { const f = e.target.closest('.case'); if (f && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openCase(+f.dataset.case); } });
-$('#lbClose').addEventListener('click', () => lb.close());
-lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
-$('#lbAdd').addEventListener('click', () => {
-  const id = lbCase.item; lb.close();
-  if (!cart[id]) inc(id); else setQty(id, cart[id] + 1);
-  setTab(ITEMS[id].cat.key); renderCart();
-  toast(`${ITEMS[id].name} added to your quote`);
-  $('#services').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-});
-if (matchMedia('(hover:hover)').matches && !reduceMotion) {
-  $('#bento').addEventListener('pointermove', e => {
-    const f = e.target.closest('.case'); if (!f) return;
-    const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-    f.style.setProperty('--ry', ((x - .5) * 8) + 'deg'); f.style.setProperty('--rx', ((.5 - y) * 8) + 'deg');
-    f.style.setProperty('--gx', x * 100 + '%'); f.style.setProperty('--gy', y * 100 + '%');
-  });
-  $('#bento').addEventListener('pointerout', e => { const f = e.target.closest('.case'); if (f && !f.contains(e.relatedTarget)) { f.style.setProperty('--rx', '0deg'); f.style.setProperty('--ry', '0deg'); } });
-}
-
-/* ---------- Scroll-drift 3D objects ---------- */
-const drifts = $$('.drift');
-let driftTick = false;
-function drift() {
-  driftTick = false; const vh = innerHeight;
-  drifts.forEach(el => {
-    const r = el.parentElement.getBoundingClientRect();
-    if (r.bottom < -200 || r.top > vh + 200) return;
-    const off = (r.top + r.height / 2 - vh / 2);
-    el.style.transform = `translateY(${-off * +el.dataset.speed}px) rotate(${(off / vh) * +el.dataset.rot}deg)`;
-  });
-}
-if (!reduceMotion) { addEventListener('scroll', () => { if (!driftTick) { driftTick = true; requestAnimationFrame(drift); } }, { passive: true }); drift(); }
-
-/* ---------- Footer service links ---------- */
-$$('[data-goto]').forEach(a => a.addEventListener('click', () => setTab(a.dataset.goto)));
-
-/* ---------- Booking dialog ---------- */
-const dlg = $('#dlg'), form = $('#form');
-const today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-$('#f-date').min = today.toISOString().slice(0, 10);
-function fillSummary() {
-  const t = totals();
-  $('#dlgLines').innerHTML = t.lines ? linesHTML(false) : '<li class="empty" style="padding:10px 0"><p>No services yet — that\'s fine, just tell us what you need in the notes.</p></li>';
-  $('#dlgTotal').textContent = fmt(t.once);
-  $('#dlgMoRow').hidden = !t.mo; $('#dlgMo').textContent = fmt(t.mo) + '/mo';
-  $('#dlgSumSub').textContent = t.star ? 'Items marked * will be confirmed before work starts.' : 'Review before you send.';
-}
-function openBooking(note) {
-  closeSheet(); fillSummary();
-  $('#formView').hidden = false; $('#successView').hidden = true;
-  if (note) $('#f-notes').value = note;
-  dlg.showModal();
-  setTimeout(() => (note ? $('#f-notes') : $('#f-name')).focus(), 60);
-}
-$('#bookBtn').addEventListener('click', () => openBooking());
-$('#cbBook').addEventListener('click', () => openBooking());
-$('#footBook').addEventListener('click', e => { e.preventDefault(); openBooking(); });
-$('#dlgClose').addEventListener('click', () => dlg.close());
-$('#doneBtn').addEventListener('click', () => dlg.close());
-dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
-/* Booking requests are emailed via FormSubmit (https://formsubmit.co).
-   The first submission triggers a one-time activation email to BOOKING_EMAIL.
-   After activating, FormSubmit gives you a random alias string — paste it into
-   BOOKING_EMAIL to keep the real address out of the page source. */
-const BOOKING_EMAIL = '8028b4c927389f74bb8dc76d5cee771a'; // FormSubmit alias (private)
-const BOOKING_ENDPOINT = `https://formsubmit.co/ajax/${BOOKING_EMAIL}`;
-const CONTACT_EMAIL = 'illinisolutions@gmail.com';
-function orderText() {
-  const t = totals(); const out = [];
-  CATS.forEach(c => c.items.forEach(it => {
-    const q = it.id && cart[it.id]; if (!q) return;
-    const per = c.billing === 'monthly' ? '/mo' : '';
-    out.push(`• [${c.title}] ${it.name}${it.star ? ' *' : ''} — ${it.type === 'flat' ? 'flat fee' : qtyLabel(it, q)} @ $${it.price} = ${fmt(it.price * q)}${per}`);
-  }));
-  if (!out.length) out.push('(no services selected — see notes)');
-  out.push('', `Total (one-time): ${fmt(t.once)}`);
-  if (t.mo) out.push(`Storage: ${fmt(t.mo)}/mo`);
-  if (t.star) out.push('* Price may vary — confirm with customer');
-  return out.join('\n');
-}
-let sending = false;
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  if (sending) return;
-  if (!form.checkValidity()) { form.reportValidity(); return; }
-  const fd = Object.fromEntries(new FormData(form));
-  if (fd._honey) return; // bot trap
-  const btn = $('#submitBtn'), err = $('#formErr'), label = btn.innerHTML;
-  const ref = 'IMC-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-  const t = totals();
-  const payload = {
-    _subject: `New booking ${ref} — ${fd.name} — ${fmt(t.once)}${t.mo ? ` + ${fmt(t.mo)}/mo` : ''}`,
-    _template: 'box',
-    _replyto: fd.email,
-    _captcha: 'false',
-    'Reference': ref,
-    'Name': fd.name,
-    'Phone': fd.phone,
-    'Email': fd.email,
-    'Service address': fd.address,
-    'Preferred date': fd.date,
-    'Time window': fd.slot,
-    'Order': orderText(),
-    'Total (one-time)': fmt(t.once),
-    'Storage (monthly)': t.mo ? fmt(t.mo) + '/mo' : '—',
-    'Notes': fd.notes || '—',
-  };
-  sending = true; err.hidden = true;
-  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Sending…';
-  try {
-    const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 15000);
-    const res = await fetch(BOOKING_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload), signal: ctrl.signal,
-    });
-    clearTimeout(timer);
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || `HTTP ${res.status}`);
-    $('#ref').textContent = ref;
-    $('#formView').hidden = true; $('#successView').hidden = false;
-    confetti();
-    const ids = Object.keys(cart); cart = {}; save(); ids.forEach(renderFoot); renderCart(); renderTabCounts();
-    form.reset();
-  } catch (ex) {
-    console.warn('[booking] send failed', ex);
-    const mail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Booking request — ' + fd.name)}&body=${encodeURIComponent(`Name: ${fd.name}\nPhone: ${fd.phone}\nAddress: ${fd.address}\nDate: ${fd.date} (${fd.slot})\n\n${orderText()}\n\nNotes: ${fd.notes || '—'}`)}`;
-    err.innerHTML = `Sorry — we couldn't send your request just now. Please try again, or <a href="${mail}">email it to us directly</a>.`;
-    err.hidden = false;
-  } finally {
-    sending = false; btn.disabled = false; btn.innerHTML = label;
-  }
-});
-
-/* ---------- AI assistant ---------- */
-// Cloudflare Worker that proxies DeepSeek (the API key lives only in the Worker).
-const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname)
-  ? 'http://localhost:8787/chat'
-  : 'https://illini-chat.iceocean712.workers.dev/chat';
-const ai = $('#ai'), aiBody = $('#aiBody'), aiInput = $('#aiInput'), aiSend = $('#aiSend'), aiFab = $('#aiFab');
-const CHAT_KEY = 'imc-chat-v1';
-let chat = [];
-try { chat = JSON.parse(sessionStorage.getItem(CHAT_KEY)) || []; } catch (e) { chat = []; }
-const saveChat = () => { try { sessionStorage.setItem(CHAT_KEY, JSON.stringify(chat.slice(-30))); } catch (e) {} };
-let aiBusy = false;
-const SUGGEST = ['How much for a 2-bed move-out clean?', "What's in the Kitchen Deep Clean?", 'Store 6 boxes + a bike for summer?', 'Movers for a studio — what do I need?', '可以用中文吗？'];
-const WELCOME = "Hey! 👋 I'm the **Illini Assistant**. Ask me anything about cleaning, moving or storage — I can price it out and add it straight to your quote.";
-const ACT_RE = /\[\[(?:add:([A-Za-z0-9]+):(\d{1,2})|book)\]\]/g;
-const esc = t => t.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const QUOTE_RE = /\[\[quote:([^\]]+)\]\]/g;
+const BOOK_RE = /\[\[booking:(\{[\s\S]*?\})\]\]/g;
+const visible = t => t.replace(QUOTE_RE, '').replace(BOOK_RE, '').replace(/\[\[[\s\S]*$/, '').replace(/\n{3,}/g, '\n\n').trim();
 function md(text) {
-  const lines = esc(text.trim()).split('\n'); let html = '', inList = false;
-  const inline = l => l.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|[^*])\*(?!\s)([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+  const lines = esc(text).split('\n'); let h = '', ul = false;
+  const inl = s => s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
   for (const l of lines) {
     const m = l.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
-    if (m) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${inline(m[1])}</li>`; continue; }
-    if (inList) { html += '</ul>'; inList = false; }
-    if (l.trim()) html += `<p>${inline(l)}</p>`;
+    if (m) { if (!ul) { h += '<ul>'; ul = true; } h += `<li>${inl(m[1])}</li>`; continue; }
+    if (ul) { h += '</ul>'; ul = false; }
+    if (l.trim()) h += `<p>${inl(l)}</p>`;
   }
-  if (inList) html += '</ul>';
-  return html;
+  return h + (ul ? '</ul>' : '');
 }
-const visible = t => t.replace(ACT_RE, '').replace(/\[\[[^\]]*\]?$/, '').replace(/\n{3,}/g, '\n\n');
-function actionsHTML(text) {
-  const out = []; const seen = new Set(); let m; ACT_RE.lastIndex = 0;
-  while ((m = ACT_RE.exec(text)) && out.length < 5) {
-    if (!m[1]) { if (!seen.has('book')) { seen.add('book'); out.push(`<button class="act primary" data-ai="book">${icon('calendar')} Open booking form</button>`); } continue; }
-    const it = ITEMS[m[1]]; if (!it || !it.price || seen.has(m[1])) continue; seen.add(m[1]);
-    let q = Math.max(1, Math.min(99, +m[2])); if (it.type === 'hourly') q = Math.max(q, it.min); if (it.type === 'flat') q = 1;
-    const lbl = it.type === 'hourly' ? `${q} hrs` : it.type === 'flat' ? '' : q > 1 ? `×${q}` : '';
-    const done = (cart[m[1]] || 0) >= q;
-    out.push(`<button class="act${done ? ' done' : ''}" data-ai="add" data-id="${m[1]}" data-q="${q}">${icon(done ? 'check' : 'plus')} ${it.name}${lbl ? ' ' + lbl : ''} · ${fmt(it.price * q)}${it.cat.billing === 'monthly' ? '/mo' : ''}</button>`);
+const qtyText = (it, q) => it.u === 'hr' ? `${q} ${q > 1 ? tr('hrs') : tr('hr')}` : it.u === 'flat' ? '' : `× ${q}`;
+function parseItems(obj) {
+  const out = [];
+  for (const [id, raw] of Object.entries(obj || {})) {
+    const it = ITEMS[id]; let q = Math.floor(Number(raw));
+    if (!it || !it.price || !Number.isFinite(q) || q < 1) continue;
+    q = Math.min(q, 99); if (it.min) q = Math.max(q, it.min); if (it.u === 'flat') q = 1;
+    out.push([it, q]);
   }
-  return out.length ? `<div class="acts">${out.join('')}</div>` : '';
+  return out;
 }
-function bubble(role, text, cls = '') {
-  const el = document.createElement('div');
-  el.className = `msg ${role === 'user' ? 'me' : 'bot'} ${cls}`;
-  el.innerHTML = role === 'user' ? md(text) : md(visible(text)) + actionsHTML(text);
-  aiBody.appendChild(el); return el;
+function itemsHTML(list) {
+  let once = 0, mo = 0, star = false;
+  const rows = list.map(([it, q]) => {
+    const t = it.price * q; it.cat.monthly ? (mo += t) : (once += t); if (it.star) star = true;
+    return `<div class="qrow"><span>${esc(L(it))}${it.star ? '*' : ''} ${qtyText(it, q)}</span><span>${fmt(t)}${it.cat.monthly ? tr('perMo') : ''}</span></div>`;
+  }).join('');
+  return rows + `<div class="qtot"><span>${tr('total')}</span><b>${fmt(once)}</b></div>` +
+    (mo ? `<div class="qsub">+ ${tr('storage')} ${fmt(mo)}${tr('perMo')}</div>` : '') + (star ? `<div class="qsub">${tr('varies')}</div>` : '');
 }
+function quoteCard(spec) {
+  const obj = {}; spec.split(',').forEach(p => { const [k, v] = p.split('=').map(s => s && s.trim()); if (k) obj[k] = v || 1; });
+  const list = parseItems(obj); if (!list.length) return '';
+  return `<div class="card"><h4>${tr('quote')}</h4>${itemsHTML(list)}<div class="cbtns"><button class="btn pri" data-say="${esc(tr('bookMsg'))}">${tr('bookThis')}</button></div></div>`;
+}
+const today = (() => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); })();
+function bookingCard(json, idx) {
+  let b; try { b = JSON.parse(json); } catch (e) { return ''; }
+  const list = parseItems(b.items);
+  if (state.sent[idx]) return `<div class="card"><div class="ok"><span class="tick">✓</span><div><b>${tr('sent')}</b><div>${tr('sentText', { r: `<code>${esc(state.sent[idx])}</code>` })}</div></div></div></div>`;
+  const win = String(b.window || '').toLowerCase();
+  const opt = v => `<option value="${v}"${win.startsWith(v.toLowerCase()) ? ' selected' : ''}>${tr(v.toLowerCase())}</option>`;
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(b.date || '') ? b.date : '';
+  return `<form class="card bk" data-idx="${idx}" novalidate><h4>${tr('booking')}</h4>
+    <div class="bgrid">
+      <label>${tr('name')}<input name="name" required value="${esc(b.name || '')}" autocomplete="name"></label>
+      <label>${tr('phone')}<input name="phone" type="tel" required value="${esc(b.phone || '')}" autocomplete="tel"></label>
+      <label class="full">${tr('email')}<input name="email" type="email" required value="${esc(b.email || '')}" autocomplete="email"></label>
+      <label class="full">${tr('address')}<input name="address" required value="${esc(b.address || '')}" autocomplete="street-address"></label>
+      <label>${tr('date')}<input name="date" type="date" required min="${today}" value="${esc(date)}"></label>
+      <label>${tr('window')}<select name="window">${opt('Morning')}${opt('Afternoon')}${opt('Evening')}</select></label>
+      <label class="full">${tr('notes')}<textarea name="notes">${esc(b.notes || '')}</textarea></label>
+    </div>
+    ${list.length ? `<div class="bitems"><h4 style="margin-top:12px">${tr('services')}</h4>${itemsHTML(list)}</div>` : ''}
+    <input type="hidden" name="items" value="${esc(JSON.stringify(Object.fromEntries(list.map(([it, q]) => [it.id, q]))))}">
+    <div class="berr" hidden></div>
+    <div class="cbtns"><button class="btn pri" type="submit">${tr('confirm')}</button></div>
+  </form>`;
+}
+function botHTML(text, idx) {
+  let cards = ''; let m;
+  QUOTE_RE.lastIndex = 0; while ((m = QUOTE_RE.exec(text))) cards += quoteCard(m[1]);
+  BOOK_RE.lastIndex = 0; while ((m = BOOK_RE.exec(text))) cards += bookingCard(m[1], idx);
+  return { text: md(visible(text)), cards };
+}
+function addBot(text, idx) {
+  const { text: h, cards } = botHTML(text, idx);
+  if (h) { const el = document.createElement('div'); el.className = 'msg bot'; el.innerHTML = h; bodyEl.appendChild(el); }
+  if (cards) bodyEl.insertAdjacentHTML('beforeend', cards);
+}
+function addMe(text) { const el = document.createElement('div'); el.className = 'msg me'; el.innerHTML = md(text); bodyEl.appendChild(el); }
 function renderChat() {
-  aiBody.innerHTML = '';
-  bubble('assistant', WELCOME);
-  chat.forEach(m => bubble(m.role, m.content));
-  if (!chat.length) {
-    const c = document.createElement('div'); c.className = 'chips'; c.id = 'aiChips';
-    c.innerHTML = SUGGEST.map(q => `<button class="chip-q" data-ask="${esc(q)}">${esc(q)}</button>`).join('');
-    aiBody.appendChild(c);
-  }
-  aiBody.scrollTop = aiBody.scrollHeight;
+  bodyEl.textContent = '';
+  addBot(tr('welcome'), -1);
+  state.msgs.forEach((m, i) => { if (m.hidden) return; m.role === 'user' ? addMe(m.content) : addBot(m.content, i); });
+  if (!state.msgs.length) bodyEl.insertAdjacentHTML('beforeend', `<div class="chips">${tr('chips').map(c => `<button class="chip" data-say="${esc(c)}">${esc(c)}</button>`).join('')}</div>`);
+  bodyEl.scrollTop = bodyEl.scrollHeight;
 }
-function openAI() {
-  ai.classList.add('open'); aiFab.classList.add('hide'); aiFab.setAttribute('aria-expanded', true);
-  $('#aiNudge').classList.remove('show'); nudgeDone();
-  if (!aiBody.childElementCount) renderChat();
-  setTimeout(() => aiInput.focus({ preventScroll: true }), 250);
-  closeSheet();
-  if (matchMedia('(max-width:640px)').matches) document.body.style.overflow = 'hidden';
-}
-function closeAI() { ai.classList.remove('open'); aiFab.classList.remove('hide'); aiFab.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }
-aiFab.addEventListener('click', openAI);
-$('#aiClose').addEventListener('click', closeAI);
-$('#aiReset').addEventListener('click', () => { if (aiBusy) return; chat = []; saveChat(); renderChat(); aiInput.focus(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && ai.classList.contains('open') && !document.querySelector('dialog[open]')) closeAI(); });
-aiInput.addEventListener('input', () => { aiInput.style.height = 'auto'; aiInput.style.height = Math.min(120, aiInput.scrollHeight) + 'px'; aiSend.disabled = !aiInput.value.trim() || aiBusy; });
-aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#aiForm').requestSubmit(); } });
-$('#aiForm').addEventListener('submit', e => { e.preventDefault(); askAI(aiInput.value); });
-aiBody.addEventListener('click', e => {
-  const q = e.target.closest('[data-ask]'); if (q) { askAI(q.dataset.ask); return; }
-  const a = e.target.closest('[data-ai]'); if (!a) return;
-  if (a.dataset.ai === 'book') { closeAI(); openBooking(); return; }
-  const id = a.dataset.id, want = +a.dataset.q;
-  setQty(id, Math.max(cart[id] || 0, want));
-  a.classList.add('done'); a.innerHTML = icon('check') + ' Added to quote';
-  toast(`${ITEMS[id].name} added to your quote`);
-});
-async function askAI(text) {
-  text = (text || '').trim(); if (!text || aiBusy) return;
-  aiBusy = true; aiSend.disabled = true;
-  $('#aiChips')?.remove();
-  aiInput.value = ''; aiInput.style.height = 'auto';
-  chat.push({ role: 'user', content: text.slice(0, 1000) }); saveChat();
-  bubble('user', text);
-  const el = bubble('assistant', ''); el.innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
-  aiBody.scrollTop = aiBody.scrollHeight;
+const toBottom = () => { bodyEl.scrollTop = bodyEl.scrollHeight; };
+
+async function ask(text) {
+  text = (text || '').trim(); if (!text || busy) return;
+  busy = true; send.disabled = true;
+  bodyEl.querySelector('.chips')?.remove();
+  input.value = ''; input.style.height = '';
+  state.msgs.push({ role: 'user', content: text.slice(0, 1000) }); persist();
+  addMe(text);
+  const el = document.createElement('div'); el.className = 'msg bot'; el.innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
+  bodyEl.appendChild(el); toBottom();
   let reply = '';
   try {
     const ctrl = new AbortController(); let timer = setTimeout(() => ctrl.abort(), 30000);
     const res = await fetch(CHAT_ENDPOINT, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chat.slice(-16), cart }), signal: ctrl.signal,
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl.signal,
+      body: JSON.stringify({ messages: state.msgs.slice(-16).map(({ role, content }) => ({ role, content })), lang, today }),
     });
-    if (!res.ok || !res.body) {
-      const j = await res.json().catch(() => ({}));
-      throw new Error(j.error || `HTTP ${res.status}`);
-    }
-    const reader = res.body.getReader(), dec = new TextDecoder();
-    let raf = 0;
-    const paint = () => { raf = 0; el.innerHTML = md(visible(reply)) || '<span class="dots"><i></i><i></i><i></i></span>'; aiBody.scrollTop = aiBody.scrollHeight; };
-    while (true) {
+    if (!res.ok || !res.body) { const j = await res.json().catch(() => ({})); throw new Error(res.status === 429 ? 'rate' : (j.error || res.status)); }
+    const reader = res.body.getReader(), dec = new TextDecoder(); let raf = 0;
+    const paint = () => { raf = 0; const v = visible(reply); el.innerHTML = v ? md(v) : '<span class="dots"><i></i><i></i><i></i></span>'; toBottom(); };
+    for (;;) {
       const { value, done } = await reader.read(); if (done) break;
       clearTimeout(timer); timer = setTimeout(() => ctrl.abort(), 30000);
       reply += dec.decode(value, { stream: true });
       if (!raf) raf = requestAnimationFrame(paint);
     }
-    clearTimeout(timer);
-    if (!reply.trim()) throw new Error('Empty reply');
-    cancelAnimationFrame(raf);
-    el.innerHTML = md(visible(reply)) + actionsHTML(reply);
-    chat.push({ role: 'assistant', content: reply }); saveChat();
+    clearTimeout(timer); cancelAnimationFrame(raf);
+    if (!reply.trim()) throw new Error('empty');
+    state.msgs.push({ role: 'assistant', content: reply }); persist();
+    el.remove(); addBot(reply, state.msgs.length - 1); toBottom();
   } catch (err) {
-    console.warn('[ai]', err);
-    chat.pop(); saveChat();
+    state.msgs.pop(); persist();
     el.classList.add('err');
-    el.innerHTML = `<p>${esc(/Too many/.test(err.message) ? err.message : "Sorry, I couldn't reach the assistant just now.")}</p><div class="acts"><button class="act" data-ask="${esc(text)}">${icon('refresh')} Try again</button></div>`;
+    el.innerHTML = `<p>${esc(err.message === 'rate' ? tr('tooMany') : tr('aiFail'))}</p><div class="cbtns"><button class="btn" data-say="${esc(text)}">${tr('retry')}</button></div>`;
     el.previousElementSibling?.remove();
-  } finally {
-    aiBusy = false; aiSend.disabled = !aiInput.value.trim();
-    aiBody.scrollTop = aiBody.scrollHeight;
+  } finally { busy = false; send.disabled = !input.value.trim(); }
+}
+
+async function submitBooking(form) {
+  const err = form.querySelector('.berr'), btn = form.querySelector('[type=submit]');
+  const fd = Object.fromEntries(new FormData(form));
+  const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.email || '');
+  if (!fd.name?.trim() || !fd.phone?.trim() || !okEmail || !fd.address?.trim() || !fd.date) { err.textContent = tr('missing'); err.hidden = false; return; }
+  let items = {}; try { items = JSON.parse(fd.items || '{}'); } catch (e) {}
+  const list = parseItems(items);
+  let once = 0, mo = 0;
+  const lines = list.map(([it, q]) => { const t = it.price * q; it.cat.monthly ? (mo += t) : (once += t); return `• [${it.cat.en}] ${it.en}${it.star ? ' *' : ''} — ${it.u === 'hr' ? q + ' hr' : it.u === 'flat' ? 'flat fee' : '× ' + q} @ $${it.price} = ${fmt(t)}${it.cat.monthly ? '/mo' : ''}`; });
+  const order = (lines.length ? lines : ['(no services specified — see notes / chat)']).join('\n') + `\n\nTotal (one-time): ${fmt(once)}` + (mo ? `\nStorage: ${fmt(mo)}/mo` : '');
+  const ref = 'IMC-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+  const transcript = state.msgs.slice(-12).map(m => `${m.role === 'user' ? 'Customer' : 'AI'}: ${visible(m.content)}`).join('\n\n').slice(0, 4000);
+  btn.disabled = true; btn.innerHTML = `<span class="spin"></span> ${tr('sending')}`; err.hidden = true;
+  try {
+    const res = await fetch(BOOKING_ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: `New booking ${ref} — ${fd.name} — ${fmt(once)}${mo ? ` + ${fmt(mo)}/mo` : ''}`, _template: 'box', _replyto: fd.email, _captcha: 'false',
+        'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
+        'Name': fd.name, 'Phone': fd.phone, 'Email': fd.email, 'Service address': fd.address,
+        'Preferred date': fd.date, 'Time window': fd.window, 'Order': order, 'Notes': fd.notes || '—', 'Chat transcript': transcript,
+      }),
+    });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || String(j.success) !== 'true') throw new Error(j.message || res.status);
+    const idx = +form.dataset.idx; state.sent[idx] = ref;
+    state.msgs.push({ role: 'assistant', content: `Booking request ${ref} was sent to the team.`, hidden: 1 }); persist();
+    renderChat();
+  } catch (e) {
+    console.warn('[booking]', e);
+    err.textContent = tr('sendFail'); err.hidden = false; btn.disabled = false; btn.textContent = tr('confirm');
   }
 }
-// Gentle nudge once per visitor, after they've browsed a bit
-function nudgeDone() { try { localStorage.setItem('imc-nudged', '1'); } catch (e) {} }
-let nudged = false; try { nudged = !!localStorage.getItem('imc-nudged'); } catch (e) {}
-if (!nudged) setTimeout(() => { if (!ai.classList.contains('open')) $('#aiNudge').classList.add('show'); }, 9000);
-$('#aiNudge').addEventListener('click', e => { if (e.target.closest('#aiNudgeX')) { e.stopPropagation(); $('#aiNudge').classList.remove('show'); nudgeDone(); return; } openAI(); });
-$('#aiNudge').addEventListener('keydown', e => { if (e.key === 'Enter') openAI(); });
 
-/* ---------- Toast ---------- */
-let toastT;
-function toast(msg) { $('#toastMsg').textContent = msg; const t = $('#toast'); t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+bodyEl.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) ask(b.dataset.say); });
+bodyEl.addEventListener('submit', e => { const f = e.target.closest('form.bk'); if (f) { e.preventDefault(); submitBooking(f); } });
+$('#form').addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(120, input.scrollHeight) + 'px'; send.disabled = !input.value.trim() || busy; });
+input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#form').requestSubmit(); } });
+$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {} }; persist(); renderChat(); input.focus(); });
 
-/* ---------- Confetti ---------- */
-function confetti() {
-  if (reduceMotion) return;
-  const cv = $('#confetti'), ctx = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
-  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.scale(dpr, dpr);
-  const cols = ['#FF5F05', '#13294B', '#FFB088', '#FFFFFF', '#1C3A68'];
-  const ps = Array.from({ length: 160 }, () => ({
-    x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .55,
-    vx: (Math.random() - .5) * 16, vy: -Math.random() * 16 - 6,
-    w: 6 + Math.random() * 8, h: 4 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - .5) * .4,
-    c: cols[(Math.random() * cols.length) | 0], life: 0
-  }));
-  const t0 = performance.now();
-  (function frame(now) {
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    ps.forEach(p => { p.vy += .42; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.strokeStyle = '#13294B'; ctx.lineWidth = 1;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.strokeRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore(); });
-    if (now - t0 < 3200) requestAnimationFrame(frame); else ctx.clearRect(0, 0, innerWidth, innerHeight);
-  })(t0);
+const chatSec = $('#chat');
+function goChat(text) {
+  chatSec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  if (text) ask(text); else setTimeout(() => input.focus({ preventScroll: true }), 350);
 }
+$('#pgrid').addEventListener('click', e => { const b = e.target.closest('[data-ask-item]'); if (b) goChat(tr('askAbout', { x: L(ITEMS[b.dataset.askItem]) })); });
+const toChat = $('#toChat');
+toChat.addEventListener('click', () => goChat());
+new IntersectionObserver(([en]) => toChat.classList.toggle('show', !en.isIntersecting), { threshold: 0.15 }).observe($('.chat'));
 
-/* ---------- Hero: rotator, parallax ---------- */
-const words = ['Chill out.', 'Ace finals.', 'Fly home.', 'Get deposit back.'];
-let wi = 0; const rot = $('#rot');
-if (!reduceMotion) setInterval(() => {
-  rot.classList.add('out');
-  setTimeout(() => {
-    wi = (wi + 1) % words.length; rot.textContent = words[wi];
-    rot.classList.remove('out'); rot.classList.add('pre'); void rot.offsetWidth; rot.classList.remove('pre');
-  }, 320);
-}, 2600);
-const stage = $('#stage'), sw = $('#stageWrap');
-if (matchMedia('(hover:hover)').matches && !reduceMotion) {
-  const hero = $('.hero');
-  hero.addEventListener('pointermove', e => { const r = sw.getBoundingClientRect(); const mx = Math.max(-1.5, Math.min(1.5, ((e.clientX - r.left) / r.width - .5) * 2)), my = Math.max(-1.5, Math.min(1.5, ((e.clientY - r.top) / r.height - .5) * 2)); [stage, sw].forEach(el => { el.style.setProperty('--mx', mx); el.style.setProperty('--my', my); }); });
-  hero.addEventListener('pointerleave', () => [stage, sw].forEach(el => { el.style.setProperty('--mx', 0); el.style.setProperty('--my', 0); }));
+/* ================= Theme & language ================= */
+function setMeta() { document.querySelector('meta[name=theme-color]').content = root.dataset.theme === 'dark' ? '#0B1424' : '#FFF7EE'; }
+$('#themeBtn').addEventListener('click', e => {
+  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  const apply = () => { root.dataset.theme = next; setMeta(); try { localStorage.setItem('imc-theme', next); } catch (er) {} };
+  if (reduce) return apply();
+  if (!document.startViewTransition) { root.classList.add('theme-fade'); apply(); setTimeout(() => root.classList.remove('theme-fade'), 400); return; }
+  const r = e.currentTarget.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  root.classList.add('vt-theme');
+  const vt = document.startViewTransition(apply);
+  vt.ready.then(() => root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
+    { duration: 550, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' }));
+  vt.finished.finally(() => root.classList.remove('vt-theme'));
+});
+function setLang(next) {
+  lang = next; root.dataset.lang = next; root.lang = next === 'zh' ? 'zh-CN' : 'en';
+  try { localStorage.setItem('imc-lang', next); } catch (e) {}
+  applyStatic(); renderPricing(); renderChat();
+  document.title = next === 'zh' ? 'Illini Move & Clean — AI 报价与预约：搬家、清洁、仓储' : 'Illini Move & Clean — AI quotes & booking for moving, cleaning, storage';
 }
+$('#langBtn').addEventListener('click', () => {
+  const next = lang === 'zh' ? 'en' : 'zh';
+  if (document.startViewTransition && !reduce) document.startViewTransition(() => setLang(next)); else setLang(next);
+});
 
-/* ---------- Marquee ---------- */
-const mItems = ['Dorm move-outs', 'Deep kitchen cleans', 'Summer storage', 'Two movers + a truck', 'Fridge rescues', 'Apartment turnovers'];
-const mHTML = mItems.map(t => `<span class="marquee-item">${t}${icon('sparkles')}</span>`).join('');
-$('#marq').innerHTML = mHTML + mHTML;
-
-/* ---------- Header / menu ---------- */
-const hdr = $('#hdr');
-const onScroll = () => hdr.classList.toggle('scrolled', scrollY > 8);
-addEventListener('scroll', onScroll, { passive: true }); onScroll();
-$('#burger').addEventListener('click', () => { const o = document.body.classList.toggle('menu-open'); $('#burger').setAttribute('aria-expanded', o); });
-$$('#mnav a').forEach(a => a.addEventListener('click', () => { document.body.classList.remove('menu-open'); $('#burger').setAttribute('aria-expanded', false); }));
-
-/* ---------- Reveal ---------- */
-const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
-$$('.reveal').forEach(el => io.observe(el));
-
-/* ---------- Init ---------- */
+/* ================= Init ================= */
 $('#yr').textContent = new Date().getFullYear();
-hydrateIcons();
-renderPanel(); renderTabCounts(); renderCart();
-requestAnimationFrame(movePill);
-addEventListener('resize', movePill);
-document.fonts && document.fonts.ready.then(movePill);
+setMeta(); setLang(lang);
 })();
 </script>
 </body>
