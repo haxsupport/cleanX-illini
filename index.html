@@ -58,6 +58,9 @@ svg{display:block}
 :root[data-theme=dark] .lm-bg{fill:var(--orange)}:root[data-theme=dark] .lm-i{fill:var(--navy)}
 .logo b{font-family:var(--display);font-weight:800;font-size:18px;line-height:.9;color:var(--heading)}
 .logo b small{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--orange);margin-top:3px}
+.nbtn{display:inline-flex;align-items:center;gap:6px;height:40px;border:0;border-radius:999px;background:none;color:var(--muted);font-weight:800;font-size:14px;padding:0 10px;flex:none}
+.nbtn:hover{color:var(--heading);background:var(--surface)}
+.nbtn .i{width:16px;height:16px}
 .pbtn{display:none;align-items:center;gap:6px;height:40px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--heading);font-weight:800;font-size:14px;padding:0 14px 0 12px;flex:none}
 .pbtn .i{width:16px;height:16px;color:var(--orange)}
 .hbtn{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--heading);padding:0;flex:none}
@@ -85,11 +88,7 @@ svg{display:block}
 .agent{display:flex;flex-direction:column;min-height:0;min-width:0}
 .thread{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .thread-in{max-width:760px;margin:0 auto;padding:20px 16px 12px;display:flex;flex-direction:column;gap:12px;min-height:100%}
-.composer{flex:none;width:100%;max-width:792px;margin:0 auto;padding:8px 16px calc(10px + env(safe-area-inset-bottom))}
-.cbar{display:flex;justify-content:flex-end;margin-bottom:6px}
-.newchat{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--muted);font-weight:700;font-size:13px;padding:2px}
-.newchat:hover{color:var(--heading)}
-.newchat .i{width:14px;height:14px}
+.composer{flex:none;width:100%;max-width:792px;margin:0 auto;padding:10px 16px calc(12px + env(safe-area-inset-bottom))}
 .form{display:flex;align-items:flex-end;gap:8px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:6px 6px 6px 16px;box-shadow:4px 4px 0 var(--orange)}
 .form:focus-within{border-color:var(--orange)}
 .form textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:16px;line-height:1.45;max-height:140px;padding:9px 0;outline:none;color:var(--ink)}
@@ -109,7 +108,7 @@ svg{display:block}
 .chip{border:1.5px solid var(--line);background:var(--surface);color:var(--heading);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600}
 .chip:hover{background:var(--peach)}
 .agent.empty .intro{display:block}
-.agent.empty .cbar{visibility:hidden}
+.agent:not(.empty) .note{display:none}
 
 .msg{max-width:88%;font-size:15.5px;line-height:1.55;overflow-wrap:anywhere}
 .msg.bot{align-self:flex-start;color:var(--ink);display:grid;grid-template-columns:28px 1fr;gap:10px}
@@ -146,9 +145,9 @@ svg{display:block}
 .dep b{font-family:var(--display);font-size:21px;color:var(--orange);white-space:nowrap}
 .dep small{display:block;font-weight:600;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
 .hint{font-size:13.5px;color:#D13A3A;font-weight:700;margin-top:10px}
-.bk.old{opacity:.5}
-.bk.old .cbtns,.bk.old .dep small{display:none}
-.oldtag{float:right;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.04em}
+.bk.old{display:flex;align-items:center;gap:10px;padding:9px 14px;opacity:.6;font-size:13.5px;color:var(--muted)}
+.bk.old b{color:var(--heading)}
+.bk.old .oldtag{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
 .qr{display:flex;flex-wrap:wrap;gap:8px;margin-left:38px}
 .berr{color:#D13A3A;font-size:13px;font-weight:600;margin-top:8px}
 .ok{display:flex;gap:10px;align-items:flex-start}
@@ -217,7 +216,8 @@ svg{display:block}
   .logo b{font-size:15.5px}
   .logo b small{letter-spacing:.06em}
   .pbtn{padding:0 12px 0 10px}
-  .pbtn span{display:none}
+  .pbtn span,.nbtn span{display:none}
+  .nbtn{padding:0 8px}
   .msg{max-width:96%}
   .card,.qr{margin-left:0}
   .chips{margin-top:16px}
@@ -234,6 +234,7 @@ svg{display:block}
     <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
     <b>ILLINI<small>MOVE &amp; CLEAN</small></b>
   </a>
+  <button class="nbtn" id="reset" hidden><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span data-i18n="newChat">New chat</span></button>
   <button class="pbtn" id="pricesBtn" aria-controls="prices" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor"/></svg><span data-i18n="navPricing">Pricing</span></button>
   <button class="lang" id="langBtn" aria-label="Switch language / 切换语言"><span class="l-en">EN</span><span class="l-zh">中</span></button>
   <button class="hbtn theme-btn" id="themeBtn" aria-label="Toggle dark mode">
@@ -258,8 +259,7 @@ svg{display:block}
       </div>
     </div>
     <div class="composer" id="composer">
-      <div class="cbar"><button class="newchat" id="reset"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span data-i18n="newChat">New chat</span></button></div>
-      <form class="form" id="form">
+            <form class="form" id="form">
         <textarea id="input" rows="1" maxlength="1000" placeholder="Ask for a price or a booking…" data-i18n-ph="ph" aria-label="Message"></textarea>
         <button class="send" id="send" type="submit" aria-label="Send" disabled><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
       </form>
@@ -278,7 +278,7 @@ svg{display:block}
       <div class="fine">
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
-        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (min $20) holds your slot. We invoice it after confirming your date, and it counts toward your final bill.</div>
+        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. It holds your slot — we invoice it after confirming your date, and it counts toward your final bill.</div>
         <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
         <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
@@ -375,14 +375,14 @@ const STR = {
     fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
     fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
     notAff: 'Independent business — not affiliated with the University of Illinois.',
-    fine3: '<b>Deposit:</b> 20% of the estimate (min $20) holds your slot. We invoice it after confirming your date, and it counts toward your final bill.',
+    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. It holds your slot — we invoice it after confirming your date, and it counts toward your final bill.',
     chips: ['2-bed move-out clean — how much?', 'Move my studio + store 6 boxes', "What's in the Kitchen Deep Clean?", 'Book a cleaning for next Saturday', 'Two movers this weekend'],
     included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
     askAbout: 'Tell me about {x} — price and what’s included.',
     quote: 'Estimate', total: 'Total', storage: 'Storage', perMo: '/mo', varies: '* Final price confirmed before work starts.',
     bookThis: 'Book this', bookMsg: "I'd like to book this.",
     booking: 'Booking request', name: 'Name', phone: 'Phone', email: 'Email', address: 'Address', when: 'When',
-    morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', tbd: 'Team will confirm', noEmail: 'Skipped — invoice by text',
+    morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', tbd: 'Team will confirm', noEmail: 'Not provided — we’ll arrange it by phone',
     deposit: 'Deposit to hold your slot', depNote: 'Invoiced after we confirm your date · counts toward your bill',
     confirm: 'Confirm & send', sending: 'Sending…', change: 'Change something', changeMsg: "I'd like to change something in this booking.",
     needPhone: 'Phone number missing — just send it in the chat and I’ll update this card.', phoneMissing: 'Missing', old: 'UPDATED BELOW',
@@ -399,14 +399,14 @@ const STR = {
     fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
     fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
     notAff: '独立经营，与伊利诺伊大学无隶属关系。',
-    fine3: '<b>定金：</b>预估总价的 20%（最低 $20）用于锁定时段。确认日期后我们开账单，定金抵扣尾款。',
+    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20，用于锁定时段。确认日期后我们开账单，定金抵扣尾款。',
     chips: ['两室退房清洁多少钱？', '单间搬家 + 存 6 个箱子', '厨房深度清洁包含什么？', '帮我约下周六的清洁', '这周末要两名搬运工'],
     included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
     askAbout: '介绍一下「{x}」— 价格和包含的内容。',
     quote: '报价', total: '合计', storage: '仓储', perMo: '/月', varies: '* 最终价格开工前确认。',
     bookThis: '预约这个', bookMsg: '我想预约这个。',
     booking: '预约申请', name: '姓名', phone: '电话', email: '邮箱', address: '地址', when: '时间',
-    morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', tbd: '待团队确认', noEmail: '未填 — 账单短信发送',
+    morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', tbd: '待团队确认', noEmail: '未提供 — 我们电话沟通',
     deposit: '锁定时段的定金', depNote: '确认日期后开账单 · 抵扣尾款',
     confirm: '确认并提交', sending: '提交中…', change: '修改信息', changeMsg: '我想修改一下这个预约。',
     needPhone: '还缺手机号 — 直接在对话里发给我，我会更新这张卡。', phoneMissing: '未提供', old: '已更新',
@@ -547,11 +547,12 @@ function bookingCard(idx) {
     return `<div class="card"><div class="ok"><span class="tick">✓</span><div><b>${tr('sent')}</b><div>${dep ? tr('sentText', { r, d: `<b>${fmt(dep)}</b>` }) : tr('sentNoDep', { r })}</div></div></div></div>`;
   }
   const old = idx !== latestBooking() || Object.keys(state.sent).some(k => +k > idx);
+  if (old) { const { once, mo } = totals(b.list); return `<div class="card bk old" data-idx="${idx}"><span>${tr('booking')} · <b>${once || !mo ? fmt(once) : fmt(mo) + tr('perMo')}</b></span><span class="oldtag">${tr('old')}</span></div>`; }
   const tbd = `<dd class="tbd">${tr('tbd')}</dd>`;
   const dd = v => v ? `<dd>${esc(v)}</dd>` : tbd;
   const when = [b.date && fmtDate(b.date), b.win ? tr(b.win) : b.winRaw].filter(Boolean).join(' · ');
   const okPhone = phoneOK(b.phone);
-  return `<div class="card bk${old ? ' old' : ''}" data-idx="${idx}"><h4>${tr('booking')}${old ? `<span class="oldtag">${tr('old')}</span>` : ''}</h4>
+  return `<div class="card bk" data-idx="${idx}"><h4>${tr('booking')}</h4>
     ${b.list.length ? itemsHTML(b.list) : ''}
     ${dep ? `<div class="dep"><span>${tr('deposit')}<small>${tr('depNote')}</small></span><b>${fmt(dep)}</b></div>` : ''}
     <hr class="sep">
@@ -563,7 +564,7 @@ function bookingCard(idx) {
       <dt>${tr('address')}</dt>${dd(b.address)}
       ${b.notes ? `<dt>${tr('notes')}</dt><dd>${esc(b.notes)}</dd>` : ''}
     </dl>
-    ${!okPhone && !old ? `<div class="hint">${tr('needPhone')}</div>` : ''}
+    ${!okPhone ? `<div class="hint">${tr('needPhone')}</div>` : ''}
     <div class="berr" hidden></div>
     <div class="cbtns">${okPhone ? `<button class="btn pri" data-book="${idx}">${tr('confirm')}</button>` : ''}<button class="btn" data-say="${esc(tr('changeMsg'))}">${tr('change')}</button></div>
   </div>`;
@@ -590,7 +591,7 @@ function renderChat() {
   [...thread.children].forEach(n => { if (n !== intro) n.remove(); });
   let lastVis = -1; state.msgs.forEach((m, i) => { if (!m.hidden) lastVis = i; });
   state.msgs.forEach((m, i) => { if (m.hidden) return; m.role === 'user' ? addMe(m.content) : addBot(m.content, i, i === lastVis); });
-  agent.classList.toggle('empty', !state.msgs.length);
+  agent.classList.toggle('empty', !state.msgs.length); $('#reset').hidden = !state.msgs.length;
   $('#chips').innerHTML = tr('chips').map(c => `<button class="chip" data-say="${esc(c)}">${esc(c)}</button>`).join('');
   toEnd();
 }
@@ -604,7 +605,7 @@ async function ask(text) {
   busy = true; send.disabled = true;
   input.value = ''; input.style.height = '';
   state.msgs.push({ role: 'user', content: text.slice(0, 1000) }); persist();
-  agent.classList.remove('empty');
+  agent.classList.remove('empty'); $('#reset').hidden = false;
   thread.querySelectorAll('.qr').forEach(n => n.remove());
   addMe(text);
   const el = botEl('<span class="dots"><i></i><i></i><i></i></span>');
@@ -635,8 +636,15 @@ async function ask(text) {
     const follow = isNearEnd();
     state.msgs.push({ role: 'assistant', content: reply }); persist();
     el.remove(); addBot(reply, state.msgs.length - 1, true);
-    if (reply.includes('[[booking:')) refreshOldBookings();
-    if (follow) toEnd();
+    if (reply.includes('[[booking:')) {
+      refreshOldBookings();
+      const cards = thread.querySelectorAll('.bk:not(.old)'), card = cards[cards.length - 1];
+      if (card) {
+        if (narrow.matches) input.blur();                // put the keyboard away so the whole card is visible
+        const top = card.previousElementSibling?.classList.contains('bot') ? card.previousElementSibling : card;
+        threadWrap.scrollTop += top.getBoundingClientRect().top - threadWrap.getBoundingClientRect().top - 12;
+      }
+    } else if (follow) toEnd();
   } catch (err) {
     state.msgs.pop(); persist();
     el.classList.add('err');
@@ -663,9 +671,9 @@ async function submitBooking(btn) {
         _subject: `New booking ${ref} — ${b.name || b.phone} — ${fmt(once)}${mo ? ` + ${fmt(mo)}/mo` : ''}${dep ? ` · deposit ${fmt(dep)}` : ''}`, _template: 'box', _captcha: 'false',
         ...(b.email ? { _replyto: b.email } : {}),
         'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
-        'Phone': b.phone, 'Name': b.name || '—', 'Email (invoice)': b.email || '— (none — send invoice by text)', 'Service address': b.address || tba,
+        'Phone': b.phone, 'Name': b.name || '—', 'Email (invoice)': b.email || '— (not provided — arrange invoice by phone)', 'Service address': b.address || tba,
         'Preferred date': b.date || tba, 'Time window': b.win ? b.win[0].toUpperCase() + b.win.slice(1) : (b.winRaw || tba),
-        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of estimate, min $20) — invoice after confirming the slot` : '—',
+        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20) — invoice after confirming the slot` : '—',
         'Notes': b.notes || '—', 'Chat transcript': transcript,
       }),
     });
