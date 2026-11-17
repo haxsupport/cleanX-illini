@@ -767,7 +767,7 @@ function parseItems(obj) {
   for (const [id, raw] of Object.entries(obj || {})) {
     const it = ITEMS[id]; let q = Math.floor(Number(raw));
     if (!it || !it.price || !Number.isFinite(q) || q < 1) continue;
-    q = Math.min(q, 99); if (it.min) q = Math.max(q, it.min); if (it.u === 'flat') q = 1;
+    q = Math.min(q, 9999); if (it.min) q = Math.max(q, it.min); if (it.u === 'flat') q = 1;
     out.push([it, q]);
   }
   return out;
@@ -790,7 +790,7 @@ function depositFor(list) {
   return Math.min(base, Math.max(DEPOSIT.min, Math.ceil(base * DEPOSIT.rate / DEPOSIT.step) * DEPOSIT.step));
 }
 function quoteCard(spec) {
-  const obj = {}; spec.split(',').forEach(p => { const [k, v] = p.split('=').map(s => s && s.trim()); if (k) obj[k] = v || 1; });
+  const obj = {}; spec.split(/[,;]/).forEach(p => { const [k, v] = p.split(/[=:]/).map(s => s && s.trim()); if (k) obj[k] = v || 1; });
   const list = parseItems(obj); if (!list.length) return '';
   const cats = [...new Set(list.map(([it]) => it.cat.key))];
   const ics = cats.slice(0, 3).map(k => `<img src="${icon(k)}" alt="" width="34" height="34">`).join('');
