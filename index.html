@@ -144,6 +144,7 @@ svg{display:block}
 .dep{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--peach);color:var(--heading);font-weight:800}
 .dep b{font-family:var(--display);font-size:21px;color:var(--orange);white-space:nowrap}
 .dep small{display:block;font-weight:600;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
+.paidline{margin-top:6px;font-weight:700;color:#16A34A}
 .hint{font-size:13.5px;color:#D13A3A;font-weight:700;margin-top:10px}
 .bk.old{display:flex;align-items:center;gap:10px;padding:9px 14px;opacity:.6;font-size:13.5px;color:var(--muted)}
 .bk.old b{color:var(--heading)}
@@ -278,7 +279,7 @@ svg{display:block}
       <div class="fine">
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
-        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. It holds your slot — we invoice it after confirming your date, and it counts toward your final bill.</div>
+        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure Stripe link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
         <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
         <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
@@ -375,7 +376,7 @@ const STR = {
     fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
     fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
     notAff: 'Independent business — not affiliated with the University of Illinois.',
-    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. It holds your slot — we invoice it after confirming your date, and it counts toward your final bill.',
+    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure Stripe link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
     chips: ['2-bed move-out clean — how much?', 'Move my studio + store 6 boxes', "What's in the Kitchen Deep Clean?", 'Book a cleaning for next Saturday', 'Two movers this weekend'],
     included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
     askAbout: 'Tell me about {x} — price and what’s included.',
@@ -383,10 +384,11 @@ const STR = {
     bookThis: 'Book this', bookMsg: "I'd like to book this.",
     booking: 'Booking request', name: 'Name', phone: 'Phone', email: 'Email', address: 'Address', when: 'When',
     morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', tbd: 'Team will confirm', noEmail: 'Not provided — we’ll arrange it by phone',
-    deposit: 'Deposit to hold your slot', depNote: 'Invoiced after we confirm your date · counts toward your bill',
+    deposit: 'Deposit to hold your slot', depNote: 'Pay after sending · full refund if we can’t take your slot',
     confirm: 'Confirm & send', sending: 'Sending…', change: 'Change something', changeMsg: "I'd like to change something in this booking.",
     needPhone: 'Phone number missing — just send it in the chat and I’ll update this card.', phoneMissing: 'Missing', old: 'UPDATED BELOW',
-    sent: 'Request sent!', sentText: 'Reference {r}. We’ll call or text to confirm your slot, then send an invoice for the {d} deposit.', sentNoDep: 'Reference {r}. We’ll call or text to confirm your slot and final price.',
+    sent: 'Request sent!', sentText: 'Reference {r}. Pay the {d} deposit to hold your slot — fully refunded if we can’t take it, otherwise it counts toward your bill.', sentLink: 'Reference {r}. We’ll call or text to confirm, and send you a secure link for the {d} deposit (fully refunded if we can’t take your slot).',
+    pay: 'Pay {d} deposit', payLater: 'Pay later', paying: 'Opening checkout…', payFail: 'Checkout couldn’t open — try again, or we’ll text you a link.', paid: 'Deposit payment submitted — we’ll verify it and confirm your slot.', secure: 'Secure checkout by Stripe', sentNoDep: 'Reference {r}. We’ll call or text to confirm your slot and final price.',
     sendFail: "Couldn't send just now. Please try again, or email illinisolutions@gmail.com.",
     aiFail: "Sorry, I couldn't reach the assistant just now.", retry: 'Try again', tooMany: 'Too many messages — please wait a minute.',
     hr: 'hr', hrs: 'hrs', themeAria: 'Toggle dark mode',
@@ -399,7 +401,7 @@ const STR = {
     fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
     fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
     notAff: '独立经营，与伊利诺伊大学无隶属关系。',
-    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20，用于锁定时段。确认日期后我们开账单，定金抵扣尾款。',
+    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20。提交预约后通过 Stripe 安全链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
     chips: ['两室退房清洁多少钱？', '单间搬家 + 存 6 个箱子', '厨房深度清洁包含什么？', '帮我约下周六的清洁', '这周末要两名搬运工'],
     included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
     askAbout: '介绍一下「{x}」— 价格和包含的内容。',
@@ -407,10 +409,11 @@ const STR = {
     bookThis: '预约这个', bookMsg: '我想预约这个。',
     booking: '预约申请', name: '姓名', phone: '电话', email: '邮箱', address: '地址', when: '时间',
     morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', tbd: '待团队确认', noEmail: '未提供 — 我们电话沟通',
-    deposit: '锁定时段的定金', depNote: '确认日期后开账单 · 抵扣尾款',
+    deposit: '锁定时段的定金', depNote: '提交后支付 · 无法接单全额退款',
     confirm: '确认并提交', sending: '提交中…', change: '修改信息', changeMsg: '我想修改一下这个预约。',
     needPhone: '还缺手机号 — 直接在对话里发给我，我会更新这张卡。', phoneMissing: '未提供', old: '已更新',
-    sent: '已提交！', sentText: '预约编号 {r}。我们会电话或短信确认时段，然后发送 {d} 定金的账单。', sentNoDep: '预约编号 {r}。我们会电话或短信确认时段和最终价格。',
+    sent: '已提交！', sentText: '预约编号 {r}。支付 {d} 定金即可锁定时段 — 如果我们无法接单全额退款，否则抵扣尾款。', sentLink: '预约编号 {r}。我们会电话或短信确认，并发送 {d} 定金的安全付款链接（无法接单全额退款）。',
+    pay: '支付 {d} 定金', payLater: '稍后支付', paying: '正在打开支付页…', payFail: '支付页打不开 — 请重试，或我们会短信发链接给你。', paid: '定金已提交支付 — 我们核实后会确认你的时段。', secure: 'Stripe 安全支付', sentNoDep: '预约编号 {r}。我们会电话或短信确认时段和最终价格。',
     sendFail: '暂时提交失败，请重试，或发邮件到 illinisolutions@gmail.com。',
     aiFail: '抱歉，暂时连接不上 AI 助手。', retry: '重试', tooMany: '消息太频繁了，请稍等一分钟。',
     hr: '小时', hrs: '小时', themeAria: '切换深色模式',
@@ -467,9 +470,12 @@ const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname) ? '
 const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/8028b4c927389f74bb8dc76d5cee771a';
 const agent = $('#chat'), threadWrap = $('#threadWrap'), thread = $('#thread'), intro = $('#intro'), input = $('#input'), send = $('#send');
 const KEY = 'imc-chat-v3';
-let state = { msgs: [], sent: {} };
-try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {} }; } catch (e) {}
-const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify({ msgs: state.msgs, sent: state.sent })); } catch (e) {} };
+let state = { msgs: [], sent: {}, paid: {} };
+try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {}, paid: s.paid || {} }; } catch (e) {}
+const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const API = CHAT_ENDPOINT.replace(/\/chat$/, '');
+let stripeOn = null;   // null = unknown
+const checkStripe = () => stripeOn !== null ? Promise.resolve(stripeOn) : fetch(API + '/config').then(r => r.json()).then(j => (stripeOn = !!j.stripe)).catch(() => false);
 let busy = false;
 
 const QUOTE_RE = /\[\[quote:([^\]]+)\]\]/g;
@@ -543,8 +549,13 @@ function bookingCard(idx) {
   const b = readBooking(idx); if (!b) return '';
   const dep = depositFor(b.list);
   if (state.sent[idx]) {
-    const r = `<code>${esc(state.sent[idx])}</code>`;
-    return `<div class="card"><div class="ok"><span class="tick">✓</span><div><b>${tr('sent')}</b><div>${dep ? tr('sentText', { r, d: `<b>${fmt(dep)}</b>` }) : tr('sentNoDep', { r })}</div></div></div></div>`;
+    const ref = state.sent[idx], r = `<code>${esc(ref)}</code>`, d = `<b>${fmt(dep)}</b>`;
+    let body, btns = '';
+    if (!dep) body = tr('sentNoDep', { r });
+    else if (state.paid[ref]) body = `${tr('sentNoDep', { r })}<div class="paidline">✓ ${tr('paid')}</div>`;
+    else if (stripeOn) { body = tr('sentText', { r, d }); btns = `<div class="cbtns"><button class="btn pri" data-pay="${idx}">${tr('pay', { d: fmt(dep) })}</button></div><div class="qsub">🔒 ${tr('secure')}</div><div class="berr" hidden></div>`; }
+    else body = tr('sentLink', { r, d });
+    return `<div class="card sentcard" data-sent="${idx}"><div class="ok"><span class="tick">✓</span><div><b>${tr('sent')}</b><div>${body}</div></div></div>${btns}</div>`;
   }
   const old = idx !== latestBooking() || Object.keys(state.sent).some(k => +k > idx);
   if (old) { const { once, mo } = totals(b.list); return `<div class="card bk old" data-idx="${idx}"><span>${tr('booking')} · <b>${once || !mo ? fmt(once) : fmt(mo) + tr('perMo')}</b></span><span class="oldtag">${tr('old')}</span></div>`; }
@@ -654,6 +665,20 @@ async function ask(text) {
   } finally { busy = false; send.disabled = !input.value.trim(); }
 }
 
+async function payDeposit(btn) {
+  const idx = +btn.dataset.pay, ref = state.sent[idx], b = readBooking(idx), card = btn.closest('.card'), err = card.querySelector('.berr');
+  if (!ref || !b) return;
+  btn.disabled = true; const label = btn.textContent; btn.innerHTML = `<span class="spin"></span> ${tr('paying')}`; err.hidden = true;
+  try {
+    const res = await fetch(API + '/deposit', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref, items: Object.fromEntries(b.list.map(([it, q]) => [it.id, q])), email: b.email, lang, returnUrl: location.origin + location.pathname }) });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || !j.url) throw new Error(j.error || res.status);
+    location.href = j.url;
+  } catch (e) {
+    console.warn('[deposit]', e); err.textContent = tr('payFail'); err.hidden = false; btn.disabled = false; btn.textContent = label;
+  }
+}
 async function submitBooking(btn) {
   const idx = +btn.dataset.book, card = btn.closest('.bk'), err = card.querySelector('.berr');
   const b = readBooking(idx); if (!b || !phoneOK(b.phone) || state.sent[idx] || idx !== latestBooking() || busy) return;
@@ -665,6 +690,7 @@ async function submitBooking(btn) {
   const tba = '— (ask customer)';
   btn.disabled = true; btn.innerHTML = `<span class="spin"></span> ${tr('sending')}`; err.hidden = true;
   try {
+    await checkStripe();
     const res = await fetch(BOOKING_ENDPOINT, {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
@@ -673,14 +699,15 @@ async function submitBooking(btn) {
         'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
         'Phone': b.phone, 'Name': b.name || '—', 'Email (invoice)': b.email || '— (not provided — arrange invoice by phone)', 'Service address': b.address || tba,
         'Preferred date': b.date || tba, 'Time window': b.win ? b.win[0].toUpperCase() + b.win.slice(1) : (b.winRaw || tba),
-        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20) — invoice after confirming the slot` : '—',
+        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20). ${stripeOn ? 'Customer was offered Stripe checkout — check Stripe payments for client reference ' + ref + '.' : 'Online payment not set up — send the customer a payment link.'} Fully refundable if we can't take the slot.` : '—',
         'Notes': b.notes || '—', 'Chat transcript': transcript,
       }),
     });
     const j = await res.json().catch(() => ({}));
     if (!res.ok || String(j.success) !== 'true') throw new Error(j.message || res.status);
     state.sent[idx] = ref;
-    state.msgs.push({ role: 'assistant', content: `Booking request ${ref} was sent to the team (deposit ${dep ? fmt(dep) : 'n/a'} to be invoiced after they confirm).`, hidden: 1 }); persist();
+    state.msgs.push({ role: 'assistant', content: `Booking request ${ref} was sent to the team. Deposit ${dep ? fmt(dep) : 'n/a'} — payable now via the secure checkout button, or by a link from the team.`, hidden: 1 }); persist();
+    await checkStripe();
     const t = document.createElement('div'); t.innerHTML = bookingCard(idx); card.replaceWith(t.firstElementChild);
     refreshOldBookings();
   } catch (e) {
@@ -690,12 +717,13 @@ async function submitBooking(btn) {
 }
 thread.addEventListener('click', e => {
   const k = e.target.closest('[data-book]'); if (k) { submitBooking(k); return; }
+  const pz = e.target.closest('[data-pay]'); if (pz) { payDeposit(pz); return; }
   const b = e.target.closest('[data-say]'); if (b) ask(b.dataset.say);
 });
 $('#form').addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
 input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(140, input.scrollHeight) + 'px'; send.disabled = !input.value.trim() || busy; });
 input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#form').requestSubmit(); } });
-$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {} }; persist(); renderChat(); input.focus(); });
+$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, paid: {} }; persist(); renderChat(); input.focus(); });
 $('#pgrid').addEventListener('click', e => {
   const b = e.target.closest('[data-ask-item]'); if (!b) return;
   if (narrow.matches) { closeSheet(); document.activeElement?.blur(); }
@@ -742,6 +770,10 @@ $('#langBtn').addEventListener('click', () => {
 
 /* ================= Init ================= */
 $('#yr').textContent = new Date().getFullYear();
+{ const q = new URLSearchParams(location.search), paid = q.get('paid');
+  if (paid && /^IMC-[A-Z0-9]{5}$/.test(paid) && Object.values(state.sent).includes(paid)) { state.paid[paid] = 1; state.msgs.push({ role: 'assistant', content: `The customer completed Stripe checkout for the deposit on ${paid} (team will verify).`, hidden: 1 }); persist(); }
+  if (q.has('paid') || q.has('pay')) history.replaceState(null, '', location.pathname); }
+if (Object.keys(state.sent).length) checkStripe().then(on => { if (on) thread.querySelectorAll('.sentcard').forEach(el => { const t = document.createElement('div'); t.innerHTML = bookingCard(+el.dataset.sent); el.replaceWith(t.firstElementChild); }); });
 setMeta(); setLang(lang); toEnd();
 })();
 </script>
