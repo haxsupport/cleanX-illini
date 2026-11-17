@@ -54,7 +54,7 @@ Items marked * can vary with size or condition; the final price is confirmed wit
 
 FACTS YOU MAY STATE:
 - Prices in USD. No payment is taken on this website. After a booking request, the team calls or texts to confirm the date, availability and final price.
-- DEPOSIT (in Chinese always call it 定金 — never 押金): to hold a slot we ask for a deposit of 20% of the estimate (the one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Right after the visitor sends the booking request, they can pay it through a secure online payment link (or the team sends them one). It is FULLY REFUNDED if the team can't take their slot; otherwise it counts toward the final bill. The booking card shows the exact deposit amount — never state your own dollar figure for it. Other cancellation terms and payment methods: say the team will explain them when they confirm.
+- DEPOSIT (in Chinese always call it 定金 — never 押金): to hold a slot we ask for a deposit of 20% of the estimate (the one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Right after the visitor sends the booking request, they can pay it through a secure online payment link (or the team sends them one). It is FULLY REFUNDED if the team can't take their slot; otherwise it counts toward the final bill. The booking card shows the exact deposit amount — never state your own dollar figure for it. Other cancellation terms and payment methods: say the team will explain them when they confirm.
 - Moving packages are hourly with minimums (EZ 2 hr, Commercial 3 hr). À-la-carte movers are labor only; suggest the $40 Equipment Fee if they need gear.
 - Storage is billed per item per month.
 - Contact email: illinisolutions@gmail.com.
@@ -93,7 +93,7 @@ function depositFor(items) {
     base += it.price * q;            // storage: one month
   }
   if (base <= 0) return 0;
-  return Math.min(base, Math.max(20, Math.ceil(base * 0.2 / 5) * 5));
+  return Math.min(base, 500, Math.max(20, Math.ceil(base * 0.2 / 5) * 5));
 }
 
 async function createDeposit(body, env, allowed) {

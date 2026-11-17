@@ -516,7 +516,7 @@ body{background:var(--wash);background-attachment:scroll}
       <div class="fine">
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
-        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
+        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
         <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
         <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
@@ -616,7 +616,7 @@ const STR = {
     fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
     fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
     notAff: 'Independent business — not affiliated with the University of Illinois.',
-    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
+    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
     chips: ['2-bed move-out clean — how much?', 'Book a cleaning for next Saturday', 'Move my studio + store 6 boxes'],
     starters: { standard: 'I need a standard clean — how much would it be?', deep: "What's included in deep cleaning, and what does it cost?", moving: 'I need help moving — what are my options?', storage: 'I want to store some stuff — how does pricing work?' },
     included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
@@ -642,7 +642,7 @@ const STR = {
     fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
     fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
     notAff: '独立经营，与伊利诺伊大学无隶属关系。',
-    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20。提交预约后通过安全付款链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
+    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20，最高 $500。提交预约后通过安全付款链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
     chips: ['两室退房清洁多少钱？', '帮我约下周六的清洁', '单间搬家 + 存 6 个箱子'],
     starters: { standard: '我想做标准清洁，大概多少钱？', deep: '深度清洁包含什么？多少钱？', moving: '我要搬家，有哪些方案？', storage: '我想存放一些东西，怎么收费？' },
     included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
@@ -782,12 +782,12 @@ function itemsHTML(list) {
   return rows + `<div class="qtot"><span>${tr('total')}</span><b>${fmt(once)}</b></div>` +
     (mo ? `<div class="qsub">+ ${tr('storage')} ${fmt(mo)}${tr('perMo')}</div>` : '') + (star ? `<div class="qsub">${tr('varies')}</div>` : '');
 }
-/* Deposit: 20% of the estimate (first month for storage-only), rounded up to $5, min $20, never above the base */
-const DEPOSIT = { rate: 0.2, min: 20, step: 5 };
+/* Deposit: 20% of the estimate (first month for storage-only), rounded up to $5, min $20, max $500, never above the base */
+const DEPOSIT = { rate: 0.2, min: 20, max: 500, step: 5 };
 function totals(list) { let once = 0, mo = 0; list.forEach(([it, q]) => { it.cat.monthly ? (mo += it.price * q) : (once += it.price * q); }); return { once, mo }; }
 function depositFor(list) {
   const { once, mo } = totals(list), base = once + mo; if (base <= 0) return 0;
-  return Math.min(base, Math.max(DEPOSIT.min, Math.ceil(base * DEPOSIT.rate / DEPOSIT.step) * DEPOSIT.step));
+  return Math.min(base, DEPOSIT.max, Math.max(DEPOSIT.min, Math.ceil(base * DEPOSIT.rate / DEPOSIT.step) * DEPOSIT.step));
 }
 function quoteCard(spec) {
   const obj = {}; spec.split(/[,;]/).forEach(p => { const [k, v] = p.split(/[=:]/).map(s => s && s.trim()); if (k) obj[k] = v || 1; });
@@ -978,7 +978,7 @@ async function submitBooking(btn) {
         'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
         'Phone': b.phone, 'Name': b.name || '—', 'Email (invoice)': b.email || '— (not provided — arrange invoice by phone)', 'Service address': b.address || tba,
         'Preferred date': b.date || tba, 'Time window': b.win ? b.win[0].toUpperCase() + b.win.slice(1) : (b.winRaw || tba),
-        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20). ${stripeOn ? 'Customer was offered Stripe checkout — check Stripe payments for client reference ' + ref + '.' : 'Online payment not set up — send the customer a payment link.'} Fully refundable if we can't take the slot.` : '—',
+        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20, max $500). ${stripeOn ? 'Customer was offered Stripe checkout — check Stripe payments for client reference ' + ref + '.' : 'Online payment not set up — send the customer a payment link.'} Fully refundable if we can't take the slot.` : '—',
         'Notes': b.notes || '—', 'Chat transcript': transcript,
       }),
     });
