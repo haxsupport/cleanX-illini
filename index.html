@@ -27,7 +27,7 @@
   --line:rgba(19,41,75,.12); --strong:#13294B; --dash:rgba(19,41,75,.13);
   --sh:0 1px 2px rgba(19,41,75,.06),0 10px 28px -14px rgba(19,41,75,.22);
   --peach:#FFE6D6; --me-bg:#FFE1CC; --me-ink:#13294B; --o-ink:#C2410C; --o-big:#E04E00; --ok:#16A34A; --err:#D13A3A;
-  --c1:#1E5BD8; --c1-bg:#E4EFFF; --c2:#C2410C; --c2-bg:#FFE8D9; --c3:#0E7A53; --c3-bg:#DDF5E8; --c4:#966000; --c4-bg:#FFF0BF;
+  --c1:#1E5BD8; --c1-bg:#E4EFFF; --c2:#B23A08; --c2-bg:#FFE8D9; --c3:#0E7A53; --c3-bg:#DDF5E8; --c4:#966000; --c4-bg:#FFF0BF;
   --font:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
   --display:"Bricolage Grotesque",var(--font);
   color-scheme:light;
@@ -123,7 +123,7 @@ svg{display:block}
 .deco.b1{width:84px;top:-14px;right:2%}
 .deco.b2{width:56px;top:42%;left:-2%;transform:rotate(-14deg)}
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px auto 0;max-width:680px}
-.tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;border-radius:20px;padding:12px 8px 14px;background:var(--cb);color:var(--heading);text-align:center;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;border-radius:20px;padding:12px 8px 14px;background:var(--cb);color:var(--heading);text-align:center;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;animation:pop .5s cubic-bezier(.34,1.56,.64,1) backwards}
 .tile:nth-child(2){animation-delay:.05s}.tile:nth-child(3){animation-delay:.1s}.tile:nth-child(4){animation-delay:.15s}
 .tile:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:var(--sh)}
 .tile:active{transform:scale(.97)}
@@ -139,7 +139,7 @@ svg{display:block}
 .agent.empty .intro{display:block}
 .agent:not(.empty) .note{display:none}
 
-.msg{max-width:88%;font-size:15.5px;line-height:1.6;overflow-wrap:anywhere;animation:rise .25s ease-out both}
+.msg{max-width:88%;font-size:15.5px;line-height:1.6;overflow-wrap:anywhere;animation:rise .25s ease-out backwards}
 @keyframes rise{from{transform:translateY(8px)}}
 .msg.bot{align-self:flex-start;color:var(--ink);display:grid;grid-template-columns:30px 1fr;gap:10px}
 .msg.bot::before{content:"";width:30px;height:30px;border-radius:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3l1.9 5.9L20 11l-6.1 2.1L12 19l-1.9-5.9L4 11l6.1-2.1z' fill='%23fff'/%3E%3C/svg%3E") center/18px no-repeat,linear-gradient(135deg,#FF8A3D,#FF5F05 55%,#F04A00);box-shadow:0 4px 10px -4px rgba(255,95,5,.6)}
@@ -155,7 +155,7 @@ svg{display:block}
 .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
 @keyframes dot{40%{opacity:1}}
 
-.card{margin-left:40px;max-width:520px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:15px 16px;font-size:14.5px;box-shadow:var(--sh);animation:rise .3s ease-out both}
+.card{margin-left:40px;max-width:520px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:15px 16px;font-size:14.5px;box-shadow:var(--sh);animation:rise .3s ease-out backwards}
 .card h4{display:flex;align-items:center;gap:7px;margin:0 0 8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--o-ink)}
 .card h4::before{content:"";width:8px;height:8px;border-radius:3px;background:var(--orange)}
 .card.bk{border-top:4px solid var(--orange)}
@@ -185,7 +185,7 @@ svg{display:block}
 .card.bk.old{display:flex;align-items:center;gap:10px;padding:9px 14px;opacity:.6;font-size:13.5px;color:var(--muted);border-top-width:1px;box-shadow:none}
 .bk.old b{color:var(--heading)}
 .bk.old .oldtag{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
-.qr{display:flex;flex-wrap:wrap;gap:8px;margin-left:40px;animation:rise .3s ease-out both}
+.qr{display:flex;flex-wrap:wrap;gap:8px;margin-left:40px;animation:rise .3s ease-out backwards}
 .qr .chip{border-color:var(--orange);color:var(--o-ink);background:var(--surface)}
 .qr .chip:hover{background:var(--orange);color:var(--navy)}
 .berr{color:var(--err);font-size:13px;font-weight:600;margin-top:8px}
@@ -331,7 +331,7 @@ svg{display:block}
       <div class="fine">
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
-        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure Stripe link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
+        <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
         <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
         <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
@@ -431,7 +431,7 @@ const STR = {
     fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
     fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
     notAff: 'Independent business — not affiliated with the University of Illinois.',
-    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure Stripe link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
+    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
     chips: ['2-bed move-out clean — how much?', 'Book a cleaning for next Saturday', 'Move my studio + store 6 boxes'],
     starters: { standard: 'I need a standard clean — how much would it be?', deep: "What's included in deep cleaning, and what does it cost?", moving: 'I need help moving — what are my options?', storage: 'I want to store some stuff — how does pricing work?' },
     included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
@@ -457,7 +457,7 @@ const STR = {
     fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
     fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
     notAff: '独立经营，与伊利诺伊大学无隶属关系。',
-    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20。提交预约后通过 Stripe 安全链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
+    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20。提交预约后通过安全付款链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
     chips: ['两室退房清洁多少钱？', '帮我约下周六的清洁', '单间搬家 + 存 6 个箱子'],
     starters: { standard: '我想做标准清洁，大概多少钱？', deep: '深度清洁包含什么？多少钱？', moving: '我要搬家，有哪些方案？', storage: '我想存放一些东西，怎么收费？' },
     included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
