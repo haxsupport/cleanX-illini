@@ -119,9 +119,11 @@ async function createDeposit(body, env, allowed) {
   });
   const email = String(body.email || '').trim();
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length < 200) f.set('customer_email', email);
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(f.toString()));
+  const idem = `dep-${ref}-` + [...new Uint8Array(digest)].slice(0, 12).map(b => b.toString(16).padStart(2, '0')).join('');
   const r = await fetch(`${env.STRIPE_API_BASE || 'https://api.stripe.com'}/v1/checkout/sessions`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`, 'Content-Type': 'application/x-www-form-urlencoded', 'Idempotency-Key': `dep-${ref}-${dep}` },
+    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`, 'Content-Type': 'application/x-www-form-urlencoded', 'Idempotency-Key': idem },
     body: f,
   });
   const j = await r.json().catch(() => ({}));
