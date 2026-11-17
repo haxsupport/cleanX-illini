@@ -136,9 +136,17 @@ svg{display:block}
 .tile:nth-child(3) .tw{animation-delay:1.1s}.tile:nth-child(4) .tw{animation-delay:1.6s}
 @keyframes twinkle{0%,60%,100%{transform:scale(0) rotate(0)}75%{transform:scale(1) rotate(90deg)}}
 @keyframes sweep{to{transform:translateX(110%)}}
-.tile img{animation:bob 3.4s ease-in-out infinite}
-.tile:nth-child(2) img{animation-delay:-.8s}.tile:nth-child(3) img{animation-delay:-1.7s}.tile:nth-child(4) img{animation-delay:-2.5s}
-@keyframes bob{50%{transform:translateY(-5px) rotate(-3deg)}}
+.tile[data-cat=standard] img{animation:idleScrub 3.2s ease-in-out infinite}
+.tile[data-cat=deep] img{animation:idleSpritz 3.6s ease-in-out infinite;transform-origin:50% 80%}
+.tile[data-cat=moving] img{animation:idleDrive 3s ease-in-out infinite}
+.tile[data-cat=storage] img{animation:idleStack 3.4s cubic-bezier(.3,1.4,.5,1) infinite}
+@keyframes idleScrub{0%,55%,100%{transform:none}65%{transform:translateX(-4px) rotate(-6deg) scale(1.05,.95)}75%{transform:translateX(4px) rotate(6deg) scale(1.05,.95)}85%{transform:translateX(-2px) rotate(-3deg)}}
+@keyframes idleSpritz{0%,60%,100%{transform:none}70%{transform:rotate(-14deg) scale(1.05)}78%{transform:rotate(-8deg)}86%{transform:rotate(-14deg) scale(1.05)}}
+@keyframes idleDrive{0%,100%{transform:translateX(-3px)}20%{transform:translateX(0) translateY(-2px)}40%{transform:translateX(3px)}60%{transform:translateX(0) translateY(-2px)}80%{transform:translateX(-2px)}}
+@keyframes idleStack{0%,50%,100%{transform:none}62%{transform:translateY(-8px) scale(.96,1.05)}74%{transform:translateY(0) scale(1.06,.94)}84%{transform:none}}
+.tile::after{animation:glint 5s ease-in-out infinite}
+.tile:nth-child(2)::after{animation-delay:1.25s}.tile:nth-child(3)::after{animation-delay:2.5s}.tile:nth-child(4)::after{animation-delay:3.75s}
+@keyframes glint{0%,72%{transform:translateX(-110%)}88%,100%{transform:translateX(110%)}}
 .tile[data-cat=standard]:hover img{animation:scrub .7s ease-in-out infinite}
 @keyframes scrub{25%{transform:translateX(-6px) rotate(-8deg) scale(1.08,.94)}75%{transform:translateX(6px) rotate(8deg) scale(1.08,.94)}}
 .tile[data-cat=deep]:hover img{animation:spritz .9s cubic-bezier(.3,1.6,.5,1) infinite;transform-origin:50% 80%}
@@ -220,7 +228,7 @@ svg{display:block}
 @keyframes flapB{to{transform:rotateY(180deg) translateZ(calc(var(--w) / 2)) rotateX(88deg)}}
 @keyframes flapL{to{transform:rotateY(-90deg) translateZ(calc(var(--w) / 2)) rotateX(90deg)}}
 @keyframes flapR{to{transform:rotateY(90deg) translateZ(calc(var(--w) / 2)) rotateX(90deg)}}
-.box3d .tape{left:calc(var(--w) * .38);top:0;width:calc(var(--w) * .24);height:var(--w);background:var(--orange);transform:rotateX(90deg) translateZ(calc(var(--w) / 2 + 1px)) scaleY(0);transform-origin:50% 0;animation:tape .3s 1s ease-out forwards}
+.box3d .tape{left:calc(var(--w) * .38);top:0;width:calc(var(--w) * .24);height:var(--w);background:var(--orange);transform:rotateX(90deg) translateZ(calc(var(--w) / 2 + 1px)) scaleY(0);animation:tape .3s 1s ease-out forwards}
 @keyframes tape{to{transform:rotateX(90deg) translateZ(calc(var(--w) / 2 + 1px)) scaleY(1)}}
 @keyframes hop{50%{transform:rotateX(-26deg) rotateY(-38deg) translateY(-10px)}}
 .chead{display:flex;align-items:center;gap:8px;margin:-15px -16px 12px;padding:8px 16px;min-height:30px;background:var(--cb,var(--peach))}
@@ -753,8 +761,10 @@ function bookingCard(idx) {
 const chipsHTML = spec => { const opts = spec.split('|').map(x => x.trim()).filter(Boolean).slice(0, 5); return opts.length ? `<div class="qr">${opts.map(o => `<button class="chip" data-say="${esc(o.slice(0, 80))}">${esc(o.slice(0, 80))}</button>`).join('')}</div>` : ''; };
 /* Only the newest unsent booking card stays actionable */
 function refreshOldBookings() {
+  const latest = latestBooking();
   thread.querySelectorAll('.bk[data-idx]').forEach(el => {
-    const i = +el.dataset.idx, html = bookingCard(i); if (!html) return;
+    const i = +el.dataset.idx; if (i === latest && !state.sent[i] && !el.classList.contains('old')) return;
+    const html = bookingCard(i); if (!html) return;
     const t = document.createElement('div'); t.innerHTML = html; el.replaceWith(t.firstElementChild);
   });
 }
@@ -824,7 +834,7 @@ async function ask(text) {
       const cards = thread.querySelectorAll('.bk:not(.old)'), card = cards[cards.length - 1];
       if (card) {
         if (narrow.matches) input.blur();                // put the keyboard away so the whole card is visible
-        const top = card.previousElementSibling?.classList.contains('bot') ? card.previousElementSibling : card;
+        const pb = card.previousElementSibling, top = pb && pb.classList.contains('bot') && pb.offsetHeight < 110 ? pb : card;
         threadWrap.scrollTop += top.getBoundingClientRect().top - threadWrap.getBoundingClientRect().top - 12;
       }
     } else if (follow) toEnd();
