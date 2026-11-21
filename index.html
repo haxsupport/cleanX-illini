@@ -468,6 +468,16 @@ body{background:var(--wash);background-attachment:scroll}
 .cx-guide{width:100%;max-width:600px}.cx-guide-body{padding:18px}.cx-guide-body h3{font-family:var(--font);font-size:20px;line-height:1.35;letter-spacing:0;margin-bottom:8px}.cx-guide-body p,.cx-quick>p{font-size:14px;color:var(--muted);margin:0 0 14px}.cx-options{display:flex;flex-wrap:wrap;gap:9px}.cx-choice,.cx-options>.chip{min-height:46px;white-space:normal;text-align:center;padding:11px 16px}.cx-choice[aria-pressed=true]{border-color:var(--orange);background:var(--surface-2)}.cx-guide-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.cx-guide-nav .btn{font-size:13px;min-height:42px}.cx-step{font-size:12px;color:var(--muted)}.cx-custom{flex-basis:100%;margin-top:12px}.cx-custom label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.cx-custom>div{display:flex;gap:8px}.cx-custom input{width:100%;min-width:0;padding:12px;border:1px solid var(--strong);border-radius:12px;font:inherit;color:var(--ink);background:var(--surface)}.cx-custom .btn{flex:none;min-height:46px}.cx-extras{width:100%;display:grid;gap:9px}.cx-extra{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--line);border-radius:12px;font-size:14px;cursor:pointer;min-height:48px}.cx-extra input{width:19px;height:19px;accent-color:var(--orange)}.cx-extra b{margin-left:auto}.cx-extras>.btn{margin:6px 0;min-height:46px}.cx-guide-error{color:var(--err)!important;margin-top:10px!important}.cx-quick{max-width:600px}.cx-scope{flex-basis:100%;margin-top:16px}.cx-scope .cx-small{font-size:12px}.cx-quick .chips{justify-content:flex-start}.logo b small{letter-spacing:.1em}@media(max-width:480px){.cx-guide-body{padding:15px}.cx-choice{flex-grow:1}.cx-guide-nav .btn{flex:1}.cx-custom .btn{padding:10px 14px}.cx-guide-body h3{font-size:19px}}
 
 .cx-service-list{display:grid;gap:10px;margin-bottom:20px}.cx-service-pick{display:flex;align-items:center;gap:12px;width:100%;padding:15px 12px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:left;box-shadow:var(--sh);min-height:78px}.cx-service-pick:hover{border-color:var(--orange);background:var(--surface-2)}.cx-service-pick>span:nth-child(2){flex:1}.cx-service-pick b{display:block;font-size:15px}.cx-service-pick small{display:block;font-size:12px;color:var(--muted);margin-top:3px}.cx-service-pick>span:last-child{font-size:22px;color:var(--o-ink)}.cx-rate-details{margin:12px 0 18px;padding:0 4px}.cx-rate-details>summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:14px;font-weight:700;min-height:44px;color:var(--muted);list-style:none}.cx-rate-details>summary::-webkit-details-marker{display:none}.cx-rate-details>p{font-size:12px;color:var(--muted)}.cx-rate-details section{padding:14px 0;border-top:1px solid var(--line)}.cx-rate-details h3{font:800 15px var(--font);margin-bottom:8px}.cx-rate-row{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:9px 0;line-height:1.5;border-bottom:1px dashed var(--line)}.cx-rate-row b{white-space:nowrap;flex:none}.fine{font-size:11px}
+
+/* Keep the popup controls outside its scrolling form. */
+#quoteDialog{padding:0;overflow:hidden;max-height:90dvh;max-height:calc(100dvh - 32px)}
+#quoteDialog[open]{display:flex;flex-direction:column}
+#quoteDialog .cx-dialog-head{position:relative;flex:0 0 auto;margin:0;padding:22px 76px 18px 22px;background:var(--surface);border-bottom:1px solid var(--line);z-index:2}
+#quoteDialog .cx-dialog-head h2{font-size:24px;line-height:1.2;overflow-wrap:break-word}
+#quoteClose{position:absolute;top:12px;right:12px;width:44px;height:44px;min-width:44px;min-height:44px;z-index:3}
+#quoteForm{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:8px 22px 22px;scroll-padding-block:16px}
+@media(max-width:480px){#quoteDialog .cx-dialog-head{padding:20px 68px 16px 16px}#quoteDialog .cx-dialog-head h2{font-size:21px}#quoteClose{top:10px;right:10px}#quoteForm{padding:6px 16px 20px}}
+
 </style>
 </head>
 <body>
@@ -666,7 +676,7 @@ function openEstimate(q,last){
  for(const k of ['kind','sqft','beds','baths','service','facility'])if(q[k]!==undefined)qform.elements[k].value=q[k];
  qform.querySelectorAll('[name=extras]').forEach(n=>n.checked=(q.extras||[]).includes(n.value));
  for(const k of ['name','email','phone','address','date','window','notes','frequency'])if(lastDetails[k])qform.elements[k].value=lastDetails[k];
- $('#contactFields').hidden=!requesting;$('#quoteSubmit').textContent=requesting?'Send quote request':'Continue to request';$('#quoteStatus').textContent='';requestId=crypto.randomUUID();syncQuote();dialog.showModal();
+ $('#contactFields').hidden=!requesting;$('#quoteSubmit').textContent=requesting?'Send quote request':'Continue to request';$('#quoteStatus').textContent='';requestId=crypto.randomUUID();syncQuote();dialog.showModal();qform.scrollTop=0;
 }
 qform.addEventListener('input',syncQuote);qform.addEventListener('change',syncQuote);
 $('#quoteClose').onclick=()=>dialog.close();
