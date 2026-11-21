@@ -694,12 +694,27 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-say],[data
 $('#form').onsubmit=e=>{e.preventDefault();ask(input.value)};
 input.oninput=()=>{input.style.height='';input.style.height=Math.min(input.scrollHeight,150)+'px';send.disabled=busy||!input.value.trim()};
 input.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();ask(input.value)}};
-$('#reset').onclick=()=>{if(busy)return;removeGuide();msgs=[];lastQuote=null;lastDetails={};[...thread.children].forEach(n=>{if(n.id!=='intro')n.remove()});chat.classList.add('empty');$('#reset').hidden=true;input.focus()};
+function restoreHomePosition(){
+ if(!chat.classList.contains('empty')||document.activeElement?.matches('input,textarea,select,[contenteditable="true"]'))return;
+ wrap.scrollTop=0;
+ if(document.documentElement.scrollTop||document.body.scrollTop){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;}
+}
+$('#reset').onclick=()=>{
+ if(busy)return;
+ if(document.activeElement instanceof HTMLElement)document.activeElement.blur();
+ input.blur();input.value='';input.style.height='';send.disabled=true;
+ if(dialog.open)dialog.close();closeSheet();removeGuide();
+ msgs=[];lastQuote=null;lastDetails={};requesting=false;requestId='';qform.reset();qform.scrollTop=0;
+ [...thread.children].forEach(n=>{if(n.id!=='intro')n.remove()});
+ chat.classList.add('empty');$('#reset').hidden=true;wrap.scrollTop=0;
+ const heading=$('#intro h1');heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});
+ restoreHomePosition();requestAnimationFrame(restoreHomePosition);
+};
 $('#themeBtn').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('cleanx-theme',root.dataset.theme)}catch{}};
 $('#langBtn').onclick=()=>{lang=lang==='en'?'zh':'en';root.dataset.lang=lang;root.lang=lang==='zh'?'zh-CN':'en';staticText()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 if(window.ResizeObserver)new ResizeObserver(()=>chat.style.setProperty('--comp-h',$('#composer').offsetHeight+'px')).observe($('#composer'));
-if(window.visualViewport){const resize=()=>root.style.setProperty('--app-h',window.visualViewport.height+'px');visualViewport.addEventListener('resize',resize);resize();}
+if(window.visualViewport){const resize=()=>{root.style.setProperty('--app-h',window.visualViewport.height+'px');restoreHomePosition();};visualViewport.addEventListener('resize',resize);visualViewport.addEventListener('scroll',restoreHomePosition);resize();}
 $('#yr').textContent=new Date().getFullYear();staticText();
 })();
 
