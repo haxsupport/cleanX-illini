@@ -525,7 +525,7 @@ body{background:var(--wash);background-attachment:scroll}
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
         <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
         <div>© <span id="yr"></span> cleanX · Chicago, IL · <a href="mailto:dani@hax.support">dani@hax.support</a></div>
-        <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
+        
       </div>
     </div>
   </aside>
@@ -583,7 +583,7 @@ const cats=[
 let lang=root.dataset.lang||'en',busy=false,msgs=[],lastQuote=null,lastDetails={};
 const tr=(en,zh)=>lang==='zh'?zh:en;
 function staticText(){
- const text={newChat:tr('New chat','新对话'),navPricing:tr('Pricing','价格'),eyebrow:tr('cleanX Assistant · Chicago, IL','cleanX 助手 · 芝加哥'),h1:tr('Move out. Clean up. <em>Chill out.</em>','搬出。清洁。<em>放轻松。</em>'),sub:tr('Tap a service for a quick estimate, or ask our assistant.','向 AI 咨询价格、清洁计划或报价申请。'),aiNote:tr('cleanX confirms final prices and availability. AI chat is processed by Cloudflare.','AI 可能出错。最终价格和时间由 cleanX 确认。聊天由 Cloudflare AI 处理。'),pTitle:tr('Let’s find your price','获取估价'),pSub:tr('Choose a service. We’ll take it one step at a time.','与 AI 使用的价格一致。点击图标咨询或计算估价。'),fine1:'Estimates are a starting point. We’ll confirm the price and availability with you.',fine2:'',fine3:'',notAff:'Revamped for cleanX · Original design and code by <a href="https://github.com/howyoungx/illini-move-clean" target="_blank" rel="noopener">howyoungx / Illini Move &amp; Clean and contributors</a>.'};
+ const text={newChat:tr('New chat','新对话'),navPricing:tr('Pricing','价格'),eyebrow:tr('cleanX Assistant · Chicago, IL','cleanX 助手 · 芝加哥'),h1:tr('Move out. Clean up. <em>Chill out.</em>','搬出。清洁。<em>放轻松。</em>'),sub:tr('Tap a service for a quick estimate, or ask our assistant.','向 AI 咨询价格、清洁计划或报价申请。'),aiNote:tr('cleanX confirms final prices and availability. AI chat is processed by Cloudflare.','AI 可能出错。最终价格和时间由 cleanX 确认。聊天由 Cloudflare AI 处理。'),pTitle:tr('Let’s find your price','获取估价'),pSub:tr('Choose a service. We’ll take it one step at a time.','与 AI 使用的价格一致。点击图标咨询或计算估价。'),fine1:'Estimates are a starting point. We’ll confirm the price and availability with you.',fine2:'',fine3:'',notAff:''};
  document.querySelectorAll('[data-i18n]').forEach(n=>{if(Object.prototype.hasOwnProperty.call(text,n.dataset.i18n)){n.innerHTML=text[n.dataset.i18n];n.hidden=!text[n.dataset.i18n]}});
  $('#input').placeholder=tr('Ask for a price or a quote request…','咨询价格或申请报价…');
  $('#tiles').innerHTML=cats.map(c=>'<button class="tile" data-cat="'+c.key+'" data-start="'+c.key+'"><img src="assets/web/icons/'+c.icon+'.webp" alt="" width="76" height="76"><div><b>'+esc(lang==='zh'?c.zh:c.name)+'</b><span>'+esc(c.from)+'</span></div></button>').join('');
