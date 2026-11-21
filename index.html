@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<title>Illini Move & Clean — AI quotes & booking for moving, cleaning, storage</title>
-<meta name="description" content="Ask our AI for an instant quote or to book moving, cleaning and storage in Champaign–Urbana. Real prices, in English or 中文.">
+<title>cleanX — Chicago cleaning quotes</title>
+<meta name="description" content="Residential cleaning and month-to-month commercial cleaning in Chicago. Chat with cleanX AI, calculate transparent estimates and request a quote.">
 <meta name="theme-color" content="#F7F5F2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2313294B'/%3E%3Cpath d='M20 16h24v8h-7v16h7v8H20v-8h7V24h-7z' fill='%23FF5F05'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2313294B'/%3E%3Cpath d='M16 16h9l7 11 7-11h9L37 32l11 16h-9l-7-11-7 11h-9l11-16z' fill='%23FF5F05'/%3E%3C/svg%3E">
 <script>
 (function () {
   var d = document.documentElement, t, l;
-  try { t = localStorage.getItem('imc-theme2'); l = localStorage.getItem('imc-lang'); } catch (e) {}
+  try { t = localStorage.getItem('cleanx-theme'); l = localStorage.getItem('cleanx-lang'); } catch (e) {}
   if (t !== 'dark') t = 'light';
   if (l !== 'zh' && l !== 'en') l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
   d.dataset.theme = t; d.dataset.lang = l; d.lang = l === 'zh' ? 'zh-CN' : 'en';
@@ -18,7 +18,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://illini-chat.iceocean712.workers.dev" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -461,15 +461,18 @@ body{background:var(--wash);background-attachment:scroll}
   .msg.bot > .tx,.card,.tile,.chip,.pcat{background:var(--surface)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.amb,.tile .tw{display:none}}
+
+#quoteDialog{width:min(640px,calc(100% - 24px));max-height:90dvh;border:2px solid var(--strong);border-radius:24px;background:var(--surface);color:var(--ink);padding:22px;box-shadow:6px 6px 0 var(--orange);overflow:auto}#quoteDialog::backdrop{background:rgba(10,25,48,.65)}.cx-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.cx-dialog-head h2{font-size:26px}.cx-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}#quoteForm label{display:grid;gap:5px;font-size:14px;font-weight:700;margin:10px 0}#quoteForm input:not([type=checkbox]),#quoteForm select,#quoteForm textarea{width:100%;padding:11px;border:1px solid var(--strong);border-radius:10px;background:var(--surface-2);color:var(--ink);font:inherit}#quoteForm textarea{min-height:90px}#quoteForm fieldset{border:1px solid var(--line);border-radius:12px;margin:12px 0}#quoteForm .cx-check{display:flex;align-items:flex-start;gap:9px;font-weight:500}#quoteForm .cx-check input{margin-top:4px;flex:none}#quoteForm .card{margin:16px 0;width:100%}.cx-note{font-size:12px;color:var(--muted);padding:0 16px 14px;margin:6px 0}.card .li{display:flex;justify-content:space-between;gap:18px;padding:8px 16px;border-bottom:1px dashed var(--line);font-size:14px}.card .total{display:flex;justify-content:space-between;gap:18px;padding:14px 16px;font-weight:800}.card .total strong{font-size:22px;color:var(--o-big)}#contactFields h3{font-size:20px;margin-top:20px}#quoteStatus{color:var(--o-ink);font-size:14px}#quoteSubmit{width:100%}@media(max-width:420px){.cx-fields{grid-template-columns:1fr}#quoteDialog{padding:16px}.card .total strong{font-size:18px}}
+
 </style>
 </head>
 <body>
 <div class="app">
 
 <header class="hdr">
-  <a class="logo" href="./" aria-label="Illini Move & Clean">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 11h20v7h-6v12h6v7H14v-7h6V18h-6z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
-    <b>ILLINI<small>MOVE &amp; CLEAN</small></b>
+  <a class="logo" href="./" aria-label="cleanX">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="lm-bg" x="1" y="1" width="46" height="46" rx="13"/><path class="lm-i" d="M14 13h6l4 7 4-7h6l-7 11 7 11h-6l-4-7-4 7h-6l7-11z"/><path d="M38 6l1.4 3.6L43 11l-3.6 1.4L38 16l-1.4-3.6L33 11l3.6-1.4z" fill="#fff"/></svg>
+    <b>cleanX<small>CHICAGO CLEANING</small></b>
   </a>
   <button class="nbtn" id="reset" hidden><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span data-i18n="newChat">New chat</span></button>
   <button class="pbtn" id="pricesBtn" aria-controls="prices" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1" fill="currentColor"/></svg><span data-i18n="navPricing">Pricing</span></button>
@@ -484,11 +487,11 @@ body{background:var(--wash);background-attachment:scroll}
 </header>
 
 <main class="main">
-  <section class="agent empty" id="chat" aria-label="Illini Assistant">
+  <section class="agent empty" id="chat" aria-label="cleanX Assistant">
     <div class="thread" id="threadWrap" aria-live="polite">
       <div class="thread-in" id="thread">
         <div class="intro" id="intro">
-          <div class="eyebrow" data-i18n="eyebrow">Illini Assistant · online</div>
+          <div class="eyebrow" data-i18n="eyebrow">cleanX Assistant · online</div>
           <h1 data-i18n="h1">Move out. Clean up. <em>Chill out.</em></h1>
           <p data-i18n="sub">Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.</p>
           <div class="tiles" id="tiles"></div>
@@ -517,7 +520,7 @@ body{background:var(--wash);background-attachment:scroll}
         <div data-i18n="fine1"><b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.</div>
         <div data-i18n="fine2">Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.</div>
         <div data-i18n="fine3"><b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.</div>
-        <div>© <span id="yr"></span> Illini Move &amp; Clean · <a href="mailto:illinisolutions@gmail.com">illinisolutions@gmail.com</a></div>
+        <div>© <span id="yr"></span> cleanX · Chicago, IL · <a href="mailto:dani@hax.support">dani@hax.support</a></div>
         <div data-i18n="notAff">Independent business — not affiliated with the University of Illinois.</div>
       </div>
     </div>
@@ -526,557 +529,112 @@ body{background:var(--wash);background-attachment:scroll}
 </div>
 <div class="scrim" id="scrim"></div>
 
+
+<dialog id="quoteDialog" aria-labelledby="quoteTitle"><div class="cx-dialog-head"><h2 id="quoteTitle">Your cleanX quote</h2><button type="button" class="hbtn" id="quoteClose" aria-label="Close quote form">×</button></div><form id="quoteForm">
+<div class="cx-fields"><label>Property type<select name="kind"><option value="residential">Residential</option><option value="commercial">Commercial</option></select></label><label>Square footage<input name="sqft" type="number" min="1" max="10000000" step="1" required inputmode="numeric"></label></div>
+<div id="homeFields"><div class="cx-fields"><label>Bedrooms<input name="beds" type="number" min="0" max="100" step="1" value="1" inputmode="numeric"></label><label>Bathrooms<input name="baths" type="number" min="0" max="100" step="1" value="1" inputmode="numeric"></label></div><label>Cleaning service<select name="service"><option value="standard">Standard cleaning</option><option value="deep">Deep cleaning (+$70 bundle)</option><option value="move">Move-in / move-out cleaning</option><option value="move-deep">Move-in / out + deep bundle</option></select></label></div>
+<label id="facilityField" hidden>Facility type<select name="facility"><option value="office">Office</option><option value="retail">Retail</option><option value="medical">Medical facilities</option><option value="industrial">Industrial / manufacturing</option><option value="education">Educational facilities</option></select></label>
+<fieldset id="extraFields"><legend>Optional individual extras</legend><label class="cx-check"><input type="checkbox" name="extras" value="fridge"> Inside fridge</label><label class="cx-check"><input type="checkbox" name="extras" value="stove"> Inside stove</label><label class="cx-check"><input type="checkbox" name="extras" value="cabinets"> Inside cabinets</label></fieldset>
+<div id="estimateResult" class="card quote" aria-live="polite"></div>
+<div id="contactFields" hidden><h3>Where should we clean?</h3><div class="cx-fields"><label>Your name<input name="name" autocomplete="name" maxlength="100"></label><label>Email<input name="email" type="email" autocomplete="email" maxlength="150"></label></div><label>Phone<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label><label>Service address in our Chicago coverage area<input name="address" autocomplete="street-address" maxlength="300"></label><div class="cx-fields"><label>Preferred date (optional)<input name="date" type="date"></label><label>Preferred time (optional)<select name="window"><option value="">Flexible</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label></div><label>Visit frequency / contract scope (optional)<input name="frequency" maxlength="200" placeholder="e.g. weekly, month-to-month office cleaning"></label><label>Notes (optional)<textarea name="notes" maxlength="1000" placeholder="Access details, condition, or questions. No payment or sensitive information."></textarea></label><label class="cx-check"><input id="requestConsent" type="checkbox"> I agree to send these details to cleanX at dani@hax.support through FormSubmit so cleanX can respond to my request.</label><p class="cx-note">This requests a quote; it does not confirm a booking or create a contract. No payment is collected.</p></div>
+<div aria-hidden="true" style="position:absolute;left:-10000px"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><p id="quoteStatus" role="status"></p><button class="btn pri" id="quoteSubmit" type="submit">Continue to request</button>
+</form></dialog>
+
 <script>
+
 (() => {
 'use strict';
-const $ = (s, el = document) => el.querySelector(s);
-const root = document.documentElement;
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let lang = root.dataset.lang;
+const $=(s,e=document)=>e.querySelector(s), root=document.documentElement;
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-/* ================= Catalog (single source of truth for prices) ================= */
-const ROOM_EN = ['Carpet/flooring: vacuum carpets and mop hard floors, treating stains or scuffs', 'Furniture: dust and wipe all furniture and clean underneath', 'Blinds & windows: dust blinds and clean windows with glass cleaner'];
-const ROOM_ZH = ['地毯/地板：吸尘地毯、拖洗硬质地板，处理污渍和划痕', '家具：除尘擦拭所有家具并清洁家具下方', '百叶窗和窗户：清除百叶窗灰尘，用玻璃清洁剂擦净窗户'];
-const CATS = [
-  { key: 'standard', en: 'Standard Clean', zh: '标准清洁', badge: { en: 'One-time', zh: '一次性' }, items: [
-    { id: 'bedroom', price: 40, u: 'room', en: 'Bedroom', zh: '卧室', d: ['Floors, furniture, blinds & windows', '地面、家具、百叶窗和窗户'], list: [ROOM_EN, ROOM_ZH] },
-    { id: 'bathroom', price: 60, u: 'room', en: 'Bathroom', zh: '浴室', d: ['Shower, toilet, sink, mirror, floor & cabinets', '淋浴间、马桶、洗手池、镜子、地面和柜子'], list: [
-      ['Shower: scrub walls, floor and fixtures (soap scum, mildew)', 'Toilet: disinfect bowl, seat, base and handle', 'Sink: basin, faucet and surrounding area', 'Mirror: streak-free glass cleaning', 'Floor: sweep and mop, including corners and behind the toilet', 'Cabinets: empty and wipe inside and out'],
-      ['淋浴间：擦洗墙面、地面和五金件（皂垢、霉斑）', '马桶：消毒内壁、座圈、底座和冲水把手', '洗手池：台盆、水龙头及周边', '镜子：玻璃清洁无痕', '地面：清扫拖洗，包括角落和马桶后方', '柜子：清空并内外擦拭']] },
-    { id: 'living', price: 40, u: 'room', star: 1, en: 'Living Room', zh: '客厅', d: ['Same checklist as a bedroom', '清洁内容同卧室'], list: [ROOM_EN, ROOM_ZH] },
-    { id: 'kitchenBasic', price: 60, u: 'kitchen', star: 1, en: 'Kitchen (Basic)', zh: '厨房（基础）', d: ['Sink, floors & appliance exteriors', '水槽、地面和电器外部'] },
-  ]},
-  { key: 'deep', en: 'Deep Cleaning', zh: '深度清洁', badge: { en: 'One-time · à la carte', zh: '一次性 · 单点' }, items: [
-    { id: 'kitchenDeep', price: 200, u: 'kitchen', en: 'Kitchen Deep Clean', zh: '厨房深度清洁', d: ['Everything in Basic, plus inside the appliances and every cabinet', '基础清洁全部内容，外加电器内部和所有橱柜'], list: [
-      ['Fridge emptied, shelves & drawers wiped', 'Stovetop, burners and control panel degreased', 'Microwave interior, turntable and door', 'Dishwasher cleaning cycle + door, edges, filter', 'Sink and faucet scrubbed', 'All cabinets & drawers emptied and wiped inside and out', 'Floors swept, vacuumed or mopped', 'All appliances wiped inside and out'],
-      ['清空冰箱，擦拭搁架和抽屉', '灶面、炉头和控制面板去油', '微波炉内部、转盘和门', '洗碗机清洁程序 + 门、边缘、滤网', '擦洗水槽和水龙头', '清空并内外擦拭所有橱柜和抽屉', '地面清扫、吸尘或拖洗', '所有电器内外擦拭']] },
-    { id: 'fridge', price: 50, u: 'fridge', en: 'Refrigerator', zh: '冰箱', d: ['Emptied; shelves, drawers & interior wiped', '清空；擦拭搁架、抽屉和内壁'] },
-    { id: 'ovenIn', price: 30, u: 'oven', en: 'Oven Inside', zh: '烤箱内部', d: ['Interior residue, racks & walls', '内部残留、烤架和内壁'] },
-    { id: 'ovenOut', price: 20, u: 'oven', star: 1, en: 'Oven Exterior', zh: '烤箱外部', d: ['Stovetop, burners & control panel', '灶面、炉头和控制面板'] },
-    { id: 'microwave', price: 20, u: 'unit', en: 'Microwave', zh: '微波炉', d: ['Interior, turntable & door', '内部、转盘和门'] },
-    { id: 'cabinets', price: 30, u: 'set', star: 1, en: 'Cabinets & Drawers', zh: '橱柜和抽屉', d: ['Emptied and wiped inside & out', '清空并内外擦拭'] },
-    { id: 'washer', price: 30, u: 'set', en: 'Washer / Dryer', zh: '洗衣机 / 烘干机', d: ['Inside & out, plus dryer-vent lint', '内外擦拭，清理烘干机排风口绒毛'] },
-    { id: 'carpet', price: 50, u: 'room', star: 1, en: 'Carpet Cleaning', zh: '地毯清洁', d: ['Deep carpet clean', '地毯深度清洁'] },
-    { id: 'trash', price: 30, u: 'bag', en: 'Trash Removal (extra)', zh: '额外垃圾清运', d: ['Haul away extra bags', '运走多余垃圾袋'] },
-    { id: 'furniture', price: 30, u: 'item', star: 1, en: 'Furniture Removal', zh: '家具清运', d: ['Haul away unwanted furniture', '运走不要的家具'] },
-  ]},
-  { key: 'moving', en: 'Moving', zh: '搬家', badge: { en: 'Billed hourly', zh: '按小时计费' }, items: [
-    { group: ['Packages', '套餐'] },
-    { id: 'ez', price: 150, u: 'hr', min: 2, en: 'EZ Move Package', zh: 'EZ 搬家套餐', d: ['2 movers + equipment + 10 ft truck or van · 2 hr min', '2 名搬运工 + 设备 + 10 英尺货车或面包车 · 最低 2 小时'] },
-    { id: 'commercial', price: 200, u: 'hr', min: 3, en: 'Commercial Move Package', zh: '商业搬家套餐', d: ['3 movers + equipment + 26 ft truck · 3 hr min', '3 名搬运工 + 设备 + 26 英尺货车 · 最低 3 小时'] },
-    { group: ['À la carte', '单点'] },
-    { id: 'mover1', price: 60, u: 'hr', min: 1, en: 'Single Mover', zh: '单人搬运工', d: ['Labor only', '仅人工'] },
-    { id: 'mover2', price: 120, u: 'hr', min: 1, en: 'Two Movers', zh: '两名搬运工', d: ['Labor only', '仅人工'] },
-    { id: 'equip', price: 40, u: 'flat', en: 'Equipment Fee', zh: '设备费', d: ['One-time flat fee per job', '每单一次性固定费用'] },
-  ]},
-  { key: 'storage', en: 'Storage', zh: '仓储', badge: { en: 'Per item · monthly', zh: '按件 · 按月' }, monthly: 1, items: [
-    { id: 'sbox', price: 10, u: 'boxmo', en: 'Standard Box', zh: '标准箱', d: ['Stackable', '可堆叠'] },
-    { id: 'large', price: 20, u: 'itemmo', star: 1, en: 'Large Item', zh: '大件物品', d: ['Mini-fridge, bike, TV, desk chair', '迷你冰箱、自行车、电视、办公椅'] },
-    { id: 'sofaFrame', price: 50, u: 'itemmo', star: 1, en: 'Sofa or Bed Frame', zh: '沙发或床架' },
-    { id: 'mattress', price: 75, u: 'itemmo', star: 1, en: 'Mattress', zh: '床垫' },
-    { id: 'car', price: 0, u: 'inq', star: 1, en: 'Auto / Car', zh: '汽车', d: ['Inquiry needed', '需咨询'] },
-  ]},
+const COMMERCIAL={office:[.09,.15],retail:[.07,.15],medical:[.14,.25],industrial:[.08,.20],education:[.07,.13]};
+const money=n=>'$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+function calculate(raw){
+ const q={kind:raw.kind==='commercial'?'commercial':'residential',sqft:Number(raw.sqft),beds:Number(raw.beds),baths:Number(raw.baths),service:['standard','deep','move','move-deep'].includes(raw.service)?raw.service:'standard',facility:raw.facility||'office',extras:Array.isArray(raw.extras)?[...new Set(raw.extras.filter(x=>['fridge','stove','cabinets'].includes(x)))]:[]};
+ if(!Number.isInteger(q.sqft)||q.sqft<1||q.sqft>10000000)throw Error('Enter a valid square footage.');
+ if(q.kind==='commercial'){
+  if(!COMMERCIAL[q.facility])throw Error('Choose a facility type.');
+  const r=COMMERCIAL[q.facility],low=Math.round(q.sqft*r[0]*100)/100,high=Math.round(q.sqft*r[1]*100)/100;
+  return {q,rows:[[q.facility[0].toUpperCase()+q.facility.slice(1)+' · '+q.sqft.toLocaleString()+' sq ft',money(r[0])+'–'+money(r[1])+'/sq ft/month']],low,high,total:money(low)+'–'+money(high)+'/month',note:'Month-to-month contract estimate. Visit frequency and scope are confirmed by cleanX; the monthly rate is not multiplied by visits.'};
+ }
+ if(!Number.isInteger(q.beds)||q.beds<0||q.beds>100||!Number.isInteger(q.baths)||q.baths<0||q.baths>100)throw Error('Enter whole bedroom and bathroom counts (0–100).');
+ if(q.sqft>3000)return {q,rows:[],total:'Custom quote',note:'Homes over 3,000 sq ft require a custom quote from cleanX.'};
+ const tier=q.sqft<1000?0:q.sqft<=2000?1:2,move=q.service.startsWith('move'),deep=q.service.includes('deep');
+ const group=(n,bath)=>n===0?(bath?0:20):n<=10?10*n+10:n<=20?150:n<=30?200:bath?400:300;
+ let rows=[['Base · '+q.sqft.toLocaleString()+' sq ft'+(move?' · move-in/out':''),(move?[80,130,180]:[50,100,150])[tier]],['Bedrooms · '+q.beds,group(q.beds,false)],['Bathrooms · '+q.baths,group(q.baths,true)]];
+ if(deep)rows.push(['Deep cleaning bundle · fridge, stove & cabinets',70]);
+ else for(const x of q.extras)rows.push([x[0].toUpperCase()+x.slice(1),x==='cabinets'?30:tier===0?50:30]);
+ const amount=rows.reduce((a,r)=>a+r[1],0);
+ return {q,rows:rows.map(r=>[r[0],money(r[1])]),amount,total:money(amount),note:'Estimate for one cleaning. Final scope, availability and price are confirmed by cleanX.'};
+}
+
+const CHAT_ICON='<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>';
+const CHEV='<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m6 9 6 6 6-6"/></svg>';
+const cats=[
+ {key:'standard',name:'Standard Clean',zh:'标准清洁',icon:'sponge',photo:'bedroom',from:'$50 base + rooms',badge:'One cleaning',start:'I need a standard residential cleaning quote.',rows:[['Under 1,000 sq ft base','$50'],['1,000–2,000 sq ft base','$100'],['2,001–3,000 sq ft base','$150'],['Bedroom / bathroom tier','Added to base'],['Each room type: 1 → $20; 2 → $30; 3 → $40; …; 10 → $110. 11–20 → $150; 21–30 → $200. 31+ bedrooms → $300; bathrooms → $400.',''],['0 bedrooms uses $20; 0 bathrooms uses $0.','']]},
+ {key:'deep',name:'Deep Clean',zh:'深度清洁',icon:'spray',photo:'kitchen',from:'Standard + $70',badge:'Bundle or individual extras',start:'I would like a deep cleaning quote with the fridge, stove and cabinets.',rows:[['Deep cleaning bundle','+$70'],['Includes fridge, stove & cabinets. Bundled items are not charged again.',''],['Individual fridge or stove · under 1,000 sq ft','+$50 each'],['Individual fridge or stove · 1,000–3,000 sq ft','+$30 each'],['Individual cabinets','+$30']]},
+ {key:'moving',name:'Move-In / Out',zh:'搬入/搬出清洁',icon:'sponge',photo:'bedroom',from:'$80 base + rooms',badge:'Cleaning only',start:'I need a move-out cleaning quote.',rows:[['Under 1,000 sq ft base','$80'],['1,000–2,000 sq ft base','$130'],['2,001–3,000 sq ft base','$180'],['Bedroom / bathroom tiers','Same as Standard'],['Add deep cleaning bundle','+$70'],['Over 3,000 sq ft','Custom quote']]},
+ {key:'storage',name:'Commercial',zh:'商业清洁',icon:'spray',photo:'kitchen',from:'$0.07–$0.25 / sq ft',badge:'Monthly · month-to-month',start:'I would like a monthly commercial cleaning estimate.',rows:[['Office','$0.09–$0.15'],['Retail','$0.07–$0.15'],['Medical facilities','$0.14–$0.25'],['Industrial / manufacturing','$0.08–$0.20'],['Educational facilities','$0.07–$0.13'],['Rates per sq ft per month. Frequency and scope are agreed in the contract.','']]}
 ];
-const ITEMS = {};
-CATS.forEach(c => c.items.forEach(it => { if (it.id) { it.cat = c; ITEMS[it.id] = it; } }));
-const UNITS = {
-  room: ['/ room', '/ 间'], kitchen: ['/ kitchen', '/ 厨房'], fridge: ['/ fridge', '/ 台'], oven: ['/ oven', '/ 台'], unit: ['/ unit', '/ 台'],
-  set: ['/ set', '/ 套'], bag: ['/ bag', '/ 袋'], item: ['/ item', '/ 件'], hr: ['/ hr', '/ 小时'], flat: ['flat', '固定'],
-  boxmo: ['/ box / mo', '/ 箱 / 月'], itemmo: ['/ item / mo', '/ 件 / 月'], inq: ['', ''],
-};
-const L = (o) => (lang === 'zh' ? o.zh : o.en);
-const P = (pair) => pair ? pair[lang === 'zh' ? 1 : 0] : '';
-const fmt = n => '$' + n.toLocaleString('en-US');
-
-const PHOTOS = { standard: 'bedroom', deep: 'kitchen', moving: 'movers', storage: 'storage' };
-const ICONS = { standard: 'sponge', deep: 'spray', moving: 'truck', storage: 'storage' };
-const icon = k => `assets/web/icons/${ICONS[k]}.webp`;
-const minPrice = c => Math.min(...c.items.filter(i => i.price).map(i => i.price));
-
-/* iOS Safari keeps 100dvh when the keyboard opens — size the shell to the visual viewport instead */
-if (window.visualViewport) {
-  const vv = window.visualViewport;
-  let lastH = 0;
-  const fit = () => {
-    if (vv.scale > 1.01) return;                       // ignore pinch-zoom
-    const h = Math.round(vv.height);
-    if (h !== lastH) { lastH = h; root.style.setProperty('--app-h', h + 'px'); }
-    if (window.scrollY !== 0) window.scrollTo(0, 0);
-  };
-  vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); fit();
+let lang=root.dataset.lang||'en',busy=false,msgs=[],lastQuote=null,lastDetails={};
+const tr=(en,zh)=>lang==='zh'?zh:en;
+function staticText(){
+ const text={newChat:tr('New chat','新对话'),navPricing:tr('Pricing','价格'),eyebrow:tr('cleanX Assistant · Chicago, IL','cleanX 助手 · 芝加哥'),h1:tr('Move out. Clean up. <em>Chill out.</em>','搬出。清洁。<em>放轻松。</em>'),sub:tr('Ask for a price, a plan or a quote request — our AI uses cleanX’s real rates.','向 AI 咨询价格、清洁计划或报价申请。'),aiNote:tr('AI can make mistakes. cleanX confirms all prices and availability. Chat is processed by Cloudflare AI.','AI 可能出错。最终价格和时间由 cleanX 确认。聊天由 Cloudflare AI 处理。'),pTitle:tr('Real prices','真实价格'),pSub:tr('The same rates our AI uses. Tap the chat icon to ask about a service, or calculate your estimate.','与 AI 使用的价格一致。点击图标咨询或计算估价。'),fine1:'<b>Estimates:</b> Final scope, condition, pricing and availability are confirmed by cleanX before any work.',fine2:'Residential: USD per cleaning. Commercial: USD per month under month-to-month contracts. Visit frequency does not multiply the monthly rates.',fine3:'<b>Quote requests:</b> No payment or booking commitment. Requests go directly to dani@hax.support through FormSubmit. Do not include payment or sensitive information.',notAff:'Revamped for cleanX · Original design and code by <a href="https://github.com/howyoungx/illini-move-clean" target="_blank" rel="noopener">howyoungx / Illini Move &amp; Clean and contributors</a>.'};
+ document.querySelectorAll('[data-i18n]').forEach(n=>{if(text[n.dataset.i18n])n.innerHTML=text[n.dataset.i18n]});
+ $('#input').placeholder=tr('Ask for a price or a quote request…','咨询价格或申请报价…');
+ $('#tiles').innerHTML=cats.map(c=>'<button class="tile" data-cat="'+c.key+'" data-say="'+esc(c.start)+'"><img src="assets/web/icons/'+c.icon+'.webp" alt="" width="76" height="76"><div><b>'+esc(lang==='zh'?c.zh:c.name)+'</b><span>'+esc(c.from)+'</span></div></button>').join('');
+ $('#chips').innerHTML='<button class="chip" data-estimate>Calculate an estimate</button><button class="chip" data-map>Chicago service area</button><button class="chip" data-say="What does a standard cleaning include?">What’s included?</button>';
+ $('#pgrid').innerHTML=cats.map((c,i)=>'<details class="pcat" data-cat="'+c.key+'"'+(!i?' open':'')+'><summary><img src="assets/web/icons/'+c.icon+'.webp" alt="" width="38" height="38"><h3>'+esc(lang==='zh'?c.zh:c.name)+'</h3><span class="from">'+esc(c.from)+'</span><span class="chev">'+CHEV+'</span></summary><figure class="pimg"><img src="assets/web/'+c.photo+'.jpg" alt="'+esc(c.name)+'" width="760" height="507" loading="lazy"><figcaption>Illustrative photo</figcaption></figure><span class="badge">'+esc(c.badge)+'</span><div class="rows">'+c.rows.map(r=>'<div class="row"><span class="n">'+esc(r[0])+'</span><span class="p">'+esc(r[1])+'</span><button class="ask" data-say="'+esc(c.start)+'" aria-label="Ask about '+esc(c.name)+'">'+CHAT_ICON+'</button></div>').join('')+'</div></details>').join('')+'<button class="btn pri" data-estimate style="width:100%;margin:12px 0">Calculate / request a quote</button><details class="pcat" id="coverage"><summary><h3>Chicago service area</h3>'+CHEV+'</summary><iframe title="cleanX Chicago Service Area" src="https://www.google.com/maps/d/embed?mid=1znAZkOj5zW3ZnCd7y4hzC4x31T_h63Q&amp;ehbc=2E312F" width="100%" height="300" style="border:0" loading="lazy"></iframe><p style="padding:12px">Chicago and nearby areas within the highlighted coverage. <a href="https://www.google.com/maps/d/viewer?mid=1znAZkOj5zW3ZnCd7y4hzC4x31T_h63Q" target="_blank" rel="noopener">Open cleanX map</a>. Address eligibility is confirmed by cleanX.</p></details>';
 }
-
-/* ================= UI strings ================= */
-const STR = {
-  en: {
-    navPricing: 'Pricing', eyebrow: 'Illini Assistant · online', h1: 'Move out. Clean up. <em>Chill out.</em>',
-    sub: 'Ask for a price, a plan or a booking — our AI uses our real rates. English or 中文.',
-    newChat: 'New chat', ph: 'Ask for a price or a booking…', aiNote: 'AI can make mistakes. Nothing is booked until our team confirms with you.',
-    pTitle: 'Real prices', pSub: 'The same rates our AI uses. Tap the chat icon on any item to ask about it or book it.',
-    fine1: '<b>*</b> May vary with size or condition — the final price is confirmed with you before any work starts.',
-    fine2: 'Moving packages are billed hourly (EZ 2 hr min, Commercial 3 hr min). Storage is billed per item, per month. All prices in USD.',
-    notAff: 'Independent business — not affiliated with the University of Illinois.',
-    fine3: '<b>Deposit:</b> 20% of the estimate (one-time total plus the first month of any storage), rounded up to the nearest $5, minimum $20, maximum $500. Pay it through a secure payment link after you send your request. Fully refunded if we can’t take your slot; otherwise it counts toward your final bill.',
-    chips: ['2-bed move-out clean — how much?', 'Book a cleaning for next Saturday', 'Move my studio + store 6 boxes'],
-    starters: { standard: 'I need a standard clean — how much would it be?', deep: "What's included in deep cleaning, and what does it cost?", moving: 'I need help moving — what are my options?', storage: 'I want to store some stuff — how does pricing work?' },
-    included: "What's included", inquiry: 'Ask us', from: 'from {p}', photo: 'Illustrative photo', askItem: 'Ask about {x}',
-    askAbout: 'Tell me about {x} — price and what’s included.',
-    quote: 'Estimate', total: 'Total', storage: 'Storage', perMo: '/mo', varies: '* Final price confirmed before work starts.',
-    bookThis: 'Book this', bookMsg: "I'd like to book this.",
-    booking: 'Booking request', name: 'Name', phone: 'Phone', email: 'Email', address: 'Address', when: 'When',
-    morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening', notes: 'Notes', tbd: 'Team will confirm', noEmail: 'Not provided — we’ll arrange it by phone',
-    deposit: 'Deposit to hold your slot', depNote: 'Pay after sending · full refund if we can’t take your slot',
-    confirm: 'Confirm & send', sending: 'Sending…', change: 'Change something', changeMsg: "I'd like to change something in this booking.",
-    needPhone: 'Phone number missing — just send it in the chat and I’ll update this card.', phoneMissing: 'Missing', old: 'UPDATED BELOW',
-    sent: 'Request sent!', sentText: 'Reference {r}. Pay the {d} deposit to hold your slot — fully refunded if we can’t take it, otherwise it counts toward your bill.', sentLink: 'Reference {r}. We’ll call or text to confirm, and send you a secure link for the {d} deposit (fully refunded if we can’t take your slot).',
-    packing: 'Packing up your request…', pay: 'Pay {d} deposit', payLater: 'Pay later', paying: 'Opening checkout…', payFail: 'Checkout couldn’t open — try again, or we’ll text you a link.', paid: 'Deposit payment submitted — we’ll verify it and confirm your slot.', secure: 'Secure checkout by Stripe', sentNoDep: 'Reference {r}. We’ll call or text to confirm your slot and final price.',
-    sendFail: "Couldn't send just now. Please try again, or email illinisolutions@gmail.com.",
-    aiFail: "Sorry, I couldn't reach the assistant just now.", retry: 'Try again', tooMany: 'Too many messages — please wait a minute.',
-    hr: 'hr', hrs: 'hrs', themeAria: 'Toggle dark mode',
-  },
-  zh: {
-    navPricing: '价格', eyebrow: 'Illini 助手 · 在线', h1: '搬家。打扫。<em>轻松搞定。</em>',
-    sub: '问价格、做方案、直接预约 — AI 按我们的真实价格回答。中文或 English 都可以。',
-    newChat: '新对话', ph: '问价格，或直接预约…', aiNote: 'AI 可能出错。团队与你确认之前，预约不会生效。',
-    pTitle: '真实价格', pSub: '和 AI 用的是同一份价目表。点任意项目右侧的对话图标即可咨询或预约。',
-    fine1: '<b>*</b> 价格可能因面积或状况浮动，开工前会与你确认最终价格。',
-    fine2: '搬家套餐按小时计费（EZ 最低 2 小时，商业最低 3 小时）。仓储按件按月计费。价格均为美元。',
-    notAff: '独立经营，与伊利诺伊大学无隶属关系。',
-    fine3: '<b>定金：</b>预估总价（一次性费用 + 仓储首月）的 20%，向上取整到 $5，最低 $20，最高 $500。提交预约后通过安全付款链接支付。如果我们无法接单全额退款，否则抵扣尾款。',
-    chips: ['两室退房清洁多少钱？', '帮我约下周六的清洁', '单间搬家 + 存 6 个箱子'],
-    starters: { standard: '我想做标准清洁，大概多少钱？', deep: '深度清洁包含什么？多少钱？', moving: '我要搬家，有哪些方案？', storage: '我想存放一些东西，怎么收费？' },
-    included: '包含内容', inquiry: '详询', from: '{p} 起', photo: '示意图', askItem: '咨询 {x}',
-    askAbout: '介绍一下「{x}」— 价格和包含的内容。',
-    quote: '报价', total: '合计', storage: '仓储', perMo: '/月', varies: '* 最终价格开工前确认。',
-    bookThis: '预约这个', bookMsg: '我想预约这个。',
-    booking: '预约申请', name: '姓名', phone: '电话', email: '邮箱', address: '地址', when: '时间',
-    morning: '上午', afternoon: '下午', evening: '晚上', notes: '备注', tbd: '待团队确认', noEmail: '未提供 — 我们电话沟通',
-    deposit: '锁定时段的定金', depNote: '提交后支付 · 无法接单全额退款',
-    confirm: '确认并提交', sending: '提交中…', change: '修改信息', changeMsg: '我想修改一下这个预约。',
-    needPhone: '还缺手机号 — 直接在对话里发给我，我会更新这张卡。', phoneMissing: '未提供', old: '已更新',
-    sent: '已提交！', sentText: '预约编号 {r}。支付 {d} 定金即可锁定时段 — 如果我们无法接单全额退款，否则抵扣尾款。', sentLink: '预约编号 {r}。我们会电话或短信确认，并发送 {d} 定金的安全付款链接（无法接单全额退款）。',
-    packing: '正在打包你的预约…', pay: '支付 {d} 定金', payLater: '稍后支付', paying: '正在打开支付页…', payFail: '支付页打不开 — 请重试，或我们会短信发链接给你。', paid: '定金已提交支付 — 我们核实后会确认你的时段。', secure: 'Stripe 安全支付', sentNoDep: '预约编号 {r}。我们会电话或短信确认时段和最终价格。',
-    sendFail: '暂时提交失败，请重试，或发邮件到 illinisolutions@gmail.com。',
-    aiFail: '抱歉，暂时连接不上 AI 助手。', retry: '重试', tooMany: '消息太频繁了，请稍等一分钟。',
-    hr: '小时', hrs: '小时', themeAria: '切换深色模式',
-  },
-};
-const tr = (k, v) => { let s = (STR[lang] && STR[lang][k]) ?? STR.en[k] ?? k; if (v) for (const x in v) s = s.replace(`{${x}}`, v[x]); return s; };
-function applyStatic() {
-  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = tr(el.dataset.i18n); });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = tr(el.dataset.i18nPh); });
-  $('#themeBtn').setAttribute('aria-label', tr('themeAria'));
+const thread=$('#thread'),wrap=$('#threadWrap'),chat=$('#chat'),input=$('#input'),send=$('#send');
+const end=()=>{wrap.scrollTop=wrap.scrollHeight};
+function message(text,role){const e=document.createElement('div');e.className='msg '+(role==='user'?'me':'bot')+' new';const t=document.createElement('div');t.className='tx';t.style.whiteSpace='pre-wrap';t.textContent=text;e.append(t);thread.append(e);chat.classList.remove('empty');$('#reset').hidden=false;end();return e;}
+function quoteHTML(p){return '<div class="chead"><h4>Your cleanX estimate</h4></div><div class="items">'+p.rows.map(r=>'<div class="li"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('')+'</div><div class="total"><span>Estimate</span><strong>'+esc(p.total)+'</strong></div><p class="cx-note">'+esc(p.note)+'</p>';}
+function quoteCard(p){lastQuote=p.q;const e=document.createElement('div');e.className='card quote new';e.dataset.cat=p.q.kind==='commercial'?'storage':p.q.service==='deep'?'deep':'standard';e.innerHTML=quoteHTML(p)+'<div class="cbtns"><button class="btn pri" data-request>Request this quote</button><button class="btn" data-estimate>Edit estimate</button></div>';e.querySelector('[data-request]').onclick=()=>openEstimate(p.q,true);e.querySelector('[data-estimate]').onclick=()=>openEstimate(p.q,false);thread.append(e);end();}
+async function ask(text){
+ text=String(text||'').trim().slice(0,1000);if(!text||busy)return;closeSheet();busy=true;send.disabled=true;input.value='';input.style.height='';msgs.push({role:'user',content:text});message(text,'user');const wait=message(tr('Thinking…','思考中…'),'assistant');
+ try{const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs.slice(-16),lang}),signal:AbortSignal.timeout(60000)});const j=await res.json();if(!res.ok)throw Error(j.error||'The assistant is temporarily unavailable.');wait.remove();message(j.reply,'assistant');msgs.push({role:'assistant',content:j.reply,quote:j.quote?.q||null});if(j.details)lastDetails=j.details;if(j.quote)quoteCard(j.quote);}
+ catch(e){wait.remove();message(e.name==='TimeoutError'?'The assistant took too long. Please try again or use Calculate an estimate.':e.message,'assistant');}
+ finally{busy=false;send.disabled=!input.value.trim();end();}
 }
-const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const ICON_CHAT = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>';
-const ICON_CHEV = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
-
-/* ================= Price panel ================= */
-let openCats = null;   // null = default (first category open)
-function renderPricing() {
-  $('#pgrid').innerHTML = CATS.map((c, ci) => {
-    const min = minPrice(c);
-    const isOpen = openCats ? openCats.has(c.key) : ci === 0;
-    return `<details class="pcat" data-cat="${c.key}"${isOpen ? ' open' : ''}>
-      <summary><img src="${icon(c.key)}" alt="" width="38" height="38" loading="lazy"><h3>${L(c)}</h3><span class="from">${tr('from', { p: fmt(min) })}</span><span class="chev">${ICON_CHEV}</span></summary>
-      <figure class="pimg"><img src="assets/web/${PHOTOS[c.key]}.jpg" alt="${esc(L(c))}" width="760" height="507" loading="lazy" decoding="async"><figcaption>${tr('photo')}</figcaption></figure>
-      <span class="badge">${L(c.badge)}</span>
-      <div class="rows">${c.items.map(it => it.group ? `<div class="grp">${P(it.group)}</div>` : `<div class="row">
-        <span class="n">${esc(L(it))}${it.star ? '<sup>*</sup>' : ''}</span>
-        <span class="p">${it.price ? `${fmt(it.price)} <small>${P(UNITS[it.u])}</small>` : `<small>${tr('inquiry')}</small>`}</span>
-        <button class="ask" data-ask-item="${it.id}" aria-label="${esc(tr('askItem', { x: L(it) }))}" title="${esc(tr('askItem', { x: L(it) }))}">${ICON_CHAT}</button>
-        ${it.d ? `<span class="d">${esc(P(it.d))}</span>` : ''}
-        ${it.list ? `<details><summary>${tr('included')}</summary><ul>${P(it.list).map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>` : ''}
-      </div>`).join('')}</div>
-    </details>`;
-  }).join('');
+function closeSheet(){ $('#prices').classList.remove('open');$('#scrim').classList.remove('on');$('#pricesBtn').setAttribute('aria-expanded','false'); }
+function openSheet(){ $('#prices').classList.add('open');$('#scrim').classList.add('on');$('#pricesBtn').setAttribute('aria-expanded','true');$('#pricesX').focus(); }
+$('#pricesBtn').onclick=openSheet;$('#pricesX').onclick=closeSheet;$('#scrim').onclick=closeSheet;
+const dialog=$('#quoteDialog'),qform=$('#quoteForm');let requesting=false,requestId='';
+function readQuote(){const f=new FormData(qform);return {kind:f.get('kind'),sqft:f.get('sqft'),beds:f.get('beds'),baths:f.get('baths'),service:f.get('service'),facility:f.get('facility'),extras:f.getAll('extras')};}
+function syncQuote(){const commercial=qform.elements.kind.value==='commercial',deep=qform.elements.service.value.includes('deep');$('#homeFields').hidden=commercial;$('#facilityField').hidden=!commercial;$('#extraFields').hidden=commercial||deep;try{$('#estimateResult').innerHTML=quoteHTML(calculate(readQuote()));}catch(e){$('#estimateResult').textContent=e.message;} }
+function openEstimate(q,last){
+ closeSheet();requesting=!!last;qform.reset();q=q||lastQuote||{kind:'residential',sqft:'',beds:1,baths:1,service:'standard',facility:'office',extras:[]};
+ for(const k of ['kind','sqft','beds','baths','service','facility'])if(q[k]!==undefined)qform.elements[k].value=q[k];
+ qform.querySelectorAll('[name=extras]').forEach(n=>n.checked=(q.extras||[]).includes(n.value));
+ for(const k of ['name','email','phone','address','date','window','notes','frequency'])if(lastDetails[k])qform.elements[k].value=lastDetails[k];
+ $('#contactFields').hidden=!requesting;$('#quoteSubmit').textContent=requesting?'Send quote request':'Continue to request';$('#quoteStatus').textContent='';requestId=crypto.randomUUID();syncQuote();dialog.showModal();
 }
-$('#pgrid').addEventListener('toggle', e => {
-  const d = e.target; if (!d.classList || !d.classList.contains('pcat')) return;
-  openCats = new Set([...document.querySelectorAll('.pcat[open]')].map(x => x.dataset.cat));
-}, true);
-
-/* Mobile sheet */
-const prices = $('#prices'), scrim = $('#scrim'), pricesBtn = $('#pricesBtn');
-const narrow = matchMedia('(max-width:959px)');
-function openSheet() { prices.classList.add('open'); scrim.classList.add('on'); pricesBtn.setAttribute('aria-expanded', 'true'); setTimeout(() => $('#pricesX').focus({ preventScroll: true }), 50); }
-function closeSheet(refocus) { const was = prices.classList.contains('open'); prices.classList.remove('open'); scrim.classList.remove('on'); pricesBtn.setAttribute('aria-expanded', 'false'); if (was && refocus) pricesBtn.focus({ preventScroll: true }); }
-pricesBtn.addEventListener('click', openSheet);
-$('#pricesX').addEventListener('click', () => closeSheet(true));
-scrim.addEventListener('click', () => closeSheet(true));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && prices.classList.contains('open')) closeSheet(true); });
-narrow.addEventListener('change', () => closeSheet());
-
-/* ================= FX: bubbles, sparkles, packing box ================= */
-const fxLayer = document.createElement('div'); fxLayer.className = 'fx'; fxLayer.setAttribute('aria-hidden', 'true'); document.body.appendChild(fxLayer);
-function burst(el, kind = 'bubbles', n = 10, spread = 1) {
-  if (reduce || !el || document.hidden || fxLayer.childElementCount > 80) return;
-  const r = el.getBoundingClientRect(); if (!r.width) return;
-  const x = r.left + r.width / 2, y = r.top + r.height / 2, made = [];
-  for (let i = 0; i < n; i++) {
-    const p = document.createElement('i'); p.className = 'p ' + kind;
-    const up = kind === 'bubbles';
-    const a = up ? -Math.PI / 2 + (Math.random() - .5) * 1.9 * spread : Math.random() * Math.PI * 2;
-    const d = (up ? 50 + Math.random() * 120 : 34 + Math.random() * 70) * spread;
-    const sz = up ? 7 + Math.random() * 17 : 9 + Math.random() * 9;
-    p.style.cssText = `left:${x + (Math.random() - .5) * r.width * .4}px;top:${y}px;--s:${sz.toFixed(1)}px;--dx:${(Math.cos(a) * d).toFixed(1)}px;--dy:${(Math.sin(a) * d - (up ? 30 : 0)).toFixed(1)}px;--d:${Math.round(Math.random() * 140)}ms;--t:${Math.round(up ? 950 + Math.random() * 600 : 650 + Math.random() * 350)}ms`;
-    made.push(p);
-  }
-  fxLayer.append(...made);
-  setTimeout(() => made.forEach(p => p.remove()), 2000);
-}
-function packBox(card) {
-  if (reduce) return null;
-  const el = document.createElement('div'); el.className = 'pack';
-  el.innerHTML = `<div class="box3d"><i class="f fr"></i><i class="f bk2"></i><i class="f lf"></i><i class="f rt"></i><i class="f bt"></i><i class="fl fl-l"></i><i class="fl fl-r"></i><i class="fl fl-f"></i><i class="fl fl-b"></i><i class="tape"></i></div><span>${tr('packing')}</span>`;
-  card.classList.add('packing'); card.querySelector('.cbtns').before(el);
-  return el;
-}
-
-/* ================= Chat ================= */
-const CHAT_ENDPOINT = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787/chat' : 'https://illini-chat.iceocean712.workers.dev/chat';
-const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/8028b4c927389f74bb8dc76d5cee771a';
-const agent = $('#chat'), threadWrap = $('#threadWrap'), thread = $('#thread'), intro = $('#intro'), input = $('#input'), send = $('#send');
-const KEY = 'imc-chat-v3';
-let state = { msgs: [], sent: {}, paid: {} };
-try { const s = JSON.parse(sessionStorage.getItem(KEY)); if (s && Array.isArray(s.msgs)) state = { msgs: s.msgs, sent: s.sent || {}, paid: s.paid || {} }; } catch (e) {}
-const persist = () => { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
-const API = CHAT_ENDPOINT.replace(/\/chat$/, '');
-let stripeOn = null;   // null = unknown
-const checkStripe = () => stripeOn !== null ? Promise.resolve(stripeOn) : fetch(API + '/config').then(r => r.json()).then(j => (stripeOn = !!j.stripe)).catch(() => false);
-let busy = false;
-
-const QUOTE_RE = /\[\[quote:([^\]]+)\]\]/g;
-const BOOK_RE = /\[\[booking:(\{[\s\S]*?\})\]\]/g;
-const CHIPS_RE = /\[\[chips:([^\]]+)\]\]/g;
-const visible = t => t.replace(QUOTE_RE, '').replace(BOOK_RE, '').replace(CHIPS_RE, '').replace(/\[\[[\s\S]*$/, '').replace(/\n{3,}/g, '\n\n').trim();
-function md(text) {
-  const lines = esc(text).split('\n'); let h = '', ul = false;
-  const inl = s => s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
-  for (const l of lines) {
-    const m = l.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
-    if (m) { if (!ul) { h += '<ul>'; ul = true; } h += `<li>${inl(m[1])}</li>`; continue; }
-    if (ul) { h += '</ul>'; ul = false; }
-    if (l.trim()) h += `<p>${inl(l)}</p>`;
-  }
-  return h + (ul ? '</ul>' : '');
-}
-const qtyText = (it, q) => it.u === 'hr' ? `${q} ${q > 1 ? tr('hrs') : tr('hr')}` : it.u === 'flat' ? '' : `× ${q}`;
-function parseItems(obj) {
-  const out = [];
-  for (const [id, raw] of Object.entries(obj || {})) {
-    const it = ITEMS[id]; let q = Math.floor(Number(raw));
-    if (!it || !it.price || !Number.isFinite(q) || q < 1) continue;
-    q = Math.min(q, 9999); if (it.min) q = Math.max(q, it.min); if (it.u === 'flat') q = 1;
-    out.push([it, q]);
-  }
-  return out;
-}
-function itemsHTML(list) {
-  let once = 0, mo = 0, star = false;
-  const rows = list.map(([it, q]) => {
-    const t = it.price * q; it.cat.monthly ? (mo += t) : (once += t); if (it.star) star = true;
-    return `<div class="qrow"><span>${esc(L(it))}${it.star ? '*' : ''} ${qtyText(it, q)}</span><span>${fmt(t)}${it.cat.monthly ? tr('perMo') : ''}</span></div>`;
-  }).join('');
-  if (!once && mo) return rows + `<div class="qtot"><span>${tr('total')}</span><b>${fmt(mo)}${tr('perMo')}</b></div>` + (star ? `<div class="qsub">${tr('varies')}</div>` : '');
-  return rows + `<div class="qtot"><span>${tr('total')}</span><b>${fmt(once)}</b></div>` +
-    (mo ? `<div class="qsub">+ ${tr('storage')} ${fmt(mo)}${tr('perMo')}</div>` : '') + (star ? `<div class="qsub">${tr('varies')}</div>` : '');
-}
-/* Deposit: 20% of the estimate (first month for storage-only), rounded up to $5, min $20, max $500, never above the base */
-const DEPOSIT = { rate: 0.2, min: 20, max: 500, step: 5 };
-function totals(list) { let once = 0, mo = 0; list.forEach(([it, q]) => { it.cat.monthly ? (mo += it.price * q) : (once += it.price * q); }); return { once, mo }; }
-function depositFor(list) {
-  const { once, mo } = totals(list), base = once + mo; if (base <= 0) return 0;
-  return Math.min(base, DEPOSIT.max, Math.max(DEPOSIT.min, Math.ceil(base * DEPOSIT.rate / DEPOSIT.step) * DEPOSIT.step));
-}
-function quoteCard(spec) {
-  const obj = {}; spec.split(/[,;]/).forEach(p => { const [k, v] = p.split(/[=:]/).map(s => s && s.trim()); if (k) obj[k] = v || 1; });
-  const list = parseItems(obj); if (!list.length) return '';
-  const cats = [...new Set(list.map(([it]) => it.cat.key))];
-  const ics = cats.slice(0, 3).map(k => `<img src="${icon(k)}" alt="" width="34" height="34">`).join('');
-  return `<div class="card quote"${cats.length === 1 ? ` data-cat="${cats[0]}"` : ''}><div class="chead"><h4>${tr('quote')}</h4><span class="ics">${ics}</span></div>${itemsHTML(list)}<div class="cbtns"><button class="btn pri" data-say="${esc(tr('bookMsg'))}">${tr('bookThis')}</button></div></div>`;
-}
-const today = (() => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); })();
-const phoneOK = p => String(p || '').replace(/\D/g, '').length >= 7;
-const emailOK = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e || '').trim());
-/* Normalise whatever the model emitted; bad optional values degrade to blank instead of blocking */
-function readBooking(idx) {
-  const m = state.msgs[idx]; if (!m) return null;
-  let last = null, x; BOOK_RE.lastIndex = 0; while ((x = BOOK_RE.exec(m.content))) last = x[1];
-  if (!last) return null;
-  let b; try { b = JSON.parse(last); } catch (e) { return null; }
-  const s = k => String(b[k] ?? '').trim().slice(0, 400);
-  const date = /^\d{4}-\d{2}-\d{2}$/.test(s('date')) && s('date') >= today ? s('date') : '';
-  const w = s('window').toLowerCase(), win = ['morning', 'afternoon', 'evening'].find(k => w.startsWith(k)) || '';
-  return { list: parseItems(b.items), date, win, winRaw: win ? '' : s('window'), phone: s('phone'), email: emailOK(s('email')) ? s('email') : '', name: s('name'), address: s('address'), notes: s('notes') };
-}
-const latestBooking = () => { for (let i = state.msgs.length - 1; i >= 0; i--) { const m = state.msgs[i]; if (m.role === 'assistant' && !m.hidden && m.content.includes('[[booking:')) return i; } return -1; };
-function fmtDate(d) {
-  const [y, mo, da] = d.split('-').map(Number);
-  return new Date(y, mo - 1, da).toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-}
-function bookingCard(idx) {
-  const b = readBooking(idx); if (!b) return '';
-  const dep = depositFor(b.list);
-  if (state.sent[idx]) {
-    const ref = state.sent[idx], r = `<code>${esc(ref)}</code>`, d = `<b>${fmt(dep)}</b>`;
-    let body, btns = '';
-    if (!dep) body = tr('sentNoDep', { r });
-    else if (state.paid[ref]) body = `${tr('sentNoDep', { r })}<div class="paidline">✓ ${tr('paid')}</div>`;
-    else if (stripeOn) { body = tr('sentText', { r, d }); btns = `<div class="cbtns"><button class="btn pri" data-pay="${idx}">${tr('pay', { d: fmt(dep) })}</button></div><div class="qsub">🔒 ${tr('secure')}</div><div class="berr" hidden></div>`; }
-    else body = tr('sentLink', { r, d });
-    return `<div class="card sentcard" data-sent="${idx}"><div class="ok"><span class="tick">✓</span><div><b>${tr('sent')}</b><div>${body}</div></div></div>${btns}</div>`;
-  }
-  const old = idx !== latestBooking() || Object.keys(state.sent).some(k => +k > idx);
-  if (old) { const { once, mo } = totals(b.list); return `<div class="card bk old" data-idx="${idx}"><span>${tr('booking')} · <b>${once || !mo ? fmt(once) : fmt(mo) + tr('perMo')}</b></span><span class="oldtag">${tr('old')}</span></div>`; }
-  const tbd = `<dd class="tbd">${tr('tbd')}</dd>`;
-  const dd = v => v ? `<dd>${esc(v)}</dd>` : tbd;
-  const when = [b.date && fmtDate(b.date), b.win ? tr(b.win) : b.winRaw].filter(Boolean).join(' · ');
-  const okPhone = phoneOK(b.phone);
-  return `<div class="card bk" data-idx="${idx}"><div class="chead"><h4>${tr('booking')}</h4></div>
-    ${b.list.length ? itemsHTML(b.list) : ''}
-    ${dep ? `<div class="dep"><span>${tr('deposit')}<small>${tr('depNote')}</small></span><b>${fmt(dep)}</b></div>` : ''}
-    <hr class="sep">
-    <dl class="kv">
-      <dt>${tr('when')}</dt>${dd(when)}
-      <dt>${tr('phone')}</dt>${okPhone ? `<dd>${esc(b.phone)}</dd>` : `<dd class="miss">${tr('phoneMissing')}</dd>`}
-      <dt>${tr('email')}</dt>${b.email ? `<dd>${esc(b.email)}</dd>` : `<dd class="tbd">${tr('noEmail')}</dd>`}
-      ${b.name ? `<dt>${tr('name')}</dt><dd>${esc(b.name)}</dd>` : ''}
-      <dt>${tr('address')}</dt>${dd(b.address)}
-      ${b.notes ? `<dt>${tr('notes')}</dt><dd>${esc(b.notes)}</dd>` : ''}
-    </dl>
-    ${!okPhone ? `<div class="hint">${tr('needPhone')}</div>` : ''}
-    <div class="berr" hidden></div>
-    <div class="cbtns">${okPhone ? `<button class="btn pri" data-book="${idx}">${tr('confirm')}</button>` : ''}<button class="btn" data-say="${esc(tr('changeMsg'))}">${tr('change')}</button></div>
-  </div>`;
-}
-const chipsHTML = spec => { const opts = spec.split('|').map(x => x.trim()).filter(Boolean).slice(0, 5); return opts.length ? `<div class="qr">${opts.map(o => `<button class="chip" data-say="${esc(o.slice(0, 80))}">${esc(o.slice(0, 80))}</button>`).join('')}</div>` : ''; };
-/* Only the newest unsent booking card stays actionable */
-function refreshOldBookings() {
-  const latest = latestBooking();
-  thread.querySelectorAll('.bk[data-idx]').forEach(el => {
-    const i = +el.dataset.idx; if (i === latest && !state.sent[i] && !el.classList.contains('old')) return;
-    const html = bookingCard(i); if (!html) return;
-    const t = document.createElement('div'); t.innerHTML = html; el.replaceWith(t.firstElementChild);
-  });
-}
-function botEl(html, extraCls = '') { const el = document.createElement('div'); el.className = 'msg bot ' + extraCls; el.innerHTML = `<div class="tx">${html}</div>`; return el; }
-function addBot(text, idx, isLast) {
-  const h = md(visible(text)); if (h) thread.appendChild(botEl(h));
-  let cards = '', m;
-  QUOTE_RE.lastIndex = 0; while ((m = QUOTE_RE.exec(text))) cards += quoteCard(m[1]);
-  if (text.includes('[[booking:')) cards += bookingCard(idx);
-  if (isLast) { CHIPS_RE.lastIndex = 0; let c = null; while ((m = CHIPS_RE.exec(text))) c = m[1]; if (c) cards += chipsHTML(c); }
-  if (cards) thread.insertAdjacentHTML('beforeend', cards);
-}
-function addMe(text, fresh) { const el = document.createElement('div'); el.className = 'msg me' + (fresh ? ' new' : ''); el.innerHTML = md(text); thread.appendChild(el); }
-function renderChat() {
-  [...thread.children].forEach(n => { if (n !== intro) n.remove(); });
-  let lastVis = -1; state.msgs.forEach((m, i) => { if (!m.hidden) lastVis = i; });
-  state.msgs.forEach((m, i) => { if (m.hidden) return; m.role === 'user' ? addMe(m.content) : addBot(m.content, i, i === lastVis); });
-  agent.classList.toggle('empty', !state.msgs.length); $('#reset').hidden = !state.msgs.length;
-  $('#tiles').innerHTML = CATS.map(c => `<button class="tile" data-cat="${c.key}" data-say="${esc(tr('starters')[c.key])}"><img src="${icon(c.key)}" alt="" width="76" height="76"><div><b>${L(c)}</b><span>${tr('from', { p: fmt(minPrice(c)) })}</span></div></button>`).join('');
-  $('#chips').innerHTML = tr('chips').map(c => `<button class="chip" data-say="${esc(c)}">${esc(c)}</button>`).join('');
-  toEnd();
-}
-
-/* Thread-level auto-scroll: follow the stream only if the reader is already near the end */
-/* The composer floats over the thread: reserve its height at the end of the thread */
-agent.style.setProperty('--comp-h', $('#composer').offsetHeight + 'px');
-if (window.ResizeObserver) new ResizeObserver(([e]) => agent.style.setProperty('--comp-h', Math.ceil(e.target.offsetHeight) + 'px')).observe($('#composer'));
-const isNearEnd = () => threadWrap.scrollHeight - threadWrap.scrollTop - threadWrap.clientHeight < 80;
-const toEnd = () => { threadWrap.scrollTop = threadWrap.scrollHeight; };
-
-async function ask(text) {
-  text = (text || '').trim(); if (!text || busy) return;
-  busy = true; send.disabled = true;
-  input.value = ''; input.style.height = '';
-  state.msgs.push({ role: 'user', content: text.slice(0, 1000) }); persist();
-  agent.classList.remove('empty'); $('#reset').hidden = false;
-  thread.querySelectorAll('.qr').forEach(n => n.remove());
-  addMe(text, true);
-  const el = botEl('<span class="dots"><i></i><i></i><i></i></span>', 'new');
-  thread.appendChild(el);
-  toEnd();
-  let reply = '';
-  try {
-    const ctrl = new AbortController(); let timer = setTimeout(() => ctrl.abort(), 30000);
-    const res = await fetch(CHAT_ENDPOINT, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl.signal,
-      body: JSON.stringify({ messages: state.msgs.slice(-30).map(({ role, content }) => ({ role, content })), lang, today }),
-    });
-    if (!res.ok || !res.body) { const j = await res.json().catch(() => ({})); throw new Error(res.status === 429 ? 'rate' : (j.error || res.status)); }
-    const reader = res.body.getReader(), dec = new TextDecoder(); let raf = 0;
-    const paint = () => {
-      raf = 0; const follow = isNearEnd();
-      const v = visible(reply); el.firstChild.innerHTML = v ? md(v) : '<span class="dots"><i></i><i></i><i></i></span>';
-      if (follow) toEnd();
-    };
-    for (;;) {
-      const { value, done } = await reader.read(); if (done) break;
-      clearTimeout(timer); timer = setTimeout(() => ctrl.abort(), 30000);
-      reply += dec.decode(value, { stream: true });
-      if (!raf) raf = requestAnimationFrame(paint);
-    }
-    clearTimeout(timer); cancelAnimationFrame(raf);
-    if (!reply.trim()) throw new Error('empty');
-    const follow = isNearEnd();
-    state.msgs.push({ role: 'assistant', content: reply }); persist();
-    const prev = el.previousElementSibling; el.remove(); addBot(reply, state.msgs.length - 1, true);
-    for (let n = prev && prev.nextElementSibling; n; n = n.nextElementSibling) if (!n.classList.contains('msg')) n.classList.add('new');
-    if (reply.includes('[[booking:')) {
-      refreshOldBookings();
-      const cards = thread.querySelectorAll('.bk:not(.old)'), card = cards[cards.length - 1];
-      if (card) {
-        if (narrow.matches) input.blur();                // put the keyboard away so the whole card is visible
-        const pb = card.previousElementSibling, top = pb && pb.classList.contains('bot') && pb.offsetHeight < 110 ? pb : card;
-        threadWrap.scrollTop += top.getBoundingClientRect().top - threadWrap.getBoundingClientRect().top - ($('.hdr').getBoundingClientRect().bottom - threadWrap.getBoundingClientRect().top) - 12;
-      }
-    } else if (follow) toEnd();
-  } catch (err) {
-    state.msgs.pop(); persist();
-    el.classList.add('err');
-    el.firstChild.innerHTML = `<p>${esc(err.message === 'rate' ? tr('tooMany') : tr('aiFail'))}</p><div class="cbtns"><button class="btn" data-say="${esc(text)}">${tr('retry')}</button></div>`;
-    el.previousElementSibling?.remove();
-    toEnd();
-  } finally { busy = false; send.disabled = !input.value.trim(); }
-}
-
-async function payDeposit(btn) {
-  burst(btn, 'sparkle', 10);
-  const idx = +btn.dataset.pay, ref = state.sent[idx], b = readBooking(idx), card = btn.closest('.card'), err = card.querySelector('.berr');
-  if (!ref || !b) return;
-  btn.disabled = true; const label = btn.textContent; btn.innerHTML = `<span class="spin"></span> ${tr('paying')}`; err.hidden = true;
-  try {
-    const res = await fetch(API + '/deposit', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ref, items: Object.fromEntries(b.list.map(([it, q]) => [it.id, q])), email: b.email, lang, returnUrl: location.origin + location.pathname }) });
-    const j = await res.json().catch(() => ({}));
-    if (!res.ok || !j.url) throw new Error(j.error || res.status);
-    location.href = j.url;
-  } catch (e) {
-    console.warn('[deposit]', e); err.textContent = tr('payFail'); err.hidden = false; btn.disabled = false; btn.textContent = label;
-  }
-}
-async function submitBooking(btn) {
-  const idx = +btn.dataset.book, card = btn.closest('.bk'), err = card.querySelector('.berr');
-  const b = readBooking(idx); if (!b || !phoneOK(b.phone) || state.sent[idx] || idx !== latestBooking() || busy) return;
-  const { once, mo } = totals(b.list), dep = depositFor(b.list);
-  const lines = b.list.map(([it, q]) => { const t = it.price * q; return `• [${it.cat.en}] ${it.en}${it.star ? ' *' : ''} — ${it.u === 'hr' ? q + ' hr' : it.u === 'flat' ? 'flat fee' : '× ' + q} @ $${it.price} = ${fmt(t)}${it.cat.monthly ? '/mo' : ''}`; });
-  const order = (lines.length ? lines : ['(no services specified — see notes / chat)']).join('\n') + `\n\nTotal (one-time): ${fmt(once)}` + (mo ? `\nStorage: ${fmt(mo)}/mo` : '');
-  const ref = 'IMC-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-  const transcript = state.msgs.filter(m => !m.hidden).slice(-20).map(m => `${m.role === 'user' ? 'Customer' : 'AI'}: ${visible(m.content)}`).join('\n\n').slice(0, 6000);
-  const tba = '— (ask customer)';
-  btn.disabled = true; btn.innerHTML = `<span class="spin"></span> ${tr('sending')}`; err.hidden = true;
-  const pack = packBox(card), minWait = new Promise(r => setTimeout(r, reduce ? 0 : 1500));
-  try {
-    await checkStripe();
-    const res = await fetch(BOOKING_ENDPOINT, {
-      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        _subject: `New booking ${ref} — ${b.name || b.phone} — ${fmt(once)}${mo ? ` + ${fmt(mo)}/mo` : ''}${dep ? ` · deposit ${fmt(dep)}` : ''}`, _template: 'box', _captcha: 'false',
-        ...(b.email ? { _replyto: b.email } : {}),
-        'Reference': ref, 'Source': 'AI assistant', 'Language': lang === 'zh' ? '中文' : 'English',
-        'Phone': b.phone, 'Name': b.name || '—', 'Email (invoice)': b.email || '— (not provided — arrange invoice by phone)', 'Service address': b.address || tba,
-        'Preferred date': b.date || tba, 'Time window': b.win ? b.win[0].toUpperCase() + b.win.slice(1) : (b.winRaw || tba),
-        'Order': order, 'Deposit due': dep ? `${fmt(dep)} (20% of one-time total + first month of storage, rounded up to $5, min $20, max $500). ${stripeOn ? 'Customer was offered Stripe checkout — check Stripe payments for client reference ' + ref + '.' : 'Online payment not set up — send the customer a payment link.'} Fully refundable if we can't take the slot.` : '—',
-        'Notes': b.notes || '—', 'Chat transcript': transcript,
-      }),
-    });
-    const j = await res.json().catch(() => ({}));
-    if (!res.ok || String(j.success) !== 'true') throw new Error(j.message || res.status);
-    await minWait;
-    state.sent[idx] = ref;
-    state.msgs.push({ role: 'assistant', content: `Booking request ${ref} was sent to the team. Deposit ${dep ? fmt(dep) : 'n/a'} — payable now via the secure checkout button, or by a link from the team.`, hidden: 1 }); persist();
-    await checkStripe();
-    const t = document.createElement('div'); t.innerHTML = bookingCard(idx); const sc = t.firstElementChild; sc.classList.add('new'); card.replaceWith(sc);
-    refreshOldBookings();
-    setTimeout(() => { burst(sc.querySelector('.tick'), 'sparkle', 16); burst(sc.querySelector('.tick'), 'bubbles', 8); }, 250);
-  } catch (e) {
-    pack && pack.remove(); card.classList.remove('packing');
-    console.warn('[booking]', e);
-    err.textContent = tr('sendFail'); err.hidden = false; btn.disabled = false; btn.textContent = tr('confirm');
-  }
-}
-thread.addEventListener('click', e => {
-  const k = e.target.closest('[data-book]'); if (k) { submitBooking(k); return; }
-  const pz = e.target.closest('[data-pay]'); if (pz) { payDeposit(pz); return; }
-  const b = e.target.closest('[data-say]'); if (b) ask(b.dataset.say);
+qform.addEventListener('input',syncQuote);qform.addEventListener('change',syncQuote);
+$('#quoteClose').onclick=()=>dialog.close();
+qform.addEventListener('submit',async e=>{
+ e.preventDefault();let p;try{p=calculate(readQuote());}catch(error){$('#quoteStatus').textContent=error.message;return;}
+ if(!requesting){requesting=true;$('#contactFields').hidden=false;$('#quoteSubmit').textContent='Send quote request';qform.elements.name.focus();return;}
+ const f=new FormData(qform),d={};for(const k of ['name','email','phone','address','date','window','notes','frequency','website'])d[k]=String(f.get(k)||'').trim();
+ if(!d.name||!d.address||!d.email||!d.phone||!$('#requestConsent').checked){$('#quoteStatus').textContent='Please add your name, email, phone and service address, then confirm permission to send your request.';return;}
+ const button=$('#quoteSubmit');button.disabled=true;$('#quoteStatus').textContent='Sending your request…';
+ try{const res=await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quote:p.q,details:d,id:requestId,consent:true}),signal:AbortSignal.timeout(30000)});const j=await res.json();if(!res.ok)throw Error(j.error||'Could not send. Please try again.');lastQuote=p.q;lastDetails=d;dialog.close();message('Your quote request was submitted to cleanX at dani@hax.support. Reference: '+j.reference+'. cleanX will confirm the final price and availability. This is not a confirmed booking.','assistant');}
+ catch(error){$('#quoteStatus').textContent=error.name==='TimeoutError'?'Delivery could not be confirmed. Please contact dani@hax.support before retrying to avoid duplicates.':error.message;}
+ finally{button.disabled=false;}
 });
-$('#form').addEventListener('submit', e => { e.preventDefault(); if (input.value.trim() && !busy) burst(send, 'bubbles', 12); ask(input.value); });
-/* 3D tiles: pointer tilt, hover effects, tap burst */
-const tilesEl = $('#tiles'), lastFx = new WeakMap();
-tilesEl.addEventListener('pointermove', e => {
-  if (e.pointerType !== 'mouse' || reduce) return;
-  const t = e.target.closest('.tile'); if (!t) return;
-  const r = t.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-  t.style.setProperty('--rx', (-py * 18).toFixed(1) + 'deg'); t.style.setProperty('--ry', (px * 20).toFixed(1) + 'deg');
-  t.style.setProperty('--mx', ((px + .5) * 100).toFixed(0) + '%'); t.style.setProperty('--my', ((py + .5) * 100).toFixed(0) + '%');
-});
-tilesEl.addEventListener('pointerover', e => {
-  const t = e.target.closest('.tile'); if (!t || e.pointerType !== 'mouse' || t.contains(e.relatedTarget)) return;
-  const now = Date.now(); if (now - (lastFx.get(t) || 0) < 1200) return; lastFx.set(t, now);
-  const k = t.dataset.cat, img = t.querySelector('img');
-  if (k === 'standard' || k === 'deep') burst(img, 'bubbles', k === 'deep' ? 7 : 9, .7);
-  else burst(img, 'sparkle', 6, .7);
-});
-tilesEl.addEventListener('pointerout', e => { const t = e.target.closest('.tile'); if (t && !t.contains(e.relatedTarget)) ['--rx', '--ry'].forEach(v => t.style.removeProperty(v)); });
-tilesEl.addEventListener('click', e => { const t = e.target.closest('.tile'); if (t) { burst(t.querySelector('img'), 'bubbles', 14); burst(t.querySelector('img'), 'sparkle', 6); } });
-thread.addEventListener('click', e => { const c = e.target.closest('.qr .chip, .quote .btn.pri'); if (c) burst(c, c.classList.contains('chip') ? 'bubbles' : 'sparkle', 8, .8); }, true);
-input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(140, input.scrollHeight) + 'px'; send.disabled = !input.value.trim() || busy; });
-input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#form').requestSubmit(); } });
-$('#reset').addEventListener('click', () => { if (busy) return; state = { msgs: [], sent: {}, paid: {} }; persist(); renderChat(); input.focus(); });
-$('#pgrid').addEventListener('click', e => {
-  const b = e.target.closest('[data-ask-item]'); if (!b) return;
-  if (narrow.matches) { closeSheet(); document.activeElement?.blur(); }
-  ask(tr('askAbout', { x: L(ITEMS[b.dataset.askItem]) }));
-});
-
-/* ================= Theme & language ================= */
-// Run a DOM update inside a View Transition, but never depend on it: if the
-// transition is skipped/aborted (tab hidden, etc.) the update still runs.
-function withTransition(update) {
-  if (!document.startViewTransition || reduce || document.hidden) { update(); return null; }
-  let ran = false; const run = () => { if (!ran) { ran = true; update(); } };
-  let vt; try { vt = document.startViewTransition(run); } catch (e) { run(); return null; }
-  vt.ready.catch(() => {}); vt.finished.catch(() => {}); vt.updateCallbackDone.catch(run);
-  setTimeout(run, 600);
-  return vt;
-}
-function setMeta() { document.querySelector('meta[name=theme-color]').content = root.dataset.theme === 'dark' ? '#141B2D' : '#F7F5F2'; }
-$('#themeBtn').addEventListener('click', e => {
-  const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-  const apply = () => { root.dataset.theme = next; setMeta(); try { localStorage.setItem('imc-theme2', next); } catch (er) {} };
-  if (!document.startViewTransition || reduce || document.hidden) { if (!reduce) { root.classList.add('theme-fade'); setTimeout(() => root.classList.remove('theme-fade'), 400); } apply(); return; }
-  const r = e.currentTarget.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
-  const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-  root.classList.add('vt-theme');
-  const vt = withTransition(apply);
-  if (!vt) { root.classList.remove('vt-theme'); return; }
-  vt.ready.then(() => root.animate({ clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${R}px at ${x}px ${y}px)`] },
-    { duration: 550, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
-  vt.finished.catch(() => {}).finally(() => root.classList.remove('vt-theme'));
-});
-function setLang(next) {
-  const atEnd = isNearEnd(), keepScroll = threadWrap.scrollTop, keepPrices = $('#pricesBody').scrollTop;
-  lang = next; root.dataset.lang = next; root.lang = next === 'zh' ? 'zh-CN' : 'en';
-  try { localStorage.setItem('imc-lang', next); } catch (e) {}
-  applyStatic(); renderPricing(); renderChat();
-  if (atEnd) toEnd(); else threadWrap.scrollTop = keepScroll; $('#pricesBody').scrollTop = keepPrices;
-  document.title = next === 'zh' ? 'Illini Move & Clean — AI 报价与预约：搬家、清洁、仓储' : 'Illini Move & Clean — AI quotes & booking for moving, cleaning, storage';
-}
-$('#langBtn').addEventListener('click', () => {
-  const next = lang === 'zh' ? 'en' : 'zh';
-  withTransition(() => setLang(next));
-});
-
-/* ================= Init ================= */
-$('#yr').textContent = new Date().getFullYear();
-{ const q = new URLSearchParams(location.search), paid = q.get('paid');
-  if (paid && /^IMC-[A-Z0-9]{5}$/.test(paid) && Object.values(state.sent).includes(paid)) { state.paid[paid] = 1; state.msgs.push({ role: 'assistant', content: `The customer completed Stripe checkout for the deposit on ${paid} (team will verify).`, hidden: 1 }); persist(); }
-  if (q.has('paid') || q.has('pay')) history.replaceState(null, '', location.pathname); }
-if (Object.keys(state.sent).length) checkStripe().then(on => { if (on) thread.querySelectorAll('.sentcard').forEach(el => { const t = document.createElement('div'); t.innerHTML = bookingCard(+el.dataset.sent); el.replaceWith(t.firstElementChild); }); });
-setMeta(); setLang(lang); toEnd();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say],[data-estimate],[data-map]');if(!b||b.closest('.card.quote'))return;if(b.hasAttribute('data-estimate'))openEstimate(null,false);else if(b.hasAttribute('data-map')){if(matchMedia('(max-width:959px)').matches)openSheet();$('#coverage').open=true;$('#coverage').scrollIntoView({behavior:'smooth',block:'start'});}else ask(b.dataset.say);});
+$('#form').onsubmit=e=>{e.preventDefault();ask(input.value)};
+input.oninput=()=>{input.style.height='';input.style.height=Math.min(input.scrollHeight,150)+'px';send.disabled=busy||!input.value.trim()};
+input.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();ask(input.value)}};
+$('#reset').onclick=()=>{if(busy)return;msgs=[];lastQuote=null;lastDetails={};[...thread.children].forEach(n=>{if(n.id!=='intro')n.remove()});chat.classList.add('empty');$('#reset').hidden=true;input.focus()};
+$('#themeBtn').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('cleanx-theme',root.dataset.theme)}catch{}};
+$('#langBtn').onclick=()=>{lang=lang==='en'?'zh':'en';root.dataset.lang=lang;root.lang=lang==='zh'?'zh-CN':'en';staticText()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+if(window.ResizeObserver)new ResizeObserver(()=>chat.style.setProperty('--comp-h',$('#composer').offsetHeight+'px')).observe($('#composer'));
+if(window.visualViewport){const resize=()=>root.style.setProperty('--app-h',window.visualViewport.height+'px');visualViewport.addEventListener('resize',resize);resize();}
+$('#yr').textContent=new Date().getFullYear();staticText();
 })();
+
 </script>
 </body>
 </html>
