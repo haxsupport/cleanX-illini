@@ -567,7 +567,7 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const COMMERCIAL={office:[.09,.17],retail:[.07,.15],medical:[.14,.29],industrial:[.08,.20],education:[.07,.14]};
 const COMMERCIAL_ADDONS={carpet:{name:'Carpet cleaning',rates:[.08,.25]},strip:{name:'Strip & refinish floors',rates:[.30,.60]},recoat:{name:'Scrub & recoat floors',rates:[.20,.40]},disinfect:{name:'Electrostatic disinfection',rates:[.10,.30]},windows:{name:'Window cleaning',rates:null}};
 const CONTRACTS={1:0,3:.03,6:.05,12:.08};
-const money=n=>'$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const money=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:Number.isInteger(Number(n))?0:2,maximumFractionDigits:2});
 function calculate(raw){
  const q={kind:raw.kind==='commercial'?'commercial':'residential',sqft:Number(raw.sqft),beds:Number(raw.beds),baths:Number(raw.baths),service:['standard','deep','move','move-deep'].includes(raw.service)?raw.service:'standard',facility:raw.facility||'office',extras:Array.isArray(raw.extras)?[...new Set(raw.extras.filter(x=>['fridge','stove','cabinets'].includes(x)))]:[]};
  if(!Number.isInteger(q.sqft)||q.sqft<1||q.sqft>10000000)throw Error('Enter a valid square footage.');
