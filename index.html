@@ -676,7 +676,16 @@ function openEstimate(q,last){
  for(const k of ['kind','sqft','beds','baths','service','facility'])if(q[k]!==undefined)qform.elements[k].value=q[k];
  qform.querySelectorAll('[name=extras]').forEach(n=>n.checked=(q.extras||[]).includes(n.value));
  for(const k of ['name','email','phone','address','date','window','notes','frequency'])if(lastDetails[k])qform.elements[k].value=lastDetails[k];
- $('#contactFields').hidden=!requesting;$('#quoteSubmit').textContent=requesting?'Send quote request':'Continue to request';$('#quoteStatus').textContent='';requestId=crypto.randomUUID();syncQuote();dialog.showModal();qform.scrollTop=0;
+ $('#contactFields').hidden=!requesting;$('#quoteSubmit').textContent=requesting?'Send quote request':'Continue to request';$('#quoteStatus').textContent='';requestId=crypto.randomUUID();syncQuote();dialog.showModal();
+ const positionEntry=()=>{
+  if(!dialog.open)return;
+  if(requesting){
+   const heading=$('#contactFields h3');
+   heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});
+   qform.scrollTop+=heading.getBoundingClientRect().top-qform.getBoundingClientRect().top-12;
+  }else qform.scrollTop=0;
+ };
+ positionEntry();requestAnimationFrame(positionEntry);
 }
 qform.addEventListener('input',syncQuote);qform.addEventListener('change',syncQuote);
 $('#quoteClose').onclick=()=>dialog.close();
